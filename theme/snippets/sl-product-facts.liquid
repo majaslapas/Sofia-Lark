@@ -1,0 +1,274 @@
+{%- comment -%}
+  Sofia Lark product facts: what a product is made of, how big it is and what it promises, read
+  from what the store already has, so every product gets them without any setup.
+
+  In order of trust:
+  1. product metafields, when filled (custom.subtitle, length_mm, width_mm, plating, stone, care,
+     water_resistant, hypoallergenic);
+  2. the description: lines written as "Label: value" (Izmērs: 5 × 5 cm, Material: Stainless
+     steel, Garums: 16 cm), the Kalliope headings (Materiāli, Roku darbs, Rotas kopšana) with the
+     paragraph under them, a short first line naming the metal ("Gold plated brass (14Carats)"),
+     and the claims it makes (does not change colour in water, hypoallergenic, handmade in Greece);
+  3. the existing custom.material and custom.earring_closure metafields, only where the
+     description says nothing.
+
+  Accepts: product. Outputs key¦value pairs joined by §, for the caller to split:
+    subtitle, size, length, width, diameter, material, color, stone, closure, weight, plating,
+    features, handmade, care, flag (water, tarnish, hypo, greece; one pair each).
+  Written without regular expressions, so each rule is plain string work that Liquid can do.
+{%- endcomment -%}
+{%- liquid
+  assign map = '|izmērs=size|izmēri=size|izmērs auskariem=size|size=size|sizes=size|earrings sizes=size|earring sizes=size|earrings size=size|dimensions=size|garums=length|length=length|ķēdes garums=length|kaklarotas garums=length|aproces garums=length|platums=width|width=width|diametrs=diameter|diameter=diameter|materiāls=material|materiāli=material|material=material|materials=material|materiāls un apdare=material|krāsa=color|color=color|colour=color|tonis=color|akmens=stone|akmeņi=stone|stone=stone|stones=stone|aizdare=closure|closure=closure|stiprinājums=closure|svars=weight|weight=weight|pārklājums=plating|plating=plating|īpašības=features|features=features|properties=features|'
+  assign headings = '|materiāli=material|materiāls=material|roku darbs=handmade|rotas kopšana=care|kopšana=care|'
+  assign words = '|length=length|width=width|garums=length|platums=width|diametrs=diameter|diameter=diameter|'
+  assign digits = '0,1,2,3,4,5,6,7,8,9' | split: ','
+  assign material_words = 'plated,zeltīt,brass,bronz,steel,tērauds,sudrab,silver,misiņ' | split: ','
+  assign claim_words = 'water,ūden,alerģ,allerg,tarnish,nemaina' | split: ','
+
+  comment
+    Lines: every block or line break becomes a mark, the tags go, and empty lines are dropped.
+  endcomment
+  assign d = product.description | replace: '<br', '¶<br' | replace: '<BR', '¶<BR'
+  assign d = d | replace: '</p>', '¶' | replace: '</li>', '¶' | replace: '</div>', '¶' | replace: '</tr>', '¶'
+  assign d = d | replace: '</h1>', '¶' | replace: '</h2>', '¶' | replace: '</h3>', '¶' | replace: '</h4>', '¶' | replace: '</h5>', '¶' | replace: '</h6>', '¶'
+  assign d = d | strip_html | replace: '&nbsp;', ' ' | replace: ' ', ' ' | replace: '&amp;', '&' | replace: '&#39;', "'" | replace: '&quot;', '"' | replace: '&lt;', '<' | replace: '&gt;', '>'
+  assign clean = ''
+  assign raws = d | split: '¶'
+  assign bullets = '- ,– ,— ,• ,* ' | split: ','
+  for raw in raws
+    assign t = raw | strip
+    for b in bullets
+      assign b_size = b | size
+      assign t_start = t | slice: 0, b_size
+      if t_start == b
+        assign t = t | remove_first: b | strip
+      endif
+    endfor
+    if t != blank
+      assign clean = clean | append: t | append: '¶'
+    endif
+  endfor
+  assign ls = clean | split: '¶'
+  assign whole = clean | replace: '¶', ' ' | downcase
+
+  assign out = ''
+  assign found = '|'
+  assign subtitle = ''
+  assign story_count = 0
+  assign skip = -1
+
+  for l in ls
+    # inner loops below have their own forloop, so the line's place is kept here
+    assign i = forloop.index0
+    assign next_i = forloop.index
+    assign is_last = forloop.last
+    if i == skip
+      continue
+    endif
+    assign low = l | downcase
+    assign key = ''
+    assign value = ''
+
+    if l contains ':'
+      assign label = l | split: ':' | first | strip | downcase
+      assign needle = '|' | append: label | append: '='
+      if map contains needle
+        assign key = map | split: needle | last | split: '|' | first
+      elsif label.size <= 30
+        if label contains 'izmēr' or label contains 'size'
+          assign key = 'size'
+        elsif label contains 'garum' or label contains 'length'
+          assign key = 'length'
+        elsif label contains 'materiāl' or label contains 'material'
+          assign key = 'material'
+        endif
+      endif
+      if key != ''
+        assign head = l | split: ':' | first
+        assign value = l | remove_first: head | remove_first: ':' | strip
+      endif
+    endif
+
+    if key == ''
+      assign needle = '|' | append: low | append: '='
+      if headings contains needle and is_last == false
+        assign key = headings | split: needle | last | split: '|' | first
+        assign value = ls[next_i]
+        assign skip = next_i
+      endif
+    endif
+
+    if key == ''
+      assign first_word = low | split: ' ' | first | remove: ':'
+      assign needle = '|' | append: first_word | append: '='
+      if words contains needle and l.size < 32
+        assign has_digit = false
+        for dg in digits
+          if l contains dg
+            assign has_digit = true
+            break
+          endif
+        endfor
+        if has_digit
+          assign key = words | split: needle | last | split: '|' | first
+          assign original_first = l | split: ' ' | first
+          assign value = l | remove_first: original_first | strip
+        endif
+      endif
+    endif
+
+    if key == '' and l.size <= 40
+      unless found contains '|material|'
+        for m in material_words
+          if low contains m
+            assign key = 'material'
+            assign value = l
+            break
+          endif
+        endfor
+      endunless
+    endif
+
+    if key == ''
+      # The first ordinary line may be the one-line summary under the title.
+      if story_count == 0 and l.size >= 12 and l.size <= 90
+        assign last_char = l | slice: -1
+        assign is_claim = false
+        for w in claim_words
+          if low contains w
+            assign is_claim = true
+            break
+          endif
+        endfor
+        if last_char != ':' and last_char != '?' and last_char != '!' and low != 'description' and low != 'apraksts' and is_claim == false
+          assign subtitle = l
+        endif
+      endif
+      assign story_count = story_count | plus: 1
+      continue
+    endif
+
+    # An empty value ("Size:") takes the next line when it is short and has a number.
+    if value == '' and is_last == false
+      assign next = ls[next_i]
+      if next.size <= 32
+        for dg in digits
+          if next contains dg
+            assign value = next
+            assign skip = next_i
+            break
+          endif
+        endfor
+      endif
+    endif
+
+    # "Earrings sizes: Length 48 mm" is a length.
+    if key == 'size' and value != ''
+      assign vw = value | downcase | split: ' ' | first | remove: ':'
+      assign needle = '|' | append: vw | append: '='
+      if words contains needle
+        assign key = words | split: needle | last | split: '|' | first
+        assign original_first = value | split: ' ' | first
+        assign value = value | remove_first: original_first | strip
+      endif
+    endif
+
+    assign value = value | strip
+    assign last_char = value | slice: -1
+    if last_char == ','
+      assign value = value | remove_last: ',' | strip
+    endif
+    if value != ''
+      assign tag = '|' | append: key | append: '|'
+      unless found contains tag
+        assign out = out | append: key | append: '¦' | append: value | append: '§'
+        assign found = found | append: key | append: '|'
+      endunless
+    endif
+  endfor
+
+  # No material line: a few phrases that can only mean one metal, and freshwater pearls.
+  unless found contains '|material|'
+    assign phrases = 'zeltītas bronzas=Zeltīta bronza|zeltīta bronza=Zeltīta bronza|zeltītā bronza=Zeltīta bronza|juveliertērauda=Juveliertērauds|juveliertērauds=Juveliertērauds|stainless steel=Stainless steel' | split: '|'
+    for ph in phrases
+      assign ph_find = ph | split: '=' | first
+      if whole contains ph_find
+        assign ph_name = ph | split: '=' | last
+        assign out = out | append: 'material¦' | append: ph_name | append: '§'
+        assign found = found | append: 'material|'
+        break
+      endif
+    endfor
+  endunless
+  unless found contains '|stone|'
+    if whole contains 'saldūdens pērl'
+      assign out = out | append: 'stone¦Dabīgas saldūdens pērles§'
+    endif
+  endunless
+
+  # Claims, read from the whole description.
+  assign water = false
+  if whole contains 'ūden'
+    if whole contains 'nemaina' or whole contains 'izturīg' or whole contains 'nebaidās' or whole contains 'neoksid' or whole contains 'noturīg'
+      assign water = true
+    endif
+  endif
+  if whole contains 'water'
+    if whole contains 'not change' or whole contains 'tarnish' or whole contains 'water-resistant' or whole contains 'water resistant'
+      assign water = true
+    endif
+  endif
+  if product.metafields.custom.water_resistant.value
+    assign water = true
+  endif
+  if water
+    assign out = out | append: 'flag¦water§'
+  elsif whole contains 'nemaina krāsu' or whole contains 'melnēšanu' or whole contains 'tarnish' or whole contains 'does not change colo'
+    assign out = out | append: 'flag¦tarnish§'
+  endif
+  if whole contains 'alerģ' or whole contains 'allerg' or product.metafields.custom.hypoallergenic.value
+    assign out = out | append: 'flag¦hypo§'
+  endif
+  if whole contains 'grieķij'
+    if whole contains 'ar rokām' or whole contains 'roku darb'
+      assign out = out | append: 'flag¦greece§'
+    endif
+  endif
+
+  # Filled metafields win over the description; old ones only fill gaps.
+  assign mf = product.metafields.custom
+  assign over = ''
+  if mf.subtitle.value != blank
+    assign subtitle = mf.subtitle.value
+  endif
+  if mf.length_mm.value != blank
+    assign over = over | append: 'length¦' | append: mf.length_mm.value | append: ' mm§'
+  endif
+  if mf.width_mm.value != blank
+    assign over = over | append: 'width¦' | append: mf.width_mm.value | append: ' mm§'
+  endif
+  if mf.plating.value != blank
+    assign over = over | append: 'plating¦' | append: mf.plating.value | append: '§'
+  endif
+  if mf.stone.value != blank
+    assign over = over | append: 'stone¦' | append: mf.stone.value | append: '§'
+  endif
+  unless found contains '|material|'
+    if mf.material.value != blank
+      assign over = over | append: 'material¦' | append: mf.material.value | append: '§'
+    endif
+  endunless
+  unless found contains '|closure|'
+    assign closure = mf.earring_closure.value | join: ', '
+    if closure != blank
+      assign over = over | append: 'closure¦' | append: closure | append: '§'
+    endif
+  endunless
+  if mf.care != blank
+    assign over = over | append: 'care¦' | append: mf.care.value | strip_html | append: '§'
+  endif
+  if subtitle != ''
+    assign over = over | append: 'subtitle¦' | append: subtitle | append: '§'
+  endif
+-%}
+{{- over -}}{{- out -}}

@@ -118,6 +118,17 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
   text-transform: uppercase;
   text-wrap: balance;
 }
+.sl-p__title--long { font-size: clamp(26px, 2.2vw, 34px); }
+.sl-p__rating { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; font-size: 15px; }
+/* five stars, filled to the rating */
+.sl-p__stars {
+  --sl-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z'/%3E%3C/svg%3E");
+  width: 80px;
+  height: 15px;
+  background: linear-gradient(90deg, var(--sl-ink) var(--sl-rating, 100%), var(--sl-ground-2) 0); /* taste-skill-ignore: a fill level, not a gradient */
+  -webkit-mask: var(--sl-star) left / 16px 15px repeat-x;
+  mask: var(--sl-star) left / 16px 15px repeat-x;
+}
 .sl-p__subtitle {
   margin: 12px 0 0;
   font-size: 18px;
@@ -352,6 +363,24 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
 }
 .sl-p__tab[open] summary::after { transform: translateY(2px) rotate(-135deg); }
 .sl-p__tab-body { padding: 0 18px 18px; font-size: 15px; line-height: 1.55; }
+/* descriptions are pasted from anywhere (some carry a whole chat page's wrappers and widths):
+   wrappers lose their layout, text keeps its formatting */
+.sl-p__tab-body { overflow-wrap: anywhere; }
+.sl-p__tab-body :where(div, article, section, header, main, span) {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  position: static !important;
+  white-space: normal !important;
+  background: none !important;
+}
+.sl-p__tab-body :where(img, iframe, table, video) { max-width: 100%; height: auto; }
+.sl-p__tab-body :where(ul, ol) { margin: 0 0 10px; padding-left: 20px; }
 .sl-p__tab-body p { margin: 0 0 10px; }
 .sl-p__tab-body p:last-child { margin-bottom: 0; }
 .sl-p__tab-body a { color: var(--sl-ink); text-decoration: underline; text-underline-offset: 4px; }
@@ -423,6 +452,28 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
 .sl-scale__action:hover { background: #fff; color: var(--sl-ink); }
 .sl-scale__action--main { background: var(--sl-ink); color: #fff; }
 .sl-scale__action--main:hover { background: #2b2b2b; color: #fff; }
+/* without a photograph: the piece drawn to scale beside a 1 euro coin */
+.sl-scale__plate--drawn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: clamp(24px, 4vw, 56px);
+  background: rgba(255, 255, 255, 0.55);
+}
+.sl-scale__svg { display: block; width: 100%; height: auto; max-height: 72%; overflow: visible; }
+.sl-scale__coin { fill: #c9a24b; }
+.sl-scale__coin-ring { fill: none; stroke: #e2c47a; stroke-width: 0.8; }
+.sl-scale__coin-text { fill: #5b4512; font-family: var(--typeBasePrimary), var(--typeBaseFallback); font-size: 6.4px; font-weight: 500; }
+.sl-scale__box { fill: var(--sl-ground-2); stroke: var(--sl-ink); stroke-width: 0.35; }
+.sl-scale__box:has(+ .sl-scale__photo) { fill: #fff; }
+.sl-scale__photo { mix-blend-mode: multiply; }
+.sl-scale__dim { fill: var(--sl-ink); font-family: var(--typeBasePrimary), var(--typeBaseFallback); }
+.sl-scale__caption { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: #3d3d3a; }
+.sl-scale__caption span { display: inline-flex; align-items: center; gap: 8px; }
+.sl-scale__key { width: 12px; height: 12px; border-radius: 50%; background: #c9a24b; }
+.sl-scale__key--piece { border-radius: 2px; background: var(--sl-ground-2); box-shadow: inset 0 0 0 1px var(--sl-ink); }
+.sl-pair[hidden] { display: none; }
 .sl-scale__empty { padding: 24px; margin-top: 24px; background: #fff3cd; font-size: 14px; }
 
 /* ---------- wear it with: a photograph that stays, a list that opens ---------- */

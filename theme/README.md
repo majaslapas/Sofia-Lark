@@ -1,106 +1,90 @@
 # Sofia Lark product page: theme sections
 
-The product page layout from [`../product-page/`](../product-page/), built as sections for the store's Impulse 9 theme. They follow the theme's existing `sl-` sections:
-- the same stone ground, black ink, Tenor capitals and Outfit body text;
-- one stylesheet and one script per feature;
-- Latvian copy, with settings labels in English.
+The product page layout from [`../product-page/`](../product-page/), built for the store's Impulse 9 theme as its **default product template**. Every product uses it as it is, with no setup per product, collection or metafield. Each part fills itself from data the store already has, and any part with nothing to show is left out.
 
-| Desktop | Phone |
+| Four products, no setup | True size, from the description |
 | --- | --- |
-| ![first screen](screenshots/desktop-first-screen.jpg) | ![phone](screenshots/phone.jpg) |
+| ![four products](screenshots/four-products.jpg) | ![true size](screenshots/true-size.jpg) |
 
-Screenshots are from the Calypso earrings. They use the real photos, prices and stock, and the proposed metafield values from section 3, rendered inside the live header and footer.
+These are renders of real products (photos, prices, stock and descriptions as they are today) inside the live header and footer: a brooch with one photo, a bracelet, an adjustable ring and a Kalliope earring.
 
-## What's here
+## What every product gets, and where it comes from
+
+The catalogue was measured first: 278 published products, 246 of them single-variant and 151 with one photo. The layout was then built and tested against all 278 (see *How it was checked*).
+
+| Part of the page | Source | Products that get it today |
+| --- | --- | --- |
+| Photographs | The product's media. With fewer than four photos of its own, its variant photos fill in. A last photo that would sit alone in a half-width slot takes the full width. | all (151 show one photo) |
+| One line under the title | The description's first plain line, when it reads like a summary ("Zeltītas bronzas auskari ar dabīgām saldūdens pērlēm"). The `custom.subtitle` metafield wins when filled. | 65 |
+| Key facts under the price | The description, read by `snippets/sl-product-facts.liquid`, which picks up four things:<ul><li>`Label: value` lines (Izmērs, Garums, Materiāls, Size, Material, …).</li><li>The Kalliope headings: Materiāli, Roku darbs, Rotas kopšana.</li><li>A short first line naming the metal.</li><li>The description's claims: does not change colour in water, hypoallergenic, handmade in Greece.</li></ul> | 275 |
+| Colour or variant picker | Photo tiles when every value of an option has its own photo, otherwise words. No option names need setting. | 25 tiles, 7 words |
+| Stock line | The variant's inventory: "Palicis pēdējais" (one left), "Palikuši tikai 2" (only two left), or sold out with a "tell me when it's back" link. | all |
+| Rating | Shopify's standard review metafields, which Judge.me fills. | the 5 with reviews |
+| Size and materials tab | The same facts in full, under Latvian labels. | 275 |
+| Care tab | The description's own care text (Kalliope), otherwise the section's text and the care cloth. | all |
+| "Īstais izmērs" (true size) | The `custom.on_body_image` photo when one is set. Otherwise the piece is drawn to scale beside a 1 € coin (23 mm), from the size in its description. Without a usable size it's left out: bracelets and necklaces (too long), rings ("Regulējams"), and one-number sizes. | 92 |
+| "Sader kopā" (goes well together) | The Search & Discovery app's complementary products. If there are none, Shopify's own recommendations for the product, fetched after the page loads. The care cloth always comes last. | all |
+| Review letter, shop in Rīga | The same real review and shop details on every product. | all |
+
+## Files
 
 | File | What it does |
 | --- | --- |
-| `sections/sl-product.liquid` | The product itself. Photographs scroll on the left while the buy box stays in place. The buy box holds: title and one-line subtitle, app blocks (for example Judge.me stars), price, key facts, colour tiles with stock, add to cart, the free-delivery meter, three promises, and tabs (description, size and materials, care, delivery and returns). On phones the gallery swipes and a bar with the colour, price and button appears after the main button scrolls away. |
-| `sections/sl-product-scale.liquid` | "Tā izskatās valkājot": a large photo of the piece being worn, with its measurements. Hidden when the product has no such photo. |
-| `sections/sl-product-pair.liquid` | "Valkā kopā": the product's complementary products (Search & Discovery app) or ones picked in the editor, then the care product. Each row can be added to the cart from the page. |
+| `templates/product.json` | The default product template: the sections below plus the theme's existing `sl-store`. |
+| `sections/sl-product.liquid` | The product itself. The photos scroll while the buy box stays in place. The buy box holds the title, the one-line summary, app blocks (for example Judge.me stars), the price, key facts, the variant picker with stock, the button, the free-delivery meter, the three promises and the tabs. On phones there's a swipe gallery and a sticky add-to-cart bar. |
+| `sections/sl-product-scale.liquid` | The true-size section: a photo of it being worn, or the drawing to scale. |
+| `sections/sl-product-pair.liquid` | "Sader kopā": complementary products, or Shopify's recommendations, then the care product. Rows can be added to the cart in place. |
 | `sections/sl-quote.liquid` | One real review set as a letter, plus up to three short ones. |
-| `snippets/sl-pair-row.liquid` | One row of "Valkā kopā". |
-| `assets/sl-product.css`, `assets/sl-product.js` | Styles and behaviour for all of the above. Without the script, the form still adds the chosen default variant to the cart. |
-| `templates/product.sl.json` | An alternate product template using these sections plus the theme's existing `sl-store` section. |
+| `snippets/sl-product-facts.liquid` | Reads size, material, claims and care from a product. It uses only plain string operations, so each rule can be read and changed. |
+| `snippets/sl-product-media.liquid`, `snippets/sl-pair-row.liquid` | One gallery square; one "Sader kopā" row. |
+| `assets/sl-product.css`, `assets/sl-product.js` | Styles and behaviour. Without the script, the form still adds the chosen variant to the cart. |
 
-The template is called `product.sl`, so **no live product changes until it's assigned to one**. In Shopify admin, open a product, go to *Theme template*, and choose `sl`.
+## Install
 
-## 1. Install
-
-The files go into the existing theme, next to the other `sl-` files. None replaces an existing file.
+Because `product.json` is the default template, **installing it changes every product page at once**. Do it on a copy first.
 
 1. Duplicate the live theme ("Impulse – fiksētā kartīte (draft)") under *Online Store → Themes*.
-2. On the copy, choose *Edit code* and add the seven files under the same folder names.
-3. Open the copy's theme editor on a product, switch the template to `sl`, and check it.
-4. Assign the `sl` template to one product (Calypso), then to more as their metafields are filled in.
-5. Publish the copy, or copy the same seven files into the live theme.
+2. On the copy, choose *Edit code* and add the files above, replacing `templates/product.json`. Everything else is a new file.
+3. Preview the copy on a few very different products: one with many colours, a one-photo brooch, a bracelet, a ring and a sold-out piece.
+4. Publish the copy. The live theme stays untouched as the way back.
 
-## 2. The cart
+Products that use another template (`product.gift-card`, `product.high-variant`, `product.preorder`, …) keep it.
 
-- The theme's cart type is currently **page**. With a page cart, adding a piece shows a short confirmation under the button ("… pievienots grozam · Uz grozu"), and the visitor stays on the page where "Valkā kopā" can do its job.
-- If the theme's cart type is switched to **drawer** (*Theme settings → Cart*), the section uses the theme's own drawer instead. It sends the same `ajaxProduct:added` event the theme listens for.
+## The cart
+
+- The theme's cart type is currently **page**. With a page cart, adding a piece shows a short confirmation under the button and the visitor stays on the page.
+- If the theme is switched to **drawer**, the theme's own drawer opens instead. The section sends the same `ajaxProduct:added` event the theme listens for.
 - The header cart badge updates either way.
 
-## 3. Metafields to create
+## Making it better over time (optional)
 
-These are under *Settings → Custom data → Products*, namespace `custom`. Every one is optional. Anything empty is simply left out of the page.
+Nothing here is needed for the page to work. Each item just improves what a product shows.
 
-| Key | Type | Shown as | Calypso, for example |
-| --- | --- | --- | --- |
-| `subtitle` | Single line text | The line under the title | Gari auskari ar dabīgu pērli vai kristālu |
-| `length_mm` | Integer | Key facts, size tab, worn section | 61 |
-| `width_mm` | Integer | Key facts, size tab, worn section | 14 |
-| `plating` | Single line text | Key facts (in place of material), size tab | 14 karātu zeltījums |
-| `stone` | Single line text | Key facts, size tab | Dabīga pērle vai kristāls |
-| `water_resistant` | True or false | "Ūdensizturīga" in key facts | (the steel range) |
-| `hypoallergenic` | True or false | "Hipoalerģiska" in key facts | (the steel range) |
-| `care` | Rich text | Care tab (else the section's text) | |
-| `on_body_image` | File (image) | The worn section's photograph | the on-ear photo |
-| `scale_heading` | Single line text | The worn section's heading | Tie sniedzas līdz žokļa līnijai |
-| `story` | Multi-line text | The worn section's text | Nosaukti jūras nimfas Kalipso vārdā… |
+- **Size lines in descriptions** ("Izmērs: 4 × 3 cm" or "Garums: 61 mm") give a product its true-size drawing and a size in the key facts.
+- **Metafields** under *Settings → Custom data → Products*, namespace `custom`, override what the description says:
+  - `subtitle` (single line text)
+  - `length_mm`, `width_mm` (integer)
+  - `plating`, `stone` (single line text)
+  - `care` (rich text)
+  - `water_resistant`, `hypoallergenic` (true or false)
+  - `on_body_image` (file), for the photo of it being worn
+  - `story` (multi-line text)
+- **Complementary products** in the Search & Discovery app replace Shopify's automatic recommendations with hand-picked ones.
+- **The old metafields.** The existing `custom.material` and `custom.earring_closure` are used only where a description says nothing. Some hold wrong values (Calypso says "Juveliertērauds", stainless steel), so they're worth correcting.
 
-**`material` and `earring_closure` already exist and are used as they are.** Fix them first. They currently say "Juveliertērauds" and "Stud" on Calypso, and with today's data that is what the key facts line shows:
-
-![buy box with today's data](screenshots/buy-box-with-todays-data.jpg)
-
-"Valkā kopā" reads the Search & Discovery app's **complementary products**. Fill those for the pieces you want to sell together. Until then it shows only the care cloth, in a compact layout without the photo.
-
-## 4. Settings worth knowing
-
-The product section has these settings:
-- Gallery length (default 6).
-- Which option names become photo tiles (default "Color, Colour, Krāsa, Akmens").
-- How far the tiles zoom in on the stone.
-- From what number "Palikuši tikai [count]" appears.
-- The free-delivery threshold (default €50; 0 hides the meter).
-- The three promises.
-- The care product.
-- The delivery text and page.
-
-All the visible wording is editable there too.
-
-Sold-out variants offer "Paziņot, kad atkal būs pieejams", which opens an email to the shop. A back-in-stock app can take its place later.
-
-## 5. How it was checked
+## How it was checked
 
 - **Theme Check** (`shopify theme check`): 0 offenses.
-- **Rendering and browser test:**
-  - **Setup:**
-    - The template was rendered with LiquidJS and Shopify-style filters, using each product's public storefront JSON.
-    - The result was spliced into a saved copy of the live product page, so it ran with the real `theme.css`, `theme.js`, header and footer.
-    - The cart endpoints were mocked.
-  - **Products tested:**
-    - Calypso (12 colours, 5 sold out).
-    - A Kalliope product (Latvian "Krāsa" option, no metafields).
-    - The Moonlit Arch Ring (one variant, a video).
-    - Calypso with today's metafields.
-    - Calypso with complementary products set.
-  - **What was checked:**
-    - Price, stock line and photo follow the chosen colour, and so does `?variant=`.
-    - Sold-out colours disable the button and offer the notify link.
-    - Add to cart shows the confirmation and updates the header badge and the delivery meter.
-    - A "Valkā kopā" row adds to the cart, and the meter reaches free delivery.
+- **The facts parser, on all 278 published products.** The rules were first written as a Python prototype limited to what Liquid can do. The Liquid snippet gives identical results on **278 of 278** products.
+- **The whole template, on all 278 products.** Each was rendered with LiquidJS and Shopify-style filters from the store's public `products.json`, and all 278 rendered without an error.
+- **In a browser**, inside a saved copy of the live product page with the real `theme.css`, `theme.js`, header and footer, and with the cart and recommendations endpoints mocked.
+  - **Products:** Calypso (12 colours, 5 sold out), a brooch, a bracelet, an adjustable ring, a Kalliope earring, and a sold-out necklace.
+  - **Behaviour checked:**
+    - Price, stock line, photo and `?variant=` follow the chosen colour.
+    - Sold-out variants offer the notify link.
+    - Adding to the cart updates the badge and the delivery meter.
+    - "Sader kopā" swaps in Shopify's recommendations when there are any and keeps the care cloth when there are none.
     - Arrow keys move through the colours.
     - The phone bar appears after the button and steps aside at the footer.
     - No sideways scroll at 1440px or 390px, and no script errors.
-- **Not yet checked on Shopify itself.** That needs the files uploaded to an unpublished copy of the theme.
+- **Not yet checked on Shopify itself.** That needs the files on an unpublished copy of the theme.

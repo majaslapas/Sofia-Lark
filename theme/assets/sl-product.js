@@ -375,6 +375,26 @@
     });
   }
 
+  /* Products with nothing set up ask Shopify for its own recommendations once the page has
+     loaded, and the section takes their place when there are any. */
+  function recommend(el) {
+    var url = el.dataset.slRecommend;
+    if (!url) return;
+    el.removeAttribute('data-sl-recommend');
+    fetch(url)
+      .then(function (r) { return r.ok ? r.text() : ''; })
+      .then(function (text) {
+        if (!text) return;
+        var next = new DOMParser().parseFromString(text, 'text/html').querySelector('[data-sl-pair]');
+        if (!next || !next.querySelector('[data-sl-pair-row]')) return;
+        if (next.querySelectorAll('[data-sl-pair-row]').length <= el.querySelectorAll('[data-sl-pair-row]').length) return;
+        next.removeAttribute('data-sl-recommend');
+        el.replaceWith(next);
+        init(next.parentNode);
+      })
+      .catch(function () {});
+  }
+
   /* ---------- entrances: heading, then text, then picture ---------- */
 
   function rise(scope) {
@@ -404,6 +424,7 @@
       if (el.slPair) return;
       el.slPair = true;
       Pair(el);
+      recommend(el);
     });
     rise(scope);
   }

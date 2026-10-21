@@ -4,7 +4,6 @@
       "type": "sl-product",
       "settings": {
         "max_media": 6,
-        "swatch_options": "Color, Colour, Krāsa, Akmens",
         "swatch_zoom": 150,
         "tax_note": "Nodoklis iekļauts",
         "low_stock": 3,
@@ -31,8 +30,8 @@
       "type": "sl-product-scale",
       "settings": {
         "heading": "Tā izskatās valkājot",
-        "text": "",
-        "count_label": "krāsas",
+        "heading_drawn": "Īstais izmērs",
+        "text_drawn": "Rota mērogā blakus 1 eiro monētai, lai izmērs nebūtu jāiedomājas.",
         "choose_label": "Izvēlēties",
         "visit_label": "Pielaikot veikalā",
         "visit_link": "/pages/sofia-lark-veikals"
@@ -41,8 +40,8 @@
     "pair": {
       "type": "sl-product-pair",
       "settings": {
-        "heading": "Valkā kopā",
-        "text": "Rotas, kas sader ar šo, un viss, kas vajadzīgs to kopšanai.",
+        "heading": "Sader kopā",
+        "text": "Rotas, kas labi izskatās kopā ar šo, un viss, kas vajadzīgs to kopšanai.",
         "limit": 3,
         "care_product": "silver-cleaning-cloth"
       }

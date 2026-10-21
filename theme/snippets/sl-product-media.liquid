@@ -1,0 +1,18 @@
+{%- comment -%}
+  One square of the product gallery: a photograph, a looping video, or an external video.
+  Accepts: media, wide (true for a full-width square), alt.
+{%- endcomment -%}
+<figure class="sl-p__media{% if wide %} sl-p__media--wide{% endif %}">
+  {%- case media.media_type -%}
+    {%- when 'video' -%}
+      {{- media | video_tag: image_size: '1200x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'sl-p__img' -}}
+    {%- when 'external_video' -%}
+      {{- media | external_video_tag: class: 'sl-p__img sl-p__img--frame' -}}
+    {%- else -%}
+      {%- if wide -%}
+        {{- media.preview_image | image_url: width: 1600 | image_tag: widths: '600, 800, 1000, 1200, 1600', sizes: '(min-width: 990px) 56vw, 88vw', loading: 'lazy', alt: alt, class: 'sl-p__img' -}}
+      {%- else -%}
+        {{- media.preview_image | image_url: width: 1000 | image_tag: widths: '400, 600, 800, 1000', sizes: '(min-width: 990px) 28vw, 88vw', loading: 'lazy', alt: alt, class: 'sl-p__img' -}}
+      {%- endif -%}
+  {%- endcase -%}
+</figure>

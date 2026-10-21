@@ -1,12 +1,12 @@
 {%- comment -%}
   Sofia Lark product page: the photographs scroll on the left while the buy box stays put.
   The buy box answers, in order: what it is, what it costs, how big and what it is made of,
-  which colour (every colour as its own photograph, with what is left of it), and what happens
-  after you buy (free delivery from the threshold, pickup in Rīga, returns, gift packaging).
-  Facts come from product metafields (custom.length_mm, width_mm, plating, stone, material,
-  earring_closure, water_resistant, hypoallergenic, subtitle, care); anything empty is left out.
-  sl-product.js adds the variant picker, the cart and the phone bar; without it the form still
-  adds the first available variant to the cart.
+  which variant (as photographs when every variant has its own), what is left of it, and what
+  happens after you buy (free delivery from the threshold, pickup in Rīga, returns, packaging).
+  It works for every product as it is: the facts are read from the description by
+  sl-product-facts (metafields win when they are filled), and every part that has nothing to
+  show is left out. sl-product.js adds the variant picker, the cart and the phone bar; without
+  it the form still adds the chosen variant to the cart.
 {%- endcomment -%}
 {{ 'sl-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'sl-product.js' | asset_url }}" defer="defer"></script>
@@ -15,15 +15,134 @@
   assign sid = 'SlProduct-' | append: section.id
   assign form_id = 'SlProductForm-' | append: section.id
   assign current = product.selected_or_first_available_variant
-  assign mf = product.metafields.custom
   assign free_cents = section.settings.free_shipping | times: 100
-  assign swatch_names = section.settings.swatch_options | downcase | split: ','
-
   assign lead = current.featured_media | default: product.featured_media
 
-  comment
-    Media attached to a variant are shown through the colour tray, not repeated in the gallery.
-  endcomment
+  # ---------- facts: size, material and promises, from sl-product-facts ----------
+  capture facts_raw
+    render 'sl-product-facts', product: product
+  endcapture
+  assign fr = '§' | append: facts_raw
+  assign f_keys = 'subtitle,size,length,width,diameter,material,plating,stone,color,closure,weight,features,handmade,care' | split: ','
+  for k in f_keys
+    assign needle = '§' | append: k | append: '¦'
+    assign val = ''
+    if fr contains needle
+      assign parts = fr | split: needle
+      assign val = parts[1] | split: '§' | first | strip
+    endif
+    case k
+      when 'subtitle'
+        assign f_subtitle = val
+      when 'size'
+        assign f_size = val
+      when 'length'
+        assign f_length = val
+      when 'width'
+        assign f_width = val
+      when 'diameter'
+        assign f_diameter = val
+      when 'material'
+        assign f_material = val
+      when 'plating'
+        assign f_plating = val
+      when 'stone'
+        assign f_stone = val
+      when 'color'
+        assign f_color = val
+      when 'closure'
+        assign f_closure = val
+      when 'weight'
+        assign f_weight = val
+      when 'features'
+        assign f_features = val
+      when 'handmade'
+        assign f_handmade = val
+      when 'care'
+        assign f_care = val
+    endcase
+  endfor
+  assign f_water = false
+  assign f_tarnish = false
+  assign f_hypo = false
+  assign f_greece = false
+  if fr contains '§flag¦water§'
+    assign f_water = true
+  endif
+  if fr contains '§flag¦tarnish§'
+    assign f_tarnish = true
+  endif
+  if fr contains '§flag¦hypo§'
+    assign f_hypo = true
+  endif
+  if fr contains '§flag¦greece§'
+    assign f_greece = true
+  endif
+
+  # the size as one short phrase: "61 × 14 mm", "5 × 5 cm", "Garums 48 cm + 6 cm"
+  assign dims = ''
+  if f_length != '' and f_width != ''
+    assign l_unit = f_length | slice: -2, 2
+    assign w_unit = f_width | slice: -2, 2
+    assign l_part = f_length
+    if l_unit == w_unit
+      assign l_part = f_length | remove_last: l_unit | strip
+    endif
+    assign dims = l_part | append: ' × ' | append: f_width
+  elsif f_size != ''
+    assign dims = f_size
+  elsif f_length != ''
+    assign dims = 'Garums ' | append: f_length
+  elsif f_diameter != ''
+    assign dims = 'Ø ' | append: f_diameter
+  endif
+  if dims != ''
+    assign dims = dims | replace: ' X ', ' × ' | replace: ' x ', ' × ' | replace: 'X', ' × ' | replace: 'x', ' × ' | replace: 'cm', ' cm' | replace: 'mm', ' mm' | replace: '  ', ' ' | replace: '  ', ' ' | strip
+  endif
+  # a size with no number is a ring that adjusts ("regulējams", "Adjustable") or a note to
+  # drop ("Lūdzu norādiet izmēru"); a bare number is a ring size ("18")
+  if dims != ''
+    assign dims_digit = false
+    for dg in (0..9)
+      assign dg_s = dg | append: ''
+      if dims contains dg_s
+        assign dims_digit = true
+        break
+      endif
+    endfor
+    assign dims_low = dims | downcase
+    if dims_digit == false
+      if dims_low contains 'regul' or dims_low contains 'adjust'
+        assign dims = 'Regulējams izmērs'
+      else
+        assign dims = ''
+      endif
+    elsif dims.size <= 3
+      assign dims = 'Izmērs ' | append: dims
+    endif
+  endif
+
+  # the metal in a few words: the first clause, capitalised, at most 44 characters
+  assign finish = f_plating | default: f_material
+  if finish != ''
+    assign finish = finish | split: ';' | first | replace: ',', ', ' | replace: ' ,', ',' | replace: '  ', ' ' | replace: '  ', ' ' | strip | truncate: 44, '…'
+    assign finish_end = finish | slice: -1
+    if finish_end == '.'
+      assign finish = finish | remove_last: '.' | strip
+    endif
+    assign first_letter = finish | slice: 0 | upcase
+    assign rest = finish | slice: 1, 60
+    assign finish = first_letter | append: rest
+  endif
+
+  assign has_specs = false
+  if f_size != '' or f_length != '' or f_width != '' or f_diameter != '' or f_material != '' or f_plating != '' or f_stone != '' or f_color != '' or f_closure != '' or f_weight != '' or f_features != '' or f_water or f_tarnish or f_hypo or f_greece
+    assign has_specs = true
+  endif
+
+  # ---------- gallery ----------
+  # Media attached to a variant are shown through the photo tiles. A product with few photos of
+  # its own fills the gallery with its variant photos instead, so it never looks empty.
   assign variant_media = ','
   if product.variants.size > 1
     for v in product.variants
@@ -32,44 +151,50 @@
       endif
     endfor
   endif
-
-  assign length = mf.length_mm.value
-  assign width = mf.width_mm.value
-  assign plating = mf.plating.value
-  assign material = mf.material.value
-  assign stone = mf.stone.value
-  assign closure = mf.earring_closure.value | join: ', '
-  assign finish = plating | default: material
-
-  assign has_specs = false
-  if length != blank or width != blank or material != blank or plating != blank or stone != blank or closure != blank or mf.water_resistant.value or mf.hypoallergenic.value
-    assign has_specs = true
-  endif
-
-  comment
-    Count what the gallery will show, so a last photograph that would sit alone in a half-width
-    slot takes the full width instead of leaving a hole beside it.
-  endcomment
-  assign total = 0
-  if lead
-    assign total = 1
-  endif
+  assign own_count = 0
+  assign var_count = 0
   for media in product.media
-    if total >= section.settings.max_media
-      break
-    endif
     if lead and media.id == lead.id
       continue
     endif
     assign key = ',' | append: media.id | append: ','
     if variant_media contains key
-      continue
+      assign var_count = var_count | plus: 1
+    else
+      assign own_count = own_count | plus: 1
     endif
-    assign total = total | plus: 1
   endfor
+  assign base = 0
+  if lead
+    assign base = 1
+  endif
+  assign room = section.settings.max_media | minus: base
+  assign own_shown = own_count
+  if own_shown > room
+    assign own_shown = room
+  endif
+  assign var_shown = 0
+  assign so_far = base | plus: own_shown
+  if so_far < 4
+    assign var_shown = section.settings.max_media | minus: so_far
+    if var_shown > var_count
+      assign var_shown = var_count
+    endif
+  endif
+  assign total = so_far | plus: var_shown
+
+  # ---------- breadcrumb: the collection the visitor came from, or the product's own ----------
+  assign crumb = collection
+  if crumb == blank
+    for c in product.collections
+      if c.handle != 'all' and c.handle != 'frontpage'
+        assign crumb = c
+        break
+      endif
+    endfor
+  endif
 
   assign gallery_sizes = '(min-width: 990px) 56vw, 88vw'
-  assign gallery_sizes_half = '(min-width: 990px) 28vw, 88vw'
 -%}
 
 <section
@@ -83,8 +208,8 @@
   <div class="page-width">
     <nav class="sl-p__crumbs" aria-label="Atrašanās vieta">
       <a href="{{ routes.root_url }}">Sākums</a>
-      {%- if collection != blank -%}
-        <span aria-hidden="true">/</span><a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+      {%- if crumb != blank -%}
+        <span aria-hidden="true">/</span><a href="{{ crumb.url }}">{{ crumb.title | escape }}</a>
       {%- endif -%}
       <span aria-hidden="true">/</span><span aria-current="page">{{ product.title | escape }}</span>
     </nav>
@@ -113,45 +238,57 @@
             </figure>
           {%- endif -%}
 
-          {%- for media in product.media -%}
-            {%- if shown >= section.settings.max_media -%}{%- break -%}{%- endif -%}
-            {%- if lead and media.id == lead.id -%}{%- continue -%}{%- endif -%}
-            {%- assign key = ',' | append: media.id | append: ',' -%}
-            {%- if variant_media contains key -%}{%- continue -%}{%- endif -%}
-            {%- assign shown = shown | plus: 1 -%}
-            {%- liquid
-              assign wide = false
+          {%- liquid
+            assign own_done = 0
+            for media in product.media
+              if own_done >= own_shown
+                break
+              endif
+              if lead and media.id == lead.id
+                continue
+              endif
+              assign key = ',' | append: media.id | append: ','
+              if variant_media contains key
+                continue
+              endif
+              assign own_done = own_done | plus: 1
+              assign shown = shown | plus: 1
               assign position = shown | modulo: 3
+              assign wide = false
               if position == 1
                 assign wide = true
               elsif position == 2 and shown == total
                 assign wide = true
               endif
               assign alt = media.alt | default: product.title | escape
-            -%}
-            <figure class="sl-p__media{% if wide %} sl-p__media--wide{% endif %}">
-              {%- case media.media_type -%}
-                {%- when 'video' -%}
-                  {{- media | video_tag:
-                    image_size: '1200x',
-                    autoplay: true,
-                    loop: true,
-                    muted: true,
-                    controls: false,
-                    playsinline: true,
-                    class: 'sl-p__img'
-                  -}}
-                {%- when 'external_video' -%}
-                  {{- media | external_video_tag: class: 'sl-p__img sl-p__img--frame' -}}
-                {%- else -%}
-                  {%- if wide -%}
-                    {{- media.preview_image | image_url: width: 1600 | image_tag: widths: '600, 800, 1000, 1200, 1600', sizes: gallery_sizes, loading: 'lazy', alt: alt, class: 'sl-p__img' -}}
-                  {%- else -%}
-                    {{- media.preview_image | image_url: width: 1000 | image_tag: widths: '400, 600, 800, 1000', sizes: gallery_sizes_half, loading: 'lazy', alt: alt, class: 'sl-p__img' -}}
-                  {%- endif -%}
-              {%- endcase -%}
-            </figure>
-          {%- endfor -%}
+              render 'sl-product-media', media: media, wide: wide, alt: alt
+            endfor
+
+            assign var_done = 0
+            for media in product.media
+              if var_done >= var_shown
+                break
+              endif
+              if lead and media.id == lead.id
+                continue
+              endif
+              assign key = ',' | append: media.id | append: ','
+              unless variant_media contains key
+                continue
+              endunless
+              assign var_done = var_done | plus: 1
+              assign shown = shown | plus: 1
+              assign position = shown | modulo: 3
+              assign wide = false
+              if position == 1
+                assign wide = true
+              elsif position == 2 and shown == total
+                assign wide = true
+              endif
+              assign alt = media.alt | default: product.title | escape
+              render 'sl-product-media', media: media, wide: wide, alt: alt
+            endfor
+          -%}
         </div>
         {%- if shown > 1 -%}
           <div class="sl-p__dots" data-sl-dots aria-hidden="true">
@@ -162,9 +299,18 @@
 
       {%- comment -%} ---------- buy box ---------- {%- endcomment -%}
       <div class="sl-p__buy" id="sl-buy">
-        <h1 class="sl-p__title">{{ product.title | escape }}</h1>
-        {%- if mf.subtitle.value != blank -%}
-          <p class="sl-p__subtitle">{{ mf.subtitle.value | escape }}</p>
+        <h1 class="sl-p__title{% if product.title.size > 34 %} sl-p__title--long{% endif %}">{{ product.title | escape }}</h1>
+        {%- if f_subtitle != '' -%}
+          <p class="sl-p__subtitle">{{ f_subtitle | escape }}</p>
+        {%- endif -%}
+
+        {%- assign rating = product.metafields.reviews.rating.value -%}
+        {%- assign rating_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+        {%- if rating != blank and rating_count > 0 -%}
+          <p class="sl-p__rating">
+            <span class="sl-p__stars" aria-hidden="true" style="--sl-rating: {{ rating.rating | divided_by: rating.scale_max | times: 100 }}%"></span>
+            <span>{{ rating.rating | round: 1 }} · {{ rating_count }} {% if rating_count == 1 %}atsauksme{% else %}atsauksmes{% endif %}</span>
+          </p>
         {%- endif -%}
 
         {%- for block in section.blocks -%}
@@ -185,16 +331,12 @@
         </div>
 
         {%- capture facts -%}
-          {%- if length != blank and width != blank -%}
-            <li><b>{{ length }} × {{ width }} mm</b></li>
-          {%- elsif length != blank -%}
-            <li><b>{{ length }} mm</b></li>
-          {%- endif -%}
-          {%- if finish != blank -%}<li>{{ finish | escape }}</li>{%- endif -%}
-          {%- if stone != blank -%}<li>{{ stone | escape }}</li>{%- endif -%}
-          {%- if closure != blank -%}<li>{{ closure | escape }}</li>{%- endif -%}
-          {%- if mf.water_resistant.value -%}<li>Ūdensizturīga</li>{%- endif -%}
-          {%- if mf.hypoallergenic.value -%}<li>Hipoalerģiska</li>{%- endif -%}
+          {%- if dims != '' -%}<li><b>{{ dims | escape }}</b></li>{%- endif -%}
+          {%- if finish != '' -%}<li>{{ finish | escape }}</li>{%- endif -%}
+          {%- if f_stone != '' -%}<li>{{ f_stone | truncate: 40, '…' | escape }}</li>{%- endif -%}
+          {%- if f_water -%}<li>Nemaina krāsu ūdenī</li>{%- elsif f_tarnish -%}<li>Nemaina krāsu</li>{%- endif -%}
+          {%- if f_hypo -%}<li>Hipoalerģiska</li>{%- endif -%}
+          {%- if f_greece -%}<li>Roku darbs, Grieķija</li>{%- endif -%}
         {%- endcapture -%}
         {%- if facts != blank -%}
           <ul class="sl-p__facts" role="list" aria-label="Galvenais">{{ facts }}</ul>
@@ -208,13 +350,27 @@
               {%- for option in product.options_with_values -%}
                 {%- liquid
                   assign opt_index = forloop.index0
-                  assign opt_name = option.name | downcase | strip
-                  assign visual = false
-                  for name in swatch_names
-                    assign n = name | strip
-                    if n == opt_name
-                      assign visual = true
+                  # photo tiles when every value of this option has a photograph of its own
+                  assign visual = true
+                  assign seen = ','
+                  for value in option.values
+                    assign value_media = nil
+                    for v in product.variants
+                      if v.options[opt_index] == value and v.featured_media
+                        assign value_media = v.featured_media
+                        break
+                      endif
+                    endfor
+                    if value_media == nil
+                      assign visual = false
+                      break
                     endif
+                    assign key = ',' | append: value_media.id | append: ','
+                    if seen contains key
+                      assign visual = false
+                      break
+                    endif
+                    assign seen = seen | append: value_media.id | append: ','
                   endfor
                 -%}
                 <fieldset class="sl-p__option{% if visual %} sl-p__option--tray{% endif %}" data-sl-option="{{ opt_index }}">
@@ -365,34 +521,51 @@
               <summary>Izmēri un materiāli</summary>
               <div class="sl-p__tab-body">
                 <dl class="sl-p__spec">
-                  {%- if length != blank -%}<dt>Garums</dt><dd>{{ length }} mm</dd>{%- endif -%}
-                  {%- if width != blank -%}<dt>Platums</dt><dd>{{ width }} mm</dd>{%- endif -%}
-                  {%- if material != blank -%}<dt>Materiāls</dt><dd>{{ material | escape }}</dd>{%- endif -%}
-                  {%- if plating != blank -%}<dt>Pārklājums</dt><dd>{{ plating | escape }}</dd>{%- endif -%}
-                  {%- if stone != blank -%}<dt>Akmens</dt><dd>{{ stone | escape }}</dd>{%- endif -%}
-                  {%- if closure != blank -%}<dt>Aizdare</dt><dd>{{ closure | escape }}</dd>{%- endif -%}
-                  {%- if mf.water_resistant.value -%}<dt>Ūdens</dt><dd>Nemaina krāsu saskarē ar ūdeni</dd>{%- endif -%}
-                  {%- if mf.hypoallergenic.value -%}<dt>Āda</dt><dd>Hipoalerģiska</dd>{%- endif -%}
+                  {%- if f_length != '' and f_width != '' -%}
+                    <dt>Izmērs</dt><dd>{{ dims | escape }}</dd>
+                  {%- else -%}
+                    {%- if f_size != '' -%}<dt>Izmērs</dt><dd>{{ f_size | escape }}</dd>{%- endif -%}
+                    {%- if f_length != '' -%}<dt>Garums</dt><dd>{{ f_length | escape }}</dd>{%- endif -%}
+                    {%- if f_width != '' -%}<dt>Platums</dt><dd>{{ f_width | escape }}</dd>{%- endif -%}
+                  {%- endif -%}
+                  {%- if f_diameter != '' -%}<dt>Diametrs</dt><dd>{{ f_diameter | escape }}</dd>{%- endif -%}
+                  {%- if f_material != '' -%}<dt>Materiāls</dt><dd>{{ f_material | escape }}</dd>{%- endif -%}
+                  {%- if f_plating != '' -%}<dt>Pārklājums</dt><dd>{{ f_plating | escape }}</dd>{%- endif -%}
+                  {%- if f_stone != '' -%}<dt>Akmens</dt><dd>{{ f_stone | escape }}</dd>{%- endif -%}
+                  {%- if f_color != '' -%}<dt>Krāsa</dt><dd>{{ f_color | escape }}</dd>{%- endif -%}
+                  {%- if f_closure != '' -%}<dt>Aizdare</dt><dd>{{ f_closure | escape }}</dd>{%- endif -%}
+                  {%- if f_weight != '' -%}<dt>Svars</dt><dd>{{ f_weight | escape }}</dd>{%- endif -%}
+                  {%- if f_features != '' -%}<dt>Īpašības</dt><dd>{{ f_features | escape }}</dd>{%- endif -%}
+                  {%- if f_water -%}
+                    <dt>Ūdens</dt><dd>Nemaina krāsu saskarē ar ūdeni</dd>
+                  {%- elsif f_tarnish -%}
+                    <dt>Laika gaitā</dt><dd>Nemaina krāsu</dd>
+                  {%- endif -%}
+                  {%- if f_hypo -%}<dt>Āda</dt><dd>Hipoalerģiska</dd>{%- endif -%}
+                  {%- if f_handmade != '' -%}
+                    <dt>Roku darbs</dt><dd>{{ f_handmade | escape }}</dd>
+                  {%- elsif f_greece -%}
+                    <dt>Roku darbs</dt><dd>Darināta ar rokām Grieķijā</dd>
+                  {%- endif -%}
                 </dl>
               </div>
             </details>
           {%- endif -%}
 
           {%- liquid
-            assign care = blank
-            if mf.care != blank
-              if mf.care.type == 'rich_text_field'
-                assign care = mf.care | metafield_tag
-              else
-                assign care = mf.care.value | escape | newline_to_br
-              endif
+            assign care = ''
+            assign mf_care = product.metafields.custom.care
+            if mf_care != blank and mf_care.type == 'rich_text_field'
+              assign care = mf_care | metafield_tag
+            elsif f_care != ''
+              assign care = '<p>' | append: f_care | append: '</p>'
             endif
           -%}
-          {%- if care != blank or section.settings.care != blank -%}
+          {%- if care != '' or section.settings.care != blank -%}
             <details class="sl-p__tab">
               <summary>Kopšana</summary>
               <div class="sl-p__tab-body rte">
-                {%- if care != blank -%}{{ care }}{%- else -%}{{ section.settings.care }}{%- endif -%}
+                {%- if care != '' -%}{{ care }}{%- else -%}{{ section.settings.care }}{%- endif -%}
                 {%- assign care_product = section.settings.care_product -%}
                 {%- if care_product != blank and care_product.id != product.id -%}
                   <p><a href="{{ care_product.url }}">{{ care_product.title | escape }}</a> · {{ care_product.price | money }}</p>
@@ -494,24 +667,17 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Size, material, plating, stone and closure come from the product's metafields (custom.length_mm, width_mm, material, plating, stone, earring_closure, water_resistant, hypoallergenic). Empty ones are left out. Add an app block (for example Judge.me stars) to show it under the title."
+      "content": "Works for every product without setup: size, material and promises (does not change colour, hypoallergenic, handmade) are read from lines such as \"Izmērs: 5 × 5 cm\" or \"Material: Stainless steel\" in the description. Filled product metafields (custom.subtitle, length_mm, width_mm, plating, stone, care) take their place. Add an app block (for example Judge.me stars) to show it under the title."
     },
     {
       "type": "range",
       "id": "max_media",
       "label": "Photographs in the gallery",
-      "info": "Colour photographs are shown through the colour tiles, so they are not repeated here.",
+      "info": "Variant photographs are shown through the photo tiles. A product with fewer than four photographs of its own fills the gallery with its variant photographs.",
       "min": 2,
       "max": 12,
       "step": 1,
       "default": 6
-    },
-    {
-      "type": "text",
-      "id": "swatch_options",
-      "label": "Options shown as photo tiles",
-      "info": "Option names, separated by commas. Other options are shown as words.",
-      "default": "Color, Colour, Krāsa, Akmens"
     },
     {
       "type": "range",

@@ -334,28 +334,10 @@
     }, { passive: true });
   };
 
-  /* ---------- "wear it with" rows ---------- */
+  /* ---------- "goes with": add a piece without leaving the page ---------- */
 
   function Pair(root) {
-    var photo = root.querySelector('[data-sl-pair-photo] img');
-    var rows = root.querySelectorAll('[data-sl-pair-row]');
-    function activate(row) {
-      rows.forEach(function (r) {
-        var on = r === row;
-        r.classList.toggle('is-active', on);
-        var head = r.querySelector('[data-sl-pair-head]');
-        if (head) head.setAttribute('aria-expanded', on ? 'true' : 'false');
-      });
-      if (photo && row.dataset.image) swapImage(photo, row.dataset.image, row.dataset.srcset, row.dataset.alt);
-    }
-    rows.forEach(function (row) {
-      var head = row.querySelector('[data-sl-pair-head]');
-      head.addEventListener('click', function () { activate(row); });
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        row.addEventListener('mouseenter', function () { activate(row); });
-      }
-      var form = row.querySelector('form');
-      if (!form) return;
+    root.querySelectorAll('[data-sl-pair-row] form').forEach(function (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var btn = form.querySelector('button');
@@ -395,6 +377,101 @@
       .catch(function () {});
   }
 
+  /* ---------- packaging film: plays silently while on screen, with a pause button ---------- */
+
+  /* The YouTube player script is loaded once, the first time a film comes near the screen. It is
+     waited for by polling rather than through onYouTubeIframeAPIReady, which the theme may own. */
+  var ytWaiting = [];
+  function withYouTube(cb) {
+    if (window.YT && window.YT.Player) return cb();
+    ytWaiting.push(cb);
+    if (ytWaiting.length > 1) return;
+    var s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(s);
+    var tries = 0;
+    var t = setInterval(function () {
+      if (window.YT && window.YT.Player) {
+        clearInterval(t);
+        ytWaiting.splice(0).forEach(function (f) { f(); });
+      } else if (++tries > 150) {
+        clearInterval(t); /* no YouTube: the cover picture stays */
+      }
+    }, 100);
+  }
+
+  function Film(root) {
+    var holder = root.querySelector('[data-sl-film-player]');
+    var toggle = root.querySelector('[data-sl-film-toggle]');
+    var video = holder.querySelector('video');
+    var yt = root.dataset.yt;
+    var start = Number(root.dataset.start) || 0;
+    var end = Number(root.dataset.end) || 0;
+    var player = null;
+    var wanted = !reduceMotion; /* the visitor's choice: play or stay paused */
+    var visible = false;
+
+    function playing(on) {
+      if (on) root.classList.add('is-started');
+      root.classList.toggle('is-playing', on);
+      toggle.setAttribute('aria-label', on ? 'Apturēt video' : 'Atskaņot video');
+    }
+    function apply() {
+      var go = wanted && visible;
+      if (video) {
+        if (go) video.play().then(function () { playing(true); }).catch(function () {});
+        else { video.pause(); playing(false); }
+      } else if (player && player.playVideo) {
+        if (go) player.playVideo(); else player.pauseVideo();
+      }
+    }
+    function build() {
+      if (player || !yt) return;
+      player = true;
+      var el = document.createElement('div');
+      holder.appendChild(el);
+      withYouTube(function () {
+        var vars = { autoplay: 0, mute: 1, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3, modestbranding: 1, playsinline: 1, rel: 0, start: start };
+        if (end > start) vars.end = end;
+        player = new window.YT.Player(el, {
+          videoId: yt,
+          host: 'https://www.youtube-nocookie.com',
+          playerVars: vars,
+          events: {
+            onReady: function (e) {
+              e.target.mute();
+              e.target.getIframe().setAttribute('tabindex', '-1');
+              e.target.getIframe().setAttribute('title', 'Video');
+              toggle.hidden = false;
+              apply();
+            },
+            onStateChange: function (e) {
+              var st = window.YT.PlayerState;
+              if (e.data === st.PLAYING) playing(true);
+              else if (e.data === st.PAUSED) playing(false);
+              else if (e.data === st.ENDED) { e.target.seekTo(start, true); e.target.playVideo(); }
+            }
+          }
+        });
+      });
+    }
+
+    if (video) toggle.hidden = false;
+    toggle.addEventListener('click', function () {
+      wanted = !root.classList.contains('is-playing');
+      build();
+      apply();
+    });
+
+    if (!('IntersectionObserver' in window)) { visible = true; if (wanted) build(); apply(); return; }
+    new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+      if (visible && wanted) build();
+      apply();
+    }, { rootMargin: '200px 0px' }).observe(root);
+    if (reduceMotion && yt) toggle.hidden = false;
+  }
+
   /* ---------- entrances: heading, then text, then picture ---------- */
 
   function rise(scope) {
@@ -425,6 +502,11 @@
       el.slPair = true;
       Pair(el);
       recommend(el);
+    });
+    scope.querySelectorAll('[data-sl-film]').forEach(function (el) {
+      if (el.slFilm) return;
+      el.slFilm = true;
+      Film(el);
     });
     rise(scope);
   }

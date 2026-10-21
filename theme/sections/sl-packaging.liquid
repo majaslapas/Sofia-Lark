@@ -1,0 +1,150 @@
+{%- comment -%}
+  Sofia Lark packaging: the short film of a piece being wrapped and boxed, framed beside a few
+  words about how every order is packed. The film plays silently in a loop while it is on screen
+  and has a pause button; with reduced motion it waits for a press.
+
+  The film is a video uploaded to Shopify when one is chosen, otherwise the YouTube link. A
+  YouTube film can be stopped before its end (to leave out closing titles) and starts from its
+  cover picture, which stays in place if YouTube cannot play.
+{%- endcomment -%}
+{%- liquid
+  assign sid = 'SlFilm-' | append: section.id
+  assign video = section.settings.video
+  assign yt_id = ''
+  if video == blank and section.settings.video_url != blank
+    if section.settings.video_url.type == 'youtube'
+      assign yt_id = section.settings.video_url.id
+    endif
+  endif
+  assign poster = section.settings.poster
+  if poster == blank and video != blank
+    assign poster = video.preview_image
+  endif
+-%}
+{{ 'sl-product.css' | asset_url | stylesheet_tag }}
+
+{%- if video != blank or yt_id != '' -%}
+<section class="sl-film" aria-labelledby="{{ sid }}-title" data-sl-film{% if yt_id != '' %} data-yt="{{ yt_id }}" data-start="{{ section.settings.start }}" data-end="{{ section.settings.end }}"{% endif %}>
+  <div class="page-width sl-film__inner">
+    <div class="sl-film__frame" data-sl-rise>
+      <div class="sl-film__player" data-sl-film-player>
+        {%- if video != blank -%}
+          {{- video | video_tag: muted: true, loop: true, playsinline: true, preload: 'none', class: 'sl-film__video', image_size: '1200x' -}}
+        {%- endif -%}
+      </div>
+      {%- if poster != blank -%}
+        {{- poster | image_url: width: 1400 | image_tag: widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 56vw, 100vw', loading: 'lazy', alt: '', class: 'sl-film__poster' -}}
+      {%- elsif yt_id != '' -%}
+        {%- # theme-check-disable RemoteAsset -%}
+        <img class="sl-film__poster" src="https://i.ytimg.com/vi/{{ yt_id }}/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720">
+        {%- # theme-check-enable RemoteAsset -%}
+      {%- endif -%}
+      <button type="button" class="sl-film__toggle" data-sl-film-toggle aria-label="Atskaņot video" hidden>
+        <span class="sl-film__icon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="sl-film__text">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sl-film__eyebrow" data-sl-rise>{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 id="{{ sid }}-title" class="sl-film__title" data-sl-rise style="--d: 60ms">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}
+        <div class="sl-film__body" data-sl-rise style="--d: 120ms">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.quote != blank -%}
+        <figure class="sl-film__quote" data-sl-rise style="--d: 180ms">
+          <blockquote><p>{{ section.settings.quote | escape }}</p></blockquote>
+          {%- if section.settings.quote_name != blank -%}<figcaption>{{ section.settings.quote_name | escape }}</figcaption>{%- endif -%}
+        </figure>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sofia Lark packaging film",
+  "tag": "div",
+  "class": "sl-film-section",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video uploaded to Shopify",
+      "info": "Used instead of the YouTube link when chosen. Plays without YouTube's buttons and branding."
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "YouTube link",
+      "accept": ["youtube"],
+      "default": "https://www.youtube.com/watch?v=hmWurPb8c2s"
+    },
+    {
+      "type": "range",
+      "id": "start",
+      "label": "YouTube: start at (seconds)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "end",
+      "label": "YouTube: loop back at (seconds)",
+      "info": "0 plays to the end. Set it to leave out closing titles.",
+      "min": 0,
+      "max": 120,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Cover picture",
+      "info": "Shown until the film plays. Leave empty to use the video's own."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Above the heading",
+      "default": "Iepakojums"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Katra rota skaisti iepakota"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Katru pasūtījumu iesaiņojam skaistā, dabai draudzīgā iepakojumā.</p>"
+    },
+    {
+      "type": "header",
+      "content": "A customer's words"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Review",
+      "info": "Only a real review, as it was written."
+    },
+    {
+      "type": "text",
+      "id": "quote_name",
+      "label": "Name"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sofia Lark packaging film"
+    }
+  ]
+}
+{% endschema %}

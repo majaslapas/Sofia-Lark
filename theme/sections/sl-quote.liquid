@@ -1,55 +1,71 @@
 {%- comment -%}
-  Sofia Lark customer letter: one real review given room to be read, set like a letter, with
-  two or three short ones beside it. Copy reviews in as they were written; only real ones.
+  Sofia Lark reviews: real customer reviews as an even grid of cards, with the store's overall
+  rating from Judge.me above them. Copy reviews in as they were written; only real ones.
+  The rating line reads Judge.me's shop metafields and is left out when they are missing.
 {%- endcomment -%}
 {{ 'sl-product.css' | asset_url | stylesheet_tag }}
-{%- assign sid = 'SlQuote-' | append: section.id -%}
+{%- liquid
+  assign sid = 'SlQuote-' | append: section.id
+  assign avg = shop.metafields.judgeme.all_reviews_rating.value | default: shop.metafields.judgeme.all_reviews_rating | plus: 0
+  assign total = shop.metafields.judgeme.all_reviews_count.value | default: shop.metafields.judgeme.all_reviews_count | plus: 0
+  assign avg_text = avg | round: 1 | append: '' | replace: '.', ','
+  assign avg_pct = avg | times: 20
+  # Latvian counts: 1, 21, 31 … atsauksme; 11 and the rest atsauksmes
+  assign word = 'atsauksmes'
+  assign last_digit = total | modulo: 10
+  assign last_two = total | modulo: 100
+  if last_digit == 1 and last_two != 11
+    assign word = 'atsauksme'
+  endif
+-%}
 
 <section class="sl-quote" aria-labelledby="{{ sid }}-title">
-  <div class="page-width sl-quote__inner">
+  <div class="page-width">
     <div class="sl-quote__head">
-      <h2 id="{{ sid }}-title" class="sl-quote__title" data-sl-rise>{{ section.settings.heading | escape }}</h2>
-      {%- if section.settings.text != blank -%}
-        <p class="sl-quote__intro" data-sl-rise style="--d: 80ms">{{ section.settings.text | escape }}</p>
-      {%- endif -%}
-      {%- if section.settings.link_label != blank and section.settings.link != blank -%}
-        <a class="sl-quote__link" href="{{ section.settings.link }}" data-sl-rise style="--d: 120ms">{{ section.settings.link_label | escape }}</a>
+      <div>
+        <h2 id="{{ sid }}-title" class="sl-quote__title" data-sl-rise>{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p class="sl-quote__intro" data-sl-rise style="--d: 80ms">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_summary and total > 0 and avg > 0 -%}
+        <p class="sl-quote__summary" data-sl-rise style="--d: 120ms">
+          <span class="sl-stars" aria-hidden="true" style="--sl-rating: {{ avg_pct }}%"></span>
+          <span><b>{{ avg_text }}</b> no 5 · {{ total }} {{ word }}</span>
+          {%- if section.settings.link_label != blank and section.settings.link != blank -%}
+            <a class="sl-quote__link" href="{{ section.settings.link }}">{{ section.settings.link_label | escape }}</a>
+          {%- endif -%}
+        </p>
       {%- endif -%}
     </div>
 
-    {%- if section.settings.letter != blank -%}
-      <blockquote class="sl-quote__letter" data-sl-rise style="--d: 120ms"{% if section.settings.letter_lang != blank %} lang="{{ section.settings.letter_lang }}"{% endif %}>
-        {%- assign paragraphs = section.settings.letter | newline_to_br | split: '<br />' -%}
-        {%- for p in paragraphs -%}
-          {%- assign line = p | strip -%}
-          {%- if line != blank -%}<p>{{ line | escape }}</p>{%- endif -%}
-        {%- endfor -%}
-        <footer class="sl-quote__sign">
-          {{ section.settings.name | escape }}
-          {%- if section.settings.role != blank -%}<span>{{ section.settings.role | escape }}</span>{%- endif -%}
-        </footer>
-      </blockquote>
-    {%- endif -%}
-
     {%- if section.blocks.size > 0 -%}
-      <div class="sl-quote__more">
+      <ul class="sl-quote__grid" role="list">
         {%- for block in section.blocks -%}
-          <blockquote class="sl-quote__short" data-sl-rise style="--d: {{ forloop.index0 | times: 80 }}ms" {{ block.shopify_attributes }}>
-            <p>{{ block.settings.text | escape }}</p>
-            <cite>{{ block.settings.name | escape }}</cite>
-          </blockquote>
+          <li class="sl-quote__card" data-sl-rise style="--d: {{ forloop.index0 | modulo: 3 | times: 80 }}ms" {{ block.shopify_attributes }}>
+            <figure>
+              <span class="sl-stars" role="img" aria-label="{{ block.settings.rating }} no 5" style="--sl-rating: {{ block.settings.rating | times: 20 }}%"></span>
+              <blockquote>
+                <p>{{ block.settings.text | escape }}</p>
+              </blockquote>
+              <figcaption>
+                {{ block.settings.name | escape }}
+                {%- if block.settings.about != blank -%}<span>{{ block.settings.about | escape }}</span>{%- endif -%}
+              </figcaption>
+            </figure>
+          </li>
         {%- endfor -%}
-      </div>
+      </ul>
     {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Sofia Lark review letter",
+  "name": "Sofia Lark reviews",
   "tag": "div",
   "class": "sl-quote-section",
-  "max_blocks": 3,
+  "max_blocks": 6,
   "settings": [
     {
       "type": "text",
@@ -64,6 +80,12 @@
       "default": "Atsauksmes par Sofia Lark rotām un veikalu."
     },
     {
+      "type": "checkbox",
+      "id": "show_summary",
+      "label": "Show the overall rating from Judge.me",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "link_label",
       "label": "Link label",
@@ -73,53 +95,23 @@
       "type": "url",
       "id": "link",
       "label": "Link"
-    },
-    {
-      "type": "header",
-      "content": "The letter"
-    },
-    {
-      "type": "textarea",
-      "id": "letter",
-      "label": "Review",
-      "info": "The first line is set large. Start a new line for each paragraph."
-    },
-    {
-      "type": "text",
-      "id": "name",
-      "label": "Name"
-    },
-    {
-      "type": "text",
-      "id": "role",
-      "label": "Below the name",
-      "default": "Sofia Lark kliente"
-    },
-    {
-      "type": "select",
-      "id": "letter_lang",
-      "label": "Language of the review",
-      "options": [
-        { "value": "", "label": "Latvian" },
-        { "value": "en", "label": "English" },
-        { "value": "ru", "label": "Russian" }
-      ],
-      "default": ""
     }
   ],
   "blocks": [
     {
       "type": "quote",
-      "name": "Short review",
+      "name": "Review",
       "settings": [
         { "type": "textarea", "id": "text", "label": "Review" },
-        { "type": "text", "id": "name", "label": "Name" }
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "about", "label": "About", "info": "What was bought, for example: par auskariem Iliad" },
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Sofia Lark review letter"
+      "name": "Sofia Lark reviews"
     }
   ]
 }

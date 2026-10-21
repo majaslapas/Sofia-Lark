@@ -1,13 +1,13 @@
 {%- comment -%}
-  Sofia Lark "goes with": one photograph that stays in place beside a short list of pieces that
-  go with this one. Choosing a row opens its line of description, shows its photograph and
-  offers to add it to the cart (pieces with more than one variant link to their own page).
+  Sofia Lark "goes with": a row of pieces that go with this one, each with its photograph, name,
+  price and a button to add it to the cart (pieces with more than one variant link to their own
+  page to choose).
 
-  Works for every product without setup. The list is, in order: the product's complementary
+  Works for every product without setup. The pieces are, in order: the product's complementary
   products (Search & Discovery app), or the ones picked here, or else Shopify's own product
   recommendations for it, fetched after the page loads; the care product always comes last, so a
   small order can reach free delivery. When Shopify renders this section for its recommendations
-  endpoint, `recommendations` is filled and the rows come from it.
+  endpoint, `recommendations` is filled and the pieces come from it.
 {%- endcomment -%}
 {%- liquid
   assign sid = 'SlPair-' | append: section.id
@@ -40,36 +40,28 @@
   assign count = 0
 -%}
 
-{%- capture rows -%}
+{%- capture cards -%}
   {%- for item in list -%}
     {%- if count >= max -%}{%- break -%}{%- endif -%}
     {%- assign key = ',' | append: item.id | append: ',' -%}
     {%- if ids contains key or item.available == false -%}{%- continue -%}{%- endif -%}
     {%- assign ids = ids | append: item.id | append: ',' -%}
     {%- assign count = count | plus: 1 -%}
-    {%- assign row_id = sid | append: '-' | append: count -%}
-    {%- render 'sl-pair-row', item: item, row_id: row_id -%}
+    {%- render 'sl-pair-card', item: item -%}
   {%- endfor -%}
   {%- if care != blank and care.available and care.id != product.id -%}
     {%- assign count = count | plus: 1 -%}
-    {%- assign row_id = sid | append: '-care' -%}
-    {%- render 'sl-pair-row', item: care, row_id: row_id -%}
+    {%- render 'sl-pair-card', item: care -%}
   {%- endif -%}
 {%- endcapture -%}
 
 {%- liquid
-  # the photograph: the one picked here, or the first piece on the list
-  assign photo = section.settings.image
-  if photo == blank
-    for item in list
-      if item.featured_media
-        assign photo = item.featured_media.preview_image
-        break
-      endif
-    endfor
-  endif
-  if photo == blank and care != blank
-    assign photo = care.featured_media.preview_image
+  # four across at most; fewer pieces keep their width and sit at the start
+  assign cols = count
+  if cols > 4
+    assign cols = 4
+  elsif cols < 3
+    assign cols = 3
   endif
   assign url = ''
   if mode == 'fetch' and product
@@ -79,26 +71,20 @@
 
 {{ 'sl-product.css' | asset_url | stylesheet_tag }}
 <section
-  class="sl-pair{% if count < 2 %} sl-pair--single{% endif %}"
+  class="sl-pair"
   data-sl-pair
   {% if url != '' %}data-sl-recommend="{{ url }}"{% endif %}
   {% if count == 0 %}hidden{% endif %}
   aria-labelledby="{{ sid }}-title"
 >
-  <div class="page-width sl-pair__inner">
-    {%- if count > 1 and photo -%}
-      <figure class="sl-pair__photo" data-sl-pair-photo data-sl-rise>
-        {%- assign photo_alt = photo.alt | default: section.settings.heading | escape -%}
-        {{- photo | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '(min-width: 990px) 40vw, 100vw', loading: 'lazy', alt: photo_alt, class: 'sl-pair__img' -}}
-      </figure>
-    {%- endif -%}
-    <div class="sl-pair__list">
+  <div class="page-width">
+    <div class="sl-pair__head">
       <h2 id="{{ sid }}-title" class="sl-pair__title" data-sl-rise>{{ section.settings.heading | escape }}</h2>
       {%- if section.settings.text != blank -%}
         <p class="sl-pair__intro" data-sl-rise style="--d: 80ms">{{ section.settings.text | escape }}</p>
       {%- endif -%}
-      <ul class="sl-pair__rows" role="list">{{ rows }}</ul>
     </div>
+    <ul class="sl-pair__grid" role="list" style="--sl-cols: {{ cols }}">{{ cards }}</ul>
   </div>
 </section>
 
@@ -135,8 +121,9 @@
       "type": "range",
       "id": "limit",
       "label": "Pieces to show",
+      "info": "The care product comes on top of these.",
       "min": 1,
-      "max": 5,
+      "max": 7,
       "step": 1,
       "default": 3
     },
@@ -145,12 +132,6 @@
       "id": "care_product",
       "label": "Care product, always last",
       "info": "For example the jewellery care cloth."
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Photograph",
-      "info": "Leave empty to use the first piece's photograph."
     }
   ],
   "presets": [

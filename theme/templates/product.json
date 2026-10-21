@@ -38,34 +38,74 @@
     "letter": {
       "type": "sl-quote",
       "blocks": {
-        "quote_1": {
+        "review_1": {
           "type": "quote",
           "settings": {
-            "text": "Ļoti skaistas rotas, kvalitāte super un ātra piegāde.",
-            "name": "Kristine Derikaftanova"
+            "text": "Es biju nedaudz skeptiska par pasūtījumu tiešsaistē, bet esmu ļoti apmierināta ar to, ko saņēmu. Pasūtījums bija ļoti ātri izpildīts, un rokassprādze ir pat skaistāka nekā attēlā. Es noteikti ieteiktu šo veikalu!",
+            "name": "Elizabete",
+            "rating": 5,
+            "about": "par rokassprādzi"
           }
         },
-        "quote_2": {
+        "review_2": {
           "type": "quote",
           "settings": {
-            "text": "The simple design and beautiful pearls make it look like a true heirloom piece, but it's also modern and versatile enough to wear with any outfit.",
-            "name": "Alex, par aproci Nimfa"
+            "text": "Es jau esmu saņēmusi daudz komplimentu. Auskari patiesi izceļas un man tik ļoti patīk!",
+            "name": "Antra",
+            "rating": 5,
+            "about": "par auskariem Iliad"
+          }
+        },
+        "review_3": {
+          "type": "quote",
+          "settings": {
+            "text": "Gredzeni ļoti kvalitatīvi un rūpīgi, un skaisti. Valkāju jau krietnu laiku, mirdz un laistās.",
+            "name": "Baiba Siņicina",
+            "rating": 4,
+            "about": "par gredzeniem no kolekcijas Simbioze"
+          }
+        },
+        "review_4": {
+          "type": "quote",
+          "settings": {
+            "text": "Es saņēmu savu pasūtījumu ļoti ātri, un viss bija kārtībā. Dzīvē pat skaistāki kā bildē.",
+            "name": "Nora",
+            "rating": 5
+          }
+        },
+        "review_5": {
+          "type": "quote",
+          "settings": {
+            "text": "Paldies, man ļoti patīk. Auskari ir lieli, bet ļoti viegli.",
+            "name": "Anna",
+            "rating": 5,
+            "about": "par auskariem Leaves in the Breeze"
+          }
+        },
+        "review_6": {
+          "type": "quote",
+          "settings": {
+            "text": "Nēsāju jau kādu laiku, krāsu nav mainījusi. Noteikti iesaku!",
+            "name": "Krista",
+            "rating": 5,
+            "about": "par rokassprādzi"
           }
         }
       },
       "block_order": [
-        "quote_1",
-        "quote_2"
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
       ],
       "settings": {
         "heading": "Ko saka klientes",
         "text": "Atsauksmes par Sofia Lark rotām un veikalu.",
+        "show_summary": true,
         "link_label": "",
-        "link": "",
-        "letter": "Sofia has wonderful statement pieces of jewellery.\nThe shipping was a bit slow as the order was sent out a week after it was placed but after that it was smooth sailing - fast delivery and very nice packaging as well.\nWill definitely order again.",
-        "name": "Madara Gulbe",
-        "role": "Sofia Lark kliente",
-        "letter_lang": "en"
+        "link": ""
       }
     },
     "veikals": {
@@ -84,12 +124,27 @@
         "link_label": "Par veikalu",
         "link": "/pages/sofia-lark-veikals"
       }
+    },
+    "iepakojums": {
+      "type": "sl-packaging",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=hmWurPb8c2s",
+        "start": 0,
+        "end": 14,
+        "eyebrow": "Iepakojums",
+        "heading": "Katra rota skaisti iepakota",
+        "text": "<p>Katru pasūtījumu iesaiņojam skaistā, dabai draudzīgā iepakojumā.</p>",
+        "quote": "Pasūtījumu saņēmu ļoti ātri un jauki iepakotu.",
+        "quote_name": "Margriet",
+        "poster": "shopify://shop_images/sofia-lark-iepakojums-video-vaks.jpg"
+      }
     }
   },
   "order": [
     "main",
     "pair",
     "letter",
+    "iepakojums",
     "veikals"
   ]
 }

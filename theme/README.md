@@ -15,24 +15,27 @@ The catalogue was measured first: 278 published products, 246 of them single-var
 | Photographs | The product's media. With fewer than four photos of its own, its variant photos fill in. A last photo that would sit alone in a half-width slot takes the full width. | all (151 show one photo) |
 | One line under the title | The description's first plain line, when it reads like a summary ("Zeltītas bronzas auskari ar dabīgām saldūdens pērlēm"). The `custom.subtitle` metafield wins when filled. | 65 |
 | Key facts under the price | The description, read by `snippets/sl-product-facts.liquid`, which picks up four things:<ul><li>`Label: value` lines (Izmērs, Garums, Materiāls, Size, Material, …).</li><li>The Kalliope headings: Materiāli, Roku darbs, Rotas kopšana.</li><li>A short first line naming the metal.</li><li>The description's claims: does not change colour in water, hypoallergenic, handmade in Greece.</li></ul> | 275 |
-| Colour or variant picker | Photo tiles when every value of an option has its own photo, otherwise words. No option names need setting. | 25 tiles, 7 words |
+| Colour or variant picker | Photo tiles when every value of an option has its own photo, otherwise words. No option names need setting. Sold-out values are faded and struck through before anyone clicks. | 25 tiles, 7 words |
 | Stock line | The variant's inventory: "Palicis pēdējais" (one left), "Palikuši tikai 2" (only two left), or sold out with a "tell me when it's back" link. | all |
 | Rating | Shopify's standard review metafields, which Judge.me fills. | the 5 with reviews |
 | Size and materials tab | The same facts in full, under Latvian labels. | 275 |
 | Care tab | The description's own care text (Kalliope), otherwise the section's text and the care cloth. | all |
-| "Sader kopā" (goes well together) | The Search & Discovery app's complementary products. If there are none, Shopify's own recommendations for the product, fetched after the page loads. The care cloth always comes last. | all |
-| Review letter, shop in Rīga | The same real review and shop details on every product. | all |
+| "Sader kopā" (goes well together) | A grid of cards with photographs. The pieces are the Search & Discovery app's complementary products; if there are none, Shopify's own recommendations for the product, fetched after the page loads. The care cloth always comes last. | all |
+| Reviews | Six real Latvian reviews from the store's Judge.me account, as an even grid. Above them is the store's overall rating, read live from Judge.me (now 4,9 from 50 reviews). | all |
+| Packaging film | The packing video that was a full-width background before, now framed beside its text, looping without its closing logo. | all |
+| Shop in Rīga | The theme's `sl-store` section. On product pages it has a light stone background, so it stands apart from the black footer; elsewhere it stays black. | all |
 
 ## Files
 
 | File | What it does |
 | --- | --- |
-| `templates/product.json` | The default product template: the sections below plus the theme's existing `sl-store`. |
+| `templates/product.json` | The default product template, in this order: the product, "Sader kopā", reviews, the packaging film, and the theme's existing `sl-store`. |
 | `sections/sl-product.liquid` | The product itself. The photos scroll while the buy box stays in place. The buy box holds the title, the one-line summary, app blocks (for example Judge.me stars), the price, key facts, the variant picker with stock, the button, the free-delivery meter, the three promises and the tabs. On phones there's a swipe gallery and a sticky add-to-cart bar. |
-| `sections/sl-product-pair.liquid` | "Sader kopā": complementary products, or Shopify's recommendations, then the care product. Rows can be added to the cart in place. |
-| `sections/sl-quote.liquid` | One real review set as a letter, plus up to three short ones. |
+| `sections/sl-product-pair.liquid` | "Sader kopā": complementary products, or Shopify's recommendations, then the care product, as cards. Single-variant pieces can be added to the cart in place. |
+| `sections/sl-quote.liquid` | Up to six real reviews as equal cards, each with its stars, plus the overall Judge.me rating. On phones the cards are a row you swipe. |
+| `sections/sl-packaging.liquid` | The packaging film in a 4:3 frame, with a pause button. It plays silently while on screen, and with reduced motion only when pressed. It uses a video uploaded to Shopify when one is chosen, otherwise the YouTube link (looping at 14 s, before the logo). The cover picture is in the store's Files and shows until the film plays. |
 | `snippets/sl-product-facts.liquid` | Reads size, material, claims and care from a product. It uses only plain string operations, so each rule can be read and changed. |
-| `snippets/sl-product-media.liquid`, `snippets/sl-pair-row.liquid` | One gallery square; one "Sader kopā" row. |
+| `snippets/sl-product-media.liquid`, `snippets/sl-pair-card.liquid` | One gallery square; one "Sader kopā" card. |
 | `assets/sl-product.css`, `assets/sl-product.js` | Styles and behaviour. Without the script, the form still adds the chosen variant to the cart. |
 
 ## Preview and install
@@ -48,7 +51,11 @@ After opening the link once, any product in the store can be browsed in the prev
 
 To publish it, go to *Online Store → Themes*, open the copy's *⋯* menu and choose *Publish*. Every product page changes at once. To go back, publish the previous theme again.
 
-The copy was taken on 21 October 2026. Changes made to the live theme after that (new sections, edited texts) are not in it. Make them on the copy as well, or take a fresh copy and add the files again before publishing.
+The copy was taken on 21 October 2026 at 18:51 and checked against the live theme again afterwards. The live theme's newest change is from 09:52 that day, and its recently changed files have the same checksums on the copy. The only differences are `templates/product.json` and the files added here.
+
+Changes made to the live theme from now on (new sections, edited texts) won't reach the copy. Make them on the copy as well, or take a fresh copy and add the files again before publishing.
+
+The copy also still holds `snippets/sl-pair-row.liquid` from the first version. Nothing uses it any more, and it can be deleted under *Edit code* (the store connection used here cannot delete theme files).
 
 Products that use another template (`product.gift-card`, `product.high-variant`, `product.preorder`, …) keep it.
 
@@ -88,10 +95,16 @@ Anything empty is left out, so every product looks complete whatever is filled. 
     - The phone bar appears after the button and steps aside at the footer.
     - No sideways scroll at 1440px or 390px, and no script errors.
 - **On Shopify itself**, on the preview copy:
-  - The 9 files on the copy have the same checksums as this folder.
-  - Six products were rendered at 1440px and 390px: Calypso, a Kalliope brooch, ring and earring, a bracelet and a sold-out bracelet.
-  - All six use the new sections, with no sideways scroll and no script errors from these files.
-  - "Sader kopā" loaded Shopify's real recommendations.
-  - The sold-out piece shows "Izpārdots" (sold out) and the notify link.
+  - Every file on the copy has the same checksum as this folder.
+  - Products were rendered at 1440px and 390px: Calypso, the Kalliope brooch, ring and earrings, a bracelet and a sold-out bracelet.
+  - Every page has all five sections, no sideways scroll and no script errors from these files.
+  - All "Sader kopā" photographs load at once.
+  - The reviews show the live rating "4,9 no 5 · 50 atsauksmes".
+  - Calypso's 5 sold-out colours are struck through.
+- **The packaging film.** YouTube refuses to play videos for the server these checks ran on, so the film itself could not be watched there; the cover picture showed instead. The script was checked against a stand-in for YouTube's player:
+  - It starts when the film is on screen.
+  - It goes back to the start at 14 s.
+  - Pausing holds, even after scrolling away and back.
+  - With reduced motion, it waits for the play button.
 
   ![on Shopify](screenshots/on-shopify.jpg)

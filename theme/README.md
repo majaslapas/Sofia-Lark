@@ -35,14 +35,20 @@ The catalogue was measured first: 278 published products, 246 of them single-var
 | `snippets/sl-product-media.liquid`, `snippets/sl-pair-row.liquid` | One gallery square; one "Sader kopā" row. |
 | `assets/sl-product.css`, `assets/sl-product.js` | Styles and behaviour. Without the script, the form still adds the chosen variant to the cart. |
 
-## Install
+## Preview and install
 
-Because `product.json` is the default template, **installing it changes every product page at once**. Do it on a copy first.
+The files are already on an unpublished copy of the live theme, **"Impulse – jaunā produkta lapa (priekšskatījums)"**. The copy was taken from the theme that is live now, "Impulse – kolekciju lapas (draft)". The live theme was not changed.
 
-1. Duplicate the live theme ("Impulse – fiksētā kartīte (draft)") under *Online Store → Themes*.
-2. On the copy, choose *Edit code* and add the files above, replacing `templates/product.json`. Everything else is a new file.
-3. Preview the copy on a few very different products: one with many colours, a one-photo brooch, a bracelet, a ring and a sold-out piece.
-4. Publish the copy. The live theme stays untouched as the way back.
+**Preview link:** <https://sofialark.com/products/earrings-calypso?preview_theme_id=209273651545>
+
+After opening the link once, any product in the store can be browsed in the preview until the preview bar at the bottom is closed. Other examples:
+- [a brooch](https://sofialark.com/products/kalliope-piespraude-gf1969b?preview_theme_id=209273651545)
+- [a bracelet](https://sofialark.com/products/copy-aproce-3?preview_theme_id=209273651545)
+- [a sold-out piece](https://sofialark.com/products/aproce-7?preview_theme_id=209273651545)
+
+To publish it, go to *Online Store → Themes*, open the copy's *⋯* menu and choose *Publish*. Every product page changes at once. To go back, publish the previous theme again.
+
+The copy was taken on 21 October 2026. Changes made to the live theme after that (new sections, edited texts) are not in it. Make them on the copy as well, or take a fresh copy and add the files again before publishing.
 
 Products that use another template (`product.gift-card`, `product.high-variant`, `product.preorder`, …) keep it.
 
@@ -81,4 +87,11 @@ Anything empty is left out, so every product looks complete whatever is filled. 
     - Arrow keys move through the colours.
     - The phone bar appears after the button and steps aside at the footer.
     - No sideways scroll at 1440px or 390px, and no script errors.
-- **Not yet checked on Shopify itself.** That needs the files on an unpublished copy of the theme.
+- **On Shopify itself**, on the preview copy:
+  - The 9 files on the copy have the same checksums as this folder.
+  - Six products were rendered at 1440px and 390px: Calypso, a Kalliope brooch, ring and earring, a bracelet and a sold-out bracelet.
+  - All six use the new sections, with no sideways scroll and no script errors from these files.
+  - "Sader kopā" loaded Shopify's real recommendations.
+  - The sold-out piece shows "Izpārdots" (sold out) and the notify link.
+
+  ![on Shopify](screenshots/on-shopify.jpg)

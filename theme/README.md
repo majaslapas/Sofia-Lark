@@ -2,9 +2,7 @@
 
 The product page layout from [`../product-page/`](../product-page/), built for the store's Impulse 9 theme as its **default product template**. Every product uses it as it is, with no setup per product, collection or metafield. Each part fills itself from data the store already has, and any part with nothing to show is left out.
 
-| Four products, no setup | True size, from the description |
-| --- | --- |
-| ![four products](screenshots/four-products.jpg) | ![true size](screenshots/true-size.jpg) |
+![four products, no setup](screenshots/four-products.jpg)
 
 These are renders of real products (photos, prices, stock and descriptions as they are today) inside the live header and footer: a brooch with one photo, a bracelet, an adjustable ring and a Kalliope earring.
 
@@ -22,7 +20,6 @@ The catalogue was measured first: 278 published products, 246 of them single-var
 | Rating | Shopify's standard review metafields, which Judge.me fills. | the 5 with reviews |
 | Size and materials tab | The same facts in full, under Latvian labels. | 275 |
 | Care tab | The description's own care text (Kalliope), otherwise the section's text and the care cloth. | all |
-| "Īstais izmērs" (true size) | The `custom.on_body_image` photo when one is set. Otherwise the piece is drawn to scale beside a 1 € coin (23 mm), from the size in its description. Without a usable size it's left out: bracelets and necklaces (too long), rings ("Regulējams"), and one-number sizes. | 92 |
 | "Sader kopā" (goes well together) | The Search & Discovery app's complementary products. If there are none, Shopify's own recommendations for the product, fetched after the page loads. The care cloth always comes last. | all |
 | Review letter, shop in Rīga | The same real review and shop details on every product. | all |
 
@@ -32,7 +29,6 @@ The catalogue was measured first: 278 published products, 246 of them single-var
 | --- | --- |
 | `templates/product.json` | The default product template: the sections below plus the theme's existing `sl-store`. |
 | `sections/sl-product.liquid` | The product itself. The photos scroll while the buy box stays in place. The buy box holds the title, the one-line summary, app blocks (for example Judge.me stars), the price, key facts, the variant picker with stock, the button, the free-delivery meter, the three promises and the tabs. On phones there's a swipe gallery and a sticky add-to-cart bar. |
-| `sections/sl-product-scale.liquid` | The true-size section: a photo of it being worn, or the drawing to scale. |
 | `sections/sl-product-pair.liquid` | "Sader kopā": complementary products, or Shopify's recommendations, then the care product. Rows can be added to the cart in place. |
 | `sections/sl-quote.liquid` | One real review set as a letter, plus up to three short ones. |
 | `snippets/sl-product-facts.liquid` | Reads size, material, claims and care from a product. It uses only plain string operations, so each rule can be read and changed. |
@@ -60,15 +56,13 @@ Products that use another template (`product.gift-card`, `product.high-variant`,
 
 Nothing here is needed for the page to work. Each item just improves what a product shows.
 
-- **Size lines in descriptions** ("Izmērs: 4 × 3 cm" or "Garums: 61 mm") give a product its true-size drawing and a size in the key facts.
+- **Size lines in descriptions** ("Izmērs: 4 × 3 cm" or "Garums: 61 mm") give a product a size in its key facts.
 - **Metafields** under *Settings → Custom data → Products*, namespace `custom`, override what the description says:
   - `subtitle` (single line text)
   - `length_mm`, `width_mm` (integer)
   - `plating`, `stone` (single line text)
   - `care` (rich text)
   - `water_resistant`, `hypoallergenic` (true or false)
-  - `on_body_image` (file), for the photo of it being worn
-  - `story` (multi-line text)
 - **Complementary products** in the Search & Discovery app replace Shopify's automatic recommendations with hand-picked ones.
 - **The old metafields.** The existing `custom.material` and `custom.earring_closure` are used only where a description says nothing. Some hold wrong values (Calypso says "Juveliertērauds", stainless steel), so they're worth correcting.
 

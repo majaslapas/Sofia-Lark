@@ -26,17 +26,6 @@
         "shipping_page": "refund-policy"
       }
     },
-    "worn": {
-      "type": "sl-product-scale",
-      "settings": {
-        "heading": "Tā izskatās valkājot",
-        "heading_drawn": "Īstais izmērs",
-        "text_drawn": "Rota mērogā blakus 1 eiro monētai, lai izmērs nebūtu jāiedomājas.",
-        "choose_label": "Izvēlēties",
-        "visit_label": "Pielaikot veikalā",
-        "visit_link": "/pages/sofia-lark-veikals"
-      }
-    },
     "pair": {
       "type": "sl-product-pair",
       "settings": {
@@ -99,7 +88,6 @@
   },
   "order": [
     "main",
-    "worn",
     "pair",
     "letter",
     "veikals"

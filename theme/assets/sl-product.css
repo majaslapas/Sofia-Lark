@@ -5,7 +5,6 @@
    photographs, marks the one section that shows the piece being worn. */
 
 .sl-p,
-.sl-scale,
 .sl-pair,
 .sl-quote {
   --sl-ink: #000;
@@ -24,25 +23,21 @@
 /* the theme sets these on every element of their kind; inside these sections they are ours.
    :where() keeps the section part weightless, so each rule weighs the same as the theme's own
    element rule (and wins by coming later) while every class below still wins over it. */
-:where(.sl-p, .sl-scale, .sl-pair, .sl-quote) h1,
-:where(.sl-p, .sl-scale, .sl-pair, .sl-quote) h2 { margin: 0; }
+:where(.sl-p, .sl-pair, .sl-quote) h1,
+:where(.sl-p, .sl-pair, .sl-quote) h2 { margin: 0; }
 :where(.sl-p) fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 :where(.sl-p) legend { padding: 0; }
 :where(.sl-p) label { display: block; margin: 0; font-size: inherit; letter-spacing: 0; text-transform: none; }
 :where(.sl-p, .sl-pair) ul { margin: 0; padding: 0; list-style: none; }
-:where(.sl-p, .sl-scale, .sl-pair) figure { margin: 0; }
-:where(.sl-p, .sl-scale) dl,
-:where(.sl-p, .sl-scale) dd { margin: 0; }
+:where(.sl-p, .sl-pair) figure { margin: 0; }
+:where(.sl-p) dl,
+:where(.sl-p) dd { margin: 0; }
 /* the theme's label rule weighs label:not(.a):not(.b); these match it, and come later */
 .sl-p label.sl-p__legend { margin: 0 0 12px; font-size: 16px; letter-spacing: 0; text-transform: none; }
-:where(.sl-p, .sl-pair) ul { margin: 0; padding: 0; list-style: none; }
-:where(.sl-p, .sl-scale, .sl-pair) figure { margin: 0; }
-:where(.sl-p, .sl-scale) .sl-scale) dl, :where(.sl-p, .sl-scale) dd { margin: 0; }
 
 .sl-p a:focus-visible,
 .sl-p button:focus-visible,
 .sl-p summary:focus-visible,
-.sl-scale a:focus-visible,
 .sl-pair a:focus-visible,
 .sl-pair button:focus-visible,
 .sl-quote a:focus-visible { outline: 2px solid var(--sl-ink); outline-offset: 3px; }
@@ -391,91 +386,6 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
 
 .sl-p__bar { display: none; }
 
-/* ---------- worn: real size on a person ---------- */
-
-.sl-scale { margin-top: var(--sl-gap-section); background: var(--sl-field); }
-.sl-scale__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(32px, 5vw, 96px);
-  align-items: center;
-  padding-top: clamp(40px, 5vw, 72px);
-  padding-bottom: clamp(40px, 5vw, 72px);
-}
-.sl-scale__plate { position: relative; aspect-ratio: 1 / 1; overflow: hidden; }
-.sl-scale__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.sl-scale__title {
-  max-width: 16ch;
-  font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
-  font-weight: 400;
-  font-size: clamp(28px, 3vw, 44px);
-  line-height: 1.08;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-.sl-scale__text { max-width: 38ch; margin: 22px 0 0; font-size: 18px; line-height: 1.55; }
-.sl-scale__figures {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px clamp(28px, 4vw, 56px);
-  margin-top: 40px !important;
-}
-.sl-scale__figures div { display: flex; flex-direction: column-reverse; gap: 6px; }
-.sl-scale__figures dt { font-size: 14px; color: #3d3d3a; }
-.sl-scale__figures dd {
-  font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
-  font-size: clamp(32px, 3.4vw, 52px);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.sl-scale__actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  max-width: 520px;
-  margin-top: 44px;
-}
-.sl-scale__action {
-  display: flex;
-  align-items: center;
-  min-height: 60px;
-  padding: 0 20px;
-  background: rgba(255, 255, 255, 0.55);
-  color: var(--sl-ink);
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-.sl-scale__action:hover { background: #fff; color: var(--sl-ink); }
-.sl-scale__action--main { background: var(--sl-ink); color: #fff; }
-.sl-scale__action--main:hover { background: #2b2b2b; color: #fff; }
-/* without a photograph: the piece drawn to scale beside a 1 euro coin */
-.sl-scale__plate--drawn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-  padding: clamp(24px, 4vw, 56px);
-  background: rgba(255, 255, 255, 0.55);
-}
-.sl-scale__svg { display: block; width: 100%; height: auto; max-height: 72%; overflow: visible; }
-.sl-scale__coin { fill: #c9a24b; }
-.sl-scale__coin-ring { fill: none; stroke: #e2c47a; stroke-width: 0.8; }
-.sl-scale__coin-text { fill: #5b4512; font-family: var(--typeBasePrimary), var(--typeBaseFallback); font-size: 6.4px; font-weight: 500; }
-.sl-scale__box { fill: var(--sl-ground-2); stroke: var(--sl-ink); stroke-width: 0.35; }
-.sl-scale__box:has(+ .sl-scale__photo) { fill: #fff; }
-.sl-scale__photo { mix-blend-mode: multiply; }
-.sl-scale__dim { fill: var(--sl-ink); font-family: var(--typeBasePrimary), var(--typeBaseFallback); }
-.sl-scale__caption { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: #3d3d3a; }
-.sl-scale__caption span { display: inline-flex; align-items: center; gap: 8px; }
-.sl-scale__key { width: 12px; height: 12px; border-radius: 50%; background: #c9a24b; }
-.sl-scale__key--piece { border-radius: 2px; background: var(--sl-ground-2); box-shadow: inset 0 0 0 1px var(--sl-ink); }
-.sl-pair[hidden] { display: none; }
-.sl-scale__empty { padding: 24px; margin-top: 24px; background: #fff3cd; font-size: 14px; }
-
 /* ---------- wear it with: a photograph that stays, a list that opens ---------- */
 
 .sl-pair { margin-top: var(--sl-gap-section); }
@@ -688,10 +598,6 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
     white-space: nowrap;
   }
 
-  .sl-scale .page-width { padding-left: 0; padding-right: 0; }
-  .sl-scale__inner { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-top: 0; }
-  .sl-scale__copy { padding: 0 var(--page-width-gutter-small, 17px); }
-  .sl-scale__actions { grid-template-columns: minmax(0, 1fr); }
 
   .sl-pair__inner { grid-template-columns: minmax(0, 1fr); }
   .sl-pair__photo { position: relative; top: 0; aspect-ratio: 4 / 3; margin-bottom: 28px; }

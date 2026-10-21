@@ -1,0 +1,108 @@
+{
+  "sections": {
+    "main": {
+      "type": "sl-product",
+      "settings": {
+        "max_media": 6,
+        "swatch_options": "Color, Colour, Krāsa, Akmens",
+        "swatch_zoom": 150,
+        "tax_note": "Nodoklis iekļauts",
+        "low_stock": 3,
+        "text_in_stock": "Ir noliktavā",
+        "text_low": "Palikuši tikai [count]",
+        "text_last": "Palicis pēdējais",
+        "text_sold_out": "Šis variants ir izpārdots",
+        "show_notify": true,
+        "notify_email": "",
+        "free_shipping": 50,
+        "text_free_left": "Vēl [amount] līdz bezmaksas piegādei Omniva pakomātā",
+        "text_free_done": "Piegāde Omniva pakomātā tev būs bez maksas",
+        "promise_1": "Saņem bez maksas mūsu veikalā Rīgā",
+        "promise_2": "30 dienas preces atgriešanai",
+        "promise_3": "Katra rota skaistā, dabai draudzīgā iepakojumā",
+        "open_description": true,
+        "care": "<p>Noņem rotu pirms mazgāšanās, peldēšanās, sporta un kosmētikas lietošanas. Glabā sausā vietā, atsevišķi no citām rotām.</p>",
+        "care_product": "silver-cleaning-cloth",
+        "shipping": "<p>Omniva pakomātā visā Latvijā. Bez maksas saņemšana veikalā Blaumaņa ielā 17, Rīgā.</p><p>30 dienas atgriešanai: rotai jābūt nelietotai un oriģinālajā iepakojumā.</p>",
+        "shipping_page": "refund-policy"
+      }
+    },
+    "worn": {
+      "type": "sl-product-scale",
+      "settings": {
+        "heading": "Tā izskatās valkājot",
+        "text": "",
+        "count_label": "krāsas",
+        "choose_label": "Izvēlēties",
+        "visit_label": "Pielaikot veikalā",
+        "visit_link": "/pages/sofia-lark-veikals"
+      }
+    },
+    "pair": {
+      "type": "sl-product-pair",
+      "settings": {
+        "heading": "Valkā kopā",
+        "text": "Rotas, kas sader ar šo, un viss, kas vajadzīgs to kopšanai.",
+        "limit": 3,
+        "care_product": "silver-cleaning-cloth"
+      }
+    },
+    "letter": {
+      "type": "sl-quote",
+      "blocks": {
+        "quote_1": {
+          "type": "quote",
+          "settings": {
+            "text": "Ļoti skaistas rotas, kvalitāte super un ātra piegāde.",
+            "name": "Kristine Derikaftanova"
+          }
+        },
+        "quote_2": {
+          "type": "quote",
+          "settings": {
+            "text": "The simple design and beautiful pearls make it look like a true heirloom piece, but it's also modern and versatile enough to wear with any outfit.",
+            "name": "Alex, par aproci Nimfa"
+          }
+        }
+      },
+      "block_order": [
+        "quote_1",
+        "quote_2"
+      ],
+      "settings": {
+        "heading": "Ko saka klientes",
+        "text": "Atsauksmes par Sofia Lark rotām un veikalu.",
+        "link_label": "",
+        "link": "",
+        "letter": "Sofia has wonderful statement pieces of jewellery.\nThe shipping was a bit slow as the order was sent out a week after it was placed but after that it was smooth sailing - fast delivery and very nice packaging as well.\nWill definitely order again.",
+        "name": "Madara Gulbe",
+        "role": "Sofia Lark kliente",
+        "letter_lang": "en"
+      }
+    },
+    "veikals": {
+      "type": "sl-store",
+      "settings": {
+        "heading": "Pielaiko klātienē Rīgā",
+        "text": "Rotas vari pielaikot mūsu veikalā Blaumaņa ielā 17.",
+        "address": "Blaumaņa iela 17, Rīga",
+        "phone": "+371 22066496",
+        "hours_2": "12:00–19:00",
+        "hours_3": "12:00–19:00",
+        "hours_4": "12:00–19:00",
+        "hours_5": "12:00–19:00",
+        "image": "shopify://shop_images/hf_20260312_190032_debc68f2-e28a-4556-81ae-b7ff905a9657.jpg",
+        "button_label": "Kā nokļūt",
+        "link_label": "Par veikalu",
+        "link": "/pages/sofia-lark-veikals"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "worn",
+    "pair",
+    "letter",
+    "veikals"
+  ]
+}

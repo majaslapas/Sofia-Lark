@@ -21,7 +21,7 @@ Ordered by how much it affects the decision to buy. "Status" says where this inf
 | 2 | Price, tax included, and the price of the chosen variant | — | Shown |
 | 3 | **Key facts above the fold**: size in mm, plating or metal, stone, closure | Jewellery is bought by scale and material | **Hidden.** Present in the description text only, behind a closed "Apraksts" tab |
 | 4 | **Variant picker with a photo of each colour** | "Lagoon blue" and "Sea blue" mean nothing without a picture | **Hidden.** Every Calypso colour has its own variant photo, but the picker shows 12 text buttons |
-| 5 | **Stock per variant** ("Last pair", "2 left", sold out) | Real scarcity, and it stops people trying to buy a sold-out colour | **Not shown.** Most colours have 1–2 pairs, and 4 of the 12 are sold out |
+| 5 | **Stock per variant** ("Last pair", "2 left", sold out) | Real scarcity, and it stops people trying to buy a sold-out colour | **Not shown.** Most colours have 1–2 pairs, and 5 of the 12 are sold out |
 | 6 | **On-body photo for scale** | The biggest doubt with 61 mm earrings is how long they look | **Exists but is buried.** On-ear and model shots sit at positions 2–7 among 23 thumbnails |
 | 7 | Free delivery threshold applied to this price ("€8 more for free delivery") | Raises basket size | Only in the announcement bar, never connected to the price |
 | 8 | Free pickup in Rīga and 30-day returns (14 is the legal minimum) | Two strong reasons to trust the shop | **Hidden** inside a long legal text in "Piegāde un atgriešana" |

@@ -1,0 +1,36 @@
+{%- comment -%}
+  One row of "wear it with": the name and price as the button that opens it, then a line of
+  description and the way to buy it. Accepts: item (a product), row_id.
+{%- endcomment -%}
+{%- liquid
+  assign img = item.featured_media.preview_image
+  assign text = item.metafields.custom.subtitle.value | default: item.description | strip_html | truncatewords: 22
+-%}
+<li
+  class="sl-pair__row"
+  data-sl-pair-row
+  {% if img %}
+    data-image="{{ img | image_url: width: 1200 }}"
+    data-srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1200 }} 1200w"
+    data-alt="{{ img.alt | default: item.title | escape }}"
+  {% endif %}
+>
+  <button type="button" class="sl-pair__head" data-sl-pair-head aria-expanded="false" aria-controls="{{ row_id }}">
+    <span class="sl-pair__name">{{ item.title | escape }}</span>
+    <span class="sl-pair__price">{% if item.price_varies %}no {% endif %}{{ item.price | money }}</span>
+  </button>
+  <div class="sl-pair__more" id="{{ row_id }}">
+    <div>
+      {%- if text != blank -%}<p class="sl-pair__text">{{ text | escape }}</p>{%- endif -%}
+      {%- if item.has_only_default_variant -%}
+        {%- form 'product', item, class: 'sl-pair__form' -%}
+          <input type="hidden" name="id" value="{{ item.selected_or_first_available_variant.id }}">
+          <button type="submit" class="sl-pair__add">Pievienot grozam</button>
+          <a class="sl-pair__link" href="{{ item.url }}">Apskatīt</a>
+        {%- endform -%}
+      {%- else -%}
+        <a class="sl-pair__add" href="{{ item.url }}">Izvēlēties</a>
+      {%- endif -%}
+    </div>
+  </div>
+</li>

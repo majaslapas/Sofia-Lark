@@ -1,0 +1,115 @@
+{%- comment -%}
+  Sofia Lark product, worn: one large photograph of the piece on a person, so its real size is
+  never a guess, beside the measurements set large. The photograph is the product's
+  custom.on_body_image metafield, or the one picked here; without either the section stays out
+  of the page. The words can come from the product (custom.scale_heading, custom.story).
+{%- endcomment -%}
+{%- liquid
+  assign mf = product.metafields.custom
+  assign image = mf.on_body_image.value | default: section.settings.image
+  assign heading = mf.scale_heading.value | default: section.settings.heading
+  assign text = mf.story.value | default: section.settings.text
+  assign length = mf.length_mm.value
+  assign width = mf.width_mm.value
+  assign first_option = product.options_with_values.first
+  assign variant_count = 0
+  unless product.has_only_default_variant
+    assign variant_count = first_option.values.size
+  endunless
+  assign sid = 'SlScale-' | append: section.id
+-%}
+
+{%- if image != blank -%}
+  {{ 'sl-product.css' | asset_url | stylesheet_tag }}
+  <section class="sl-scale" aria-labelledby="{{ sid }}-title">
+    <div class="page-width sl-scale__inner">
+      <figure class="sl-scale__plate" data-sl-rise>
+        {%- assign alt = image.alt | default: product.title | escape -%}
+        {{- image | image_url: width: 1400 | image_tag: widths: '500, 700, 1000, 1400', sizes: '(min-width: 990px) 46vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-scale__img' -}}
+      </figure>
+      <div class="sl-scale__copy">
+        <h2 id="{{ sid }}-title" class="sl-scale__title" data-sl-rise>{{ heading | escape }}</h2>
+        {%- if text != blank -%}
+          <p class="sl-scale__text" data-sl-rise style="--d: 80ms">{{ text | escape }}</p>
+        {%- endif -%}
+        {%- if length != blank or width != blank or variant_count > 1 -%}
+          <dl class="sl-scale__figures" data-sl-rise style="--d: 160ms">
+            {%- if length != blank -%}<div><dt>garums</dt><dd>{{ length }} mm</dd></div>{%- endif -%}
+            {%- if width != blank -%}<div><dt>platums</dt><dd>{{ width }} mm</dd></div>{%- endif -%}
+            {%- if variant_count > 1 -%}<div><dt>{{ section.settings.count_label | escape }}</dt><dd>{{ variant_count }}</dd></div>{%- endif -%}
+          </dl>
+        {%- endif -%}
+        <div class="sl-scale__actions" data-sl-rise style="--d: 240ms">
+          <a class="sl-scale__action sl-scale__action--main" href="#sl-buy">{{ section.settings.choose_label | escape }}</a>
+          {%- if section.settings.visit_label != blank and section.settings.visit_link != blank -%}
+            <a class="sl-scale__action" href="{{ section.settings.visit_link }}">{{ section.settings.visit_label | escape }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- elsif request.design_mode -%}
+  <div class="page-width sl-scale__empty">
+    Sofia Lark product, worn: add a photograph here, or fill the product's custom.on_body_image metafield. Visitors do not see this note.
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sofia Lark product, worn",
+  "tag": "div",
+  "class": "sl-scale-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photograph of the piece being worn",
+      "info": "Used when the product has no custom.on_body_image metafield. Connect it to a product metafield to vary it per product."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "A product's custom.scale_heading metafield takes its place.",
+      "default": "Tā izskatās valkājot"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "info": "A product's custom.story metafield takes its place. One or two sentences."
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Word under the number of variants",
+      "default": "krāsas"
+    },
+    {
+      "type": "text",
+      "id": "choose_label",
+      "label": "Button back to the buy box",
+      "default": "Izvēlēties"
+    },
+    {
+      "type": "text",
+      "id": "visit_label",
+      "label": "Second button",
+      "default": "Pielaikot veikalā"
+    },
+    {
+      "type": "url",
+      "id": "visit_link",
+      "label": "Second button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sofia Lark product, worn"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

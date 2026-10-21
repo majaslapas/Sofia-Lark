@@ -1,0 +1,666 @@
+{%- comment -%}
+  Sofia Lark product page: the photographs scroll on the left while the buy box stays put.
+  The buy box answers, in order: what it is, what it costs, how big and what it is made of,
+  which colour (every colour as its own photograph, with what is left of it), and what happens
+  after you buy (free delivery from the threshold, pickup in Rīga, returns, gift packaging).
+  Facts come from product metafields (custom.length_mm, width_mm, plating, stone, material,
+  earring_closure, water_resistant, hypoallergenic, subtitle, care); anything empty is left out.
+  sl-product.js adds the variant picker, the cart and the phone bar; without it the form still
+  adds the first available variant to the cart.
+{%- endcomment -%}
+{{ 'sl-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sl-product.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign sid = 'SlProduct-' | append: section.id
+  assign form_id = 'SlProductForm-' | append: section.id
+  assign current = product.selected_or_first_available_variant
+  assign mf = product.metafields.custom
+  assign free_cents = section.settings.free_shipping | times: 100
+  assign swatch_names = section.settings.swatch_options | downcase | split: ','
+
+  assign lead = current.featured_media | default: product.featured_media
+
+  comment
+    Media attached to a variant are shown through the colour tray, not repeated in the gallery.
+  endcomment
+  assign variant_media = ','
+  if product.variants.size > 1
+    for v in product.variants
+      if v.featured_media
+        assign variant_media = variant_media | append: v.featured_media.id | append: ','
+      endif
+    endfor
+  endif
+
+  assign length = mf.length_mm.value
+  assign width = mf.width_mm.value
+  assign plating = mf.plating.value
+  assign material = mf.material.value
+  assign stone = mf.stone.value
+  assign closure = mf.earring_closure.value | join: ', '
+  assign finish = plating | default: material
+
+  assign has_specs = false
+  if length != blank or width != blank or material != blank or plating != blank or stone != blank or closure != blank or mf.water_resistant.value or mf.hypoallergenic.value
+    assign has_specs = true
+  endif
+
+  comment
+    Count what the gallery will show, so a last photograph that would sit alone in a half-width
+    slot takes the full width instead of leaving a hole beside it.
+  endcomment
+  assign total = 0
+  if lead
+    assign total = 1
+  endif
+  for media in product.media
+    if total >= section.settings.max_media
+      break
+    endif
+    if lead and media.id == lead.id
+      continue
+    endif
+    assign key = ',' | append: media.id | append: ','
+    if variant_media contains key
+      continue
+    endif
+    assign total = total | plus: 1
+  endfor
+
+  assign gallery_sizes = '(min-width: 990px) 56vw, 88vw'
+  assign gallery_sizes_half = '(min-width: 990px) 28vw, 88vw'
+-%}
+
+<section
+  id="{{ sid }}"
+  class="sl-p"
+  data-sl-product
+  data-section-id="{{ section.id }}"
+  aria-label="{{ product.title | escape }}"
+  style="--sl-p-zoom: {{ section.settings.swatch_zoom | divided_by: 100.0 }};"
+>
+  <div class="page-width">
+    <nav class="sl-p__crumbs" aria-label="Atrašanās vieta">
+      <a href="{{ routes.root_url }}">Sākums</a>
+      {%- if collection != blank -%}
+        <span aria-hidden="true">/</span><a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+      {%- endif -%}
+      <span aria-hidden="true">/</span><span aria-current="page">{{ product.title | escape }}</span>
+    </nav>
+
+    <div class="sl-p__grid">
+      {%- comment -%} ---------- photographs ---------- {%- endcomment -%}
+      <div class="sl-p__gallery-wrap">
+        <div class="sl-p__gallery" data-sl-gallery>
+          {%- assign shown = 0 -%}
+          {%- if lead -%}
+            {%- assign shown = 1 -%}
+            <figure class="sl-p__media sl-p__media--wide sl-p__media--lead" data-sl-lead>
+              {%- assign lead_alt = lead.alt | default: product.title | escape -%}
+              {{- lead.preview_image | image_url: width: 1600 | image_tag:
+                widths: '600, 800, 1000, 1200, 1600',
+                sizes: gallery_sizes,
+                fetchpriority: 'high',
+                loading: 'eager',
+                alt: lead_alt,
+                class: 'sl-p__img'
+              -}}
+            </figure>
+          {%- else -%}
+            <figure class="sl-p__media sl-p__media--wide">
+              {{- 'product-1' | placeholder_svg_tag: 'sl-p__img sl-p__img--placeholder' -}}
+            </figure>
+          {%- endif -%}
+
+          {%- for media in product.media -%}
+            {%- if shown >= section.settings.max_media -%}{%- break -%}{%- endif -%}
+            {%- if lead and media.id == lead.id -%}{%- continue -%}{%- endif -%}
+            {%- assign key = ',' | append: media.id | append: ',' -%}
+            {%- if variant_media contains key -%}{%- continue -%}{%- endif -%}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- liquid
+              assign wide = false
+              assign position = shown | modulo: 3
+              if position == 1
+                assign wide = true
+              elsif position == 2 and shown == total
+                assign wide = true
+              endif
+              assign alt = media.alt | default: product.title | escape
+            -%}
+            <figure class="sl-p__media{% if wide %} sl-p__media--wide{% endif %}">
+              {%- case media.media_type -%}
+                {%- when 'video' -%}
+                  {{- media | video_tag:
+                    image_size: '1200x',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    controls: false,
+                    playsinline: true,
+                    class: 'sl-p__img'
+                  -}}
+                {%- when 'external_video' -%}
+                  {{- media | external_video_tag: class: 'sl-p__img sl-p__img--frame' -}}
+                {%- else -%}
+                  {%- if wide -%}
+                    {{- media.preview_image | image_url: width: 1600 | image_tag: widths: '600, 800, 1000, 1200, 1600', sizes: gallery_sizes, loading: 'lazy', alt: alt, class: 'sl-p__img' -}}
+                  {%- else -%}
+                    {{- media.preview_image | image_url: width: 1000 | image_tag: widths: '400, 600, 800, 1000', sizes: gallery_sizes_half, loading: 'lazy', alt: alt, class: 'sl-p__img' -}}
+                  {%- endif -%}
+              {%- endcase -%}
+            </figure>
+          {%- endfor -%}
+        </div>
+        {%- if shown > 1 -%}
+          <div class="sl-p__dots" data-sl-dots aria-hidden="true">
+            {%- for i in (1..shown) -%}<i{% if forloop.first %} class="is-on"{% endif %}></i>{%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- buy box ---------- {%- endcomment -%}
+      <div class="sl-p__buy" id="sl-buy">
+        <h1 class="sl-p__title">{{ product.title | escape }}</h1>
+        {%- if mf.subtitle.value != blank -%}
+          <p class="sl-p__subtitle">{{ mf.subtitle.value | escape }}</p>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div class="sl-p__app" {{ block.shopify_attributes }}>{% render block %}</div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <div class="sl-p__price-row">
+          <span class="sl-p__price" data-sl-price>{{ current.price | money }}</span>
+          <s class="sl-p__was" data-sl-was{% unless current.compare_at_price > current.price %} hidden{% endunless %}>
+            <span class="visually-hidden">Iepriekšējā cena </span>
+            <span data-sl-was-amount>{{ current.compare_at_price | money }}</span>
+          </s>
+          {%- if section.settings.tax_note != blank -%}
+            <span class="sl-p__tax">{{ section.settings.tax_note | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- capture facts -%}
+          {%- if length != blank and width != blank -%}
+            <li><b>{{ length }} × {{ width }} mm</b></li>
+          {%- elsif length != blank -%}
+            <li><b>{{ length }} mm</b></li>
+          {%- endif -%}
+          {%- if finish != blank -%}<li>{{ finish | escape }}</li>{%- endif -%}
+          {%- if stone != blank -%}<li>{{ stone | escape }}</li>{%- endif -%}
+          {%- if closure != blank -%}<li>{{ closure | escape }}</li>{%- endif -%}
+          {%- if mf.water_resistant.value -%}<li>Ūdensizturīga</li>{%- endif -%}
+          {%- if mf.hypoallergenic.value -%}<li>Hipoalerģiska</li>{%- endif -%}
+        {%- endcapture -%}
+        {%- if facts != blank -%}
+          <ul class="sl-p__facts" role="list" aria-label="Galvenais">{{ facts }}</ul>
+        {%- endif -%}
+
+        {%- form 'product', product, id: form_id, class: 'sl-p__form', novalidate: 'novalidate', data-sl-form: '' -%}
+          <input type="hidden" name="id" value="{{ current.id }}" data-sl-variant-id>
+
+          {%- unless product.has_only_default_variant -%}
+            <div class="sl-p__options" data-sl-options>
+              {%- for option in product.options_with_values -%}
+                {%- liquid
+                  assign opt_index = forloop.index0
+                  assign opt_name = option.name | downcase | strip
+                  assign visual = false
+                  for name in swatch_names
+                    assign n = name | strip
+                    if n == opt_name
+                      assign visual = true
+                    endif
+                  endfor
+                -%}
+                <fieldset class="sl-p__option{% if visual %} sl-p__option--tray{% endif %}" data-sl-option="{{ opt_index }}">
+                  <legend class="sl-p__legend">{{ option.name | escape }}: <b data-sl-option-value>{{ option.selected_value | escape }}</b></legend>
+                  <div class="sl-p__values">
+                    {%- for value in option.values -%}
+                      {%- liquid
+                        assign value_id = sid | append: '-' | append: opt_index | append: '-' | append: forloop.index0
+                        assign value_image = nil
+                        assign value_available = false
+                        for v in product.variants
+                          if v.options[opt_index] == value
+                            if v.available
+                              assign value_available = true
+                            endif
+                            if value_image == nil and v.featured_media
+                              assign value_image = v.featured_media.preview_image
+                            endif
+                          endif
+                        endfor
+                      -%}
+                      <input
+                        class="sl-p__radio visually-hidden"
+                        type="radio"
+                        id="{{ value_id }}"
+                        name="sl-option-{{ section.id }}-{{ opt_index }}"
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                      >
+                      {%- if visual and value_image -%}
+                        <label for="{{ value_id }}" class="sl-p__stone{% unless value_available %} is-out{% endunless %}" title="{{ value | escape }}">
+                          {{- value_image | image_url: width: 240 | image_tag: widths: '120, 160, 240', sizes: '80px', loading: 'lazy', alt: '', class: 'sl-p__stone-img' -}}
+                          <span class="visually-hidden">{{ value | escape }}{% unless value_available %}, izpārdots{% endunless %}</span>
+                        </label>
+                      {%- else -%}
+                        <label for="{{ value_id }}" class="sl-p__chip{% unless value_available %} is-out{% endunless %}">
+                          {{- value | escape -}}
+                          {%- unless value_available -%}<span class="visually-hidden">, izpārdots</span>{%- endunless -%}
+                        </label>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+              {%- endfor -%}
+            </div>
+            <noscript>
+              <label class="sl-p__legend" for="{{ sid }}-select">Variants</label>
+              <select id="{{ sid }}-select" name="id" class="sl-p__select">
+                {%- for v in product.variants -%}
+                  <option value="{{ v.id }}"{% if v == current %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title | escape }} · {{ v.price | money }}</option>
+                {%- endfor -%}
+              </select>
+            </noscript>
+          {%- endunless -%}
+
+          {%- liquid
+            assign qty = nil
+            if current.inventory_management == 'shopify' and current.inventory_policy == 'deny'
+              assign qty = current.inventory_quantity
+            endif
+            assign stock_class = ''
+            assign stock_text = section.settings.text_in_stock
+            if current.available == false
+              assign stock_class = 'is-none'
+              assign stock_text = section.settings.text_sold_out
+            elsif qty != nil and qty == 1
+              assign stock_class = 'is-low'
+              assign stock_text = section.settings.text_last
+            elsif qty != nil and qty <= section.settings.low_stock
+              assign stock_class = 'is-low'
+              assign stock_text = section.settings.text_low | replace: '[count]', qty
+            endif
+          -%}
+          <p class="sl-p__stock {{ stock_class }}" data-sl-stock aria-live="polite">{{ stock_text | escape }}</p>
+
+          <button
+            type="submit"
+            name="add"
+            class="sl-p__add"
+            data-sl-add
+            {% unless current.available %}disabled{% endunless %}
+          >
+            <span data-sl-add-label>{% if current.available %}Pievienot grozam{% else %}Izpārdots{% endif %}</span>
+            <span data-sl-add-price>{% if current.available %}{{ current.price | money }}{% endif %}</span>
+          </button>
+          <p class="sl-p__error" data-sl-error role="alert" hidden></p>
+
+          {%- if section.settings.show_notify -%}
+            {%- assign notify_email = section.settings.notify_email | default: shop.email -%}
+            <a
+              class="sl-p__notify"
+              data-sl-notify
+              data-email="{{ notify_email | escape }}"
+              data-product="{{ product.title | escape }}"
+              href="mailto:{{ notify_email }}?subject={{ product.title | append: ', ' | append: current.title | append: ': paziņot, kad pieejams' | url_encode }}"
+              {% if current.available %}hidden{% endif %}
+            >Paziņot, kad atkal būs pieejams</a>
+          {%- endif -%}
+        {%- endform -%}
+
+        <div class="sl-p__added" data-sl-added role="status" hidden>
+          <p class="sl-p__added-title" data-sl-added-title>Pievienots grozam</p>
+          <a class="sl-p__added-link" href="{{ routes.cart_url }}">Uz grozu</a>
+        </div>
+
+        {%- if free_cents > 0 -%}
+          {%- liquid
+            assign preview_total = cart.total_price | plus: current.price
+            assign left = free_cents | minus: preview_total
+            assign left_money = left | money
+            assign meter = preview_total | times: 100 | divided_by: free_cents
+            if meter > 100
+              assign meter = 100
+            endif
+          -%}
+          <div class="sl-p__ship" data-sl-ship>
+            <p class="sl-p__ship-text" data-sl-ship-text>
+              {%- if left > 0 -%}
+                {{- section.settings.text_free_left | escape | replace: '[amount]', left_money -}}
+              {%- else -%}
+                {{- section.settings.text_free_done | escape -}}
+              {%- endif -%}
+            </p>
+            <div class="sl-p__meter" aria-hidden="true"><i data-sl-meter style="width: {{ meter }}%"></i></div>
+          </div>
+        {%- endif -%}
+
+        {%- capture promises -%}
+          {%- for i in (1..3) -%}
+            {%- assign key = 'promise_' | append: i -%}
+            {%- if section.settings[key] != blank -%}<li>{{ section.settings[key] | escape }}</li>{%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if promises != blank -%}
+          <ul class="sl-p__promises" role="list">{{ promises }}</ul>
+        {%- endif -%}
+
+        <div class="sl-p__tabs">
+          {%- if product.description != blank -%}
+            <details class="sl-p__tab"{% if section.settings.open_description %} open{% endif %}>
+              <summary>Apraksts</summary>
+              <div class="sl-p__tab-body rte">{{ product.description }}</div>
+            </details>
+          {%- endif -%}
+
+          {%- if has_specs -%}
+            <details class="sl-p__tab">
+              <summary>Izmēri un materiāli</summary>
+              <div class="sl-p__tab-body">
+                <dl class="sl-p__spec">
+                  {%- if length != blank -%}<dt>Garums</dt><dd>{{ length }} mm</dd>{%- endif -%}
+                  {%- if width != blank -%}<dt>Platums</dt><dd>{{ width }} mm</dd>{%- endif -%}
+                  {%- if material != blank -%}<dt>Materiāls</dt><dd>{{ material | escape }}</dd>{%- endif -%}
+                  {%- if plating != blank -%}<dt>Pārklājums</dt><dd>{{ plating | escape }}</dd>{%- endif -%}
+                  {%- if stone != blank -%}<dt>Akmens</dt><dd>{{ stone | escape }}</dd>{%- endif -%}
+                  {%- if closure != blank -%}<dt>Aizdare</dt><dd>{{ closure | escape }}</dd>{%- endif -%}
+                  {%- if mf.water_resistant.value -%}<dt>Ūdens</dt><dd>Nemaina krāsu saskarē ar ūdeni</dd>{%- endif -%}
+                  {%- if mf.hypoallergenic.value -%}<dt>Āda</dt><dd>Hipoalerģiska</dd>{%- endif -%}
+                </dl>
+              </div>
+            </details>
+          {%- endif -%}
+
+          {%- liquid
+            assign care = blank
+            if mf.care != blank
+              if mf.care.type == 'rich_text_field'
+                assign care = mf.care | metafield_tag
+              else
+                assign care = mf.care.value | escape | newline_to_br
+              endif
+            endif
+          -%}
+          {%- if care != blank or section.settings.care != blank -%}
+            <details class="sl-p__tab">
+              <summary>Kopšana</summary>
+              <div class="sl-p__tab-body rte">
+                {%- if care != blank -%}{{ care }}{%- else -%}{{ section.settings.care }}{%- endif -%}
+                {%- assign care_product = section.settings.care_product -%}
+                {%- if care_product != blank and care_product.id != product.id -%}
+                  <p><a href="{{ care_product.url }}">{{ care_product.title | escape }}</a> · {{ care_product.price | money }}</p>
+                {%- endif -%}
+              </div>
+            </details>
+          {%- endif -%}
+
+          {%- if section.settings.shipping != blank -%}
+            <details class="sl-p__tab">
+              <summary>Piegāde un atgriešana</summary>
+              <div class="sl-p__tab-body rte">
+                {{ section.settings.shipping }}
+                {%- if section.settings.shipping_page != blank -%}
+                  <p><a href="{{ section.settings.shipping_page.url }}">Pilni piegādes un atgriešanas noteikumi</a></p>
+                {%- endif -%}
+              </div>
+            </details>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} The phone bar: appears once the main button has scrolled away. {%- endcomment -%}
+  <div class="sl-p__bar" data-sl-bar aria-hidden="true">
+    {%- assign bar_image = current.featured_media.preview_image | default: product.featured_media.preview_image -%}
+    {%- if bar_image -%}
+      {{- bar_image | image_url: width: 120 | image_tag: width: 48, height: 48, alt: '', class: 'sl-p__bar-img', loading: 'lazy' -}}
+    {%- endif -%}
+    <span class="sl-p__bar-text">
+      <b data-sl-bar-variant>{% if product.has_only_default_variant %}{{ product.title | escape }}{% else %}{{ current.title | escape }}{% endif %}</b>
+      <span data-sl-bar-price>{{ current.price | money }}</span>
+    </span>
+    <button type="button" class="sl-p__bar-add" data-sl-bar-add tabindex="-1"{% unless current.available %} disabled{% endunless %}>
+      {%- if current.available -%}Pievienot grozam{%- else -%}Izpārdots{%- endif -%}
+    </button>
+  </div>
+
+  {%- comment -%} Everything the script needs to switch variants without asking the server. {%- endcomment -%}
+  <script type="application/json" data-sl-product-json>
+    {
+      "id": {{ product.id }},
+      "title": {{ product.title | json }},
+      "free": {{ free_cents }},
+      "cartTotal": {{ cart.total_price }},
+      "lowStock": {{ section.settings.low_stock }},
+      "strings": {
+        "inStock": {{ section.settings.text_in_stock | json }},
+        "low": {{ section.settings.text_low | json }},
+        "last": {{ section.settings.text_last | json }},
+        "soldOut": {{ section.settings.text_sold_out | json }},
+        "freeLeft": {{ section.settings.text_free_left | json }},
+        "freeDone": {{ section.settings.text_free_done | json }}
+      },
+      "variants": [
+        {%- for v in product.variants -%}
+          {%- liquid
+            assign v_qty = 'null'
+            if v.inventory_management == 'shopify' and v.inventory_policy == 'deny'
+              assign v_qty = v.inventory_quantity
+            endif
+          -%}
+          {
+            "id": {{ v.id }},
+            "title": {{ v.title | json }},
+            "options": {{ v.options | json }},
+            "price": {{ v.price }},
+            "compare": {{ v.compare_at_price | default: 0 }},
+            "available": {{ v.available }},
+            "qty": {{ v_qty }},
+            "media": {%- if v.featured_media -%}
+              {%- assign vi = v.featured_media.preview_image -%}
+              {%- capture srcset -%}{{ vi | image_url: width: 600 }} 600w, {{ vi | image_url: width: 1000 }} 1000w, {{ vi | image_url: width: 1600 }} 1600w{%- endcapture -%}
+              {
+                "src": {{ vi | image_url: width: 1600 | json }},
+                "srcset": {{ srcset | json }},
+                "thumb": {{ vi | image_url: width: 120 | json }},
+                "alt": {{ v.featured_media.alt | default: product.title | json }}
+              }
+            {%- else -%}null{%- endif -%}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Sofia Lark product",
+  "tag": "div",
+  "class": "sl-p-section",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Size, material, plating, stone and closure come from the product's metafields (custom.length_mm, width_mm, material, plating, stone, earring_closure, water_resistant, hypoallergenic). Empty ones are left out. Add an app block (for example Judge.me stars) to show it under the title."
+    },
+    {
+      "type": "range",
+      "id": "max_media",
+      "label": "Photographs in the gallery",
+      "info": "Colour photographs are shown through the colour tiles, so they are not repeated here.",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "swatch_options",
+      "label": "Options shown as photo tiles",
+      "info": "Option names, separated by commas. Other options are shown as words.",
+      "default": "Color, Colour, Krāsa, Akmens"
+    },
+    {
+      "type": "range",
+      "id": "swatch_zoom",
+      "label": "Zoom inside the photo tiles",
+      "info": "Crops in on the stone when the piece is small in the photograph.",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "text",
+      "id": "tax_note",
+      "label": "Note beside the price",
+      "default": "Nodoklis iekļauts"
+    },
+    {
+      "type": "header",
+      "content": "Stock"
+    },
+    {
+      "type": "range",
+      "id": "low_stock",
+      "label": "Say \"only a few left\" from",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "text_in_stock",
+      "label": "In stock",
+      "default": "Ir noliktavā"
+    },
+    {
+      "type": "text",
+      "id": "text_low",
+      "label": "A few left",
+      "info": "[count] becomes the number.",
+      "default": "Palikuši tikai [count]"
+    },
+    {
+      "type": "text",
+      "id": "text_last",
+      "label": "Last one",
+      "default": "Palicis pēdējais"
+    },
+    {
+      "type": "text",
+      "id": "text_sold_out",
+      "label": "Sold out",
+      "default": "Šis variants ir izpārdots"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_notify",
+      "label": "Offer \"tell me when it is back\" on sold out variants",
+      "info": "Opens an e-mail to the shop. A back-in-stock app can replace it later.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "notify_email",
+      "label": "E-mail for those requests",
+      "info": "Leave empty to use the shop's e-mail."
+    },
+    {
+      "type": "header",
+      "content": "Free delivery"
+    },
+    {
+      "type": "number",
+      "id": "free_shipping",
+      "label": "Free delivery from (€)",
+      "info": "Set 0 to hide the meter.",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "text_free_left",
+      "label": "Still to go",
+      "info": "[amount] becomes the sum.",
+      "default": "Vēl [amount] līdz bezmaksas piegādei Omniva pakomātā"
+    },
+    {
+      "type": "text",
+      "id": "text_free_done",
+      "label": "Reached",
+      "default": "Piegāde Omniva pakomātā tev būs bez maksas"
+    },
+    {
+      "type": "header",
+      "content": "Promises under the button"
+    },
+    {
+      "type": "text",
+      "id": "promise_1",
+      "label": "First",
+      "default": "Saņem bez maksas mūsu veikalā Rīgā"
+    },
+    {
+      "type": "text",
+      "id": "promise_2",
+      "label": "Second",
+      "default": "30 dienas preces atgriešanai"
+    },
+    {
+      "type": "text",
+      "id": "promise_3",
+      "label": "Third",
+      "default": "Katra rota skaistā, dabai draudzīgā iepakojumā"
+    },
+    {
+      "type": "header",
+      "content": "Tabs"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_description",
+      "label": "Open the description tab",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "care",
+      "label": "Care",
+      "info": "Used when the product has no custom.care metafield.",
+      "default": "<p>Noņem rotu pirms mazgāšanās, peldēšanās, sporta un kosmētikas lietošanas. Glabā sausā vietā, atsevišķi no citām rotām.</p>"
+    },
+    {
+      "type": "product",
+      "id": "care_product",
+      "label": "Care product to suggest",
+      "info": "For example the jewellery care cloth."
+    },
+    {
+      "type": "richtext",
+      "id": "shipping",
+      "label": "Delivery and returns",
+      "default": "<p>Omniva pakomātā visā Latvijā. Bez maksas saņemšana veikalā Blaumaņa ielā 17, Rīgā.</p><p>30 dienas atgriešanai: rotai jābūt nelietotai un oriģinālajā iepakojumā.</p>"
+    },
+    {
+      "type": "page",
+      "id": "shipping_page",
+      "label": "Page with the full terms"
+    }
+  ]
+}
+{% endschema %}

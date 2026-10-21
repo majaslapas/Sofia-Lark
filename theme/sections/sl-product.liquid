@@ -123,7 +123,7 @@
   endif
 
   # the metal in a few words: the first clause, capitalised, at most 44 characters
-  assign finish = f_plating | default: f_material
+  assign finish = f_material
   if finish != ''
     assign finish = finish | split: ';' | first | replace: ',', ', ' | replace: ' ,', ',' | replace: '  ', ' ' | replace: '  ', ' ' | strip | truncate: 44, '…'
     assign finish_end = finish | slice: -1
@@ -300,7 +300,19 @@
       {%- comment -%} ---------- buy box ---------- {%- endcomment -%}
       <div class="sl-p__buy" id="sl-buy">
         <h1 class="sl-p__title{% if product.title.size > 34 %} sl-p__title--long{% endif %}">{{ product.title | escape }}</h1>
-        {%- if f_subtitle != '' -%}
+        {%- liquid
+          # a "summary" that only repeats the name ("Pegaza Spārni") is left out
+          assign sub_plain = f_subtitle | downcase | remove: '"' | remove: '“' | remove: '”' | remove: ' ' | strip
+          assign title_plain = product.title | downcase | remove: '"' | remove: '“' | remove: '”' | remove: ' ' | strip
+          assign show_subtitle = false
+          if f_subtitle != ''
+            assign show_subtitle = true
+            if title_plain contains sub_plain
+              assign show_subtitle = false
+            endif
+          endif
+        -%}
+        {%- if show_subtitle -%}
           <p class="sl-p__subtitle">{{ f_subtitle | escape }}</p>
         {%- endif -%}
 
@@ -333,6 +345,16 @@
         {%- capture facts -%}
           {%- if dims != '' -%}<li><b>{{ dims | escape }}</b></li>{%- endif -%}
           {%- if finish != '' -%}<li>{{ finish | escape }}</li>{%- endif -%}
+          {%- liquid
+            # plating as a fact of its own, unless the material already says it ("Gold-plated (14 carats)")
+            assign show_plating = false
+            if f_plating != ''
+              unless finish contains '14'
+                assign show_plating = true
+              endunless
+            endif
+          -%}
+          {%- if show_plating -%}<li>{{ f_plating | escape }}</li>{%- endif -%}
           {%- if f_stone != '' -%}<li>{{ f_stone | truncate: 40, '…' | escape }}</li>{%- endif -%}
           {%- if f_water -%}<li>Nemaina krāsu ūdenī</li>{%- elsif f_tarnish -%}<li>Nemaina krāsu</li>{%- endif -%}
           {%- if f_hypo -%}<li>Hipoalerģiska</li>{%- endif -%}
@@ -521,12 +543,11 @@
               <summary>Izmēri un materiāli</summary>
               <div class="sl-p__tab-body">
                 <dl class="sl-p__spec">
-                  {%- if f_length != '' and f_width != '' -%}
-                    <dt>Izmērs</dt><dd>{{ dims | escape }}</dd>
-                  {%- else -%}
-                    {%- if f_size != '' -%}<dt>Izmērs</dt><dd>{{ f_size | escape }}</dd>{%- endif -%}
+                  {%- if f_length != '' or f_width != '' -%}
                     {%- if f_length != '' -%}<dt>Garums</dt><dd>{{ f_length | escape }}</dd>{%- endif -%}
                     {%- if f_width != '' -%}<dt>Platums</dt><dd>{{ f_width | escape }}</dd>{%- endif -%}
+                  {%- elsif f_size != '' -%}
+                    <dt>Izmērs</dt><dd>{{ f_size | escape }}</dd>
                   {%- endif -%}
                   {%- if f_diameter != '' -%}<dt>Diametrs</dt><dd>{{ f_diameter | escape }}</dd>{%- endif -%}
                   {%- if f_material != '' -%}<dt>Materiāls</dt><dd>{{ f_material | escape }}</dd>{%- endif -%}

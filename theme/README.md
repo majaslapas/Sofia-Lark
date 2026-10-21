@@ -52,23 +52,23 @@ Products that use another template (`product.gift-card`, `product.high-variant`,
 - If the theme is switched to **drawer**, the theme's own drawer opens instead. The section sends the same `ajaxProduct:added` event the theme listens for.
 - The header cart badge updates either way.
 
-## Making it better over time (optional)
+## Product metafields
 
-Nothing here is needed for the page to work. Each item just improves what a product shows.
+Eight product metafields exist in the store and were filled from the descriptions for 263 products: `custom.subtitle`, `length_mm`, `width_mm`, `plating`, `stone`, `care`, `water_resistant` and `hypoallergenic`. What was written, by which rule, and how to undo it is in [`../metafields/README.md`](../metafields/README.md).
 
-- **Size lines in descriptions** ("Izmērs: 4 × 3 cm" or "Garums: 61 mm") give a product a size in its key facts.
-- **Metafields** under *Settings → Custom data → Products*, namespace `custom`, override what the description says:
-  - `subtitle` (single line text)
-  - `length_mm`, `width_mm` (integer)
-  - `plating`, `stone` (single line text)
-  - `care` (rich text)
-  - `water_resistant`, `hypoallergenic` (true or false)
-- **Complementary products** in the Search & Discovery app replace Shopify's automatic recommendations with hand-picked ones.
-- **The old metafields.** The existing `custom.material` and `custom.earring_closure` are used only where a description says nothing. Some hold wrong values (Calypso says "Juveliertērauds", stainless steel), so they're worth correcting.
+For each fact, the page uses the first that exists:
+1. the filled metafield;
+2. what the description says;
+3. for material and closure only, the older `custom.material` and `custom.earring_closure`.
+
+Anything empty is left out, so every product looks complete whatever is filled. Some older metafields hold wrong values (Calypso's `custom.material` says "Juveliertērauds"), but they're only used where a description says nothing.
+
+"Sader kopā" also reads the Search & Discovery app's **complementary products**. Filling those replaces Shopify's automatic recommendations with hand-picked ones.
 
 ## How it was checked
 
 - **Theme Check** (`shopify theme check`): 0 offenses.
+- **The whole template with and without metafields.** All 278 products rendered twice: once with the values now stored, once with none. Both give complete pages.
 - **The facts parser, on all 278 published products.** The rules were first written as a Python prototype limited to what Liquid can do. The Liquid snippet gives identical results on **278 of 278** products.
 - **The whole template, on all 278 products.** Each was rendered with LiquidJS and Shopify-style filters from the store's public `products.json`, and all 278 rendered without an error.
 - **In a browser**, inside a saved copy of the live product page with the real `theme.css`, `theme.js`, header and footer, and with the cart and recommendations endpoints mocked.

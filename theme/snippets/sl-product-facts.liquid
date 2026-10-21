@@ -131,6 +131,19 @@
 
     if key == ''
       # The first ordinary line may be the one-line summary under the title.
+      # a short first line naming the stones ("Natural pearls") is the stone, not a summary
+      if story_count == 0 and l.size <= 45
+        assign lead_word = low | slice: 0, 7
+        assign lead_word_lv = low | slice: 0, 5
+        if lead_word == 'natural' or lead_word_lv == 'dabīg'
+          unless found contains '|stone|'
+            assign out = out | append: 'stone¦' | append: l | append: '§'
+            assign found = found | append: 'stone|'
+          endunless
+          assign story_count = story_count | plus: 1
+          continue
+        endif
+      endif
       if story_count == 0 and l.size >= 12 and l.size <= 90
         assign last_char = l | slice: -1
         assign is_claim = false
@@ -140,7 +153,11 @@
             break
           endif
         endfor
-        if last_char != ':' and last_char != '?' and last_char != '!' and low != 'description' and low != 'apraksts' and is_claim == false
+        # "Kulons: 12 cm" is a measurement, not a summary
+        if l contains ':'
+          assign is_claim = true
+        endif
+        if last_char != '?' and last_char != '!' and low != 'description' and low != 'apraksts' and is_claim == false
           assign subtitle = l
         endif
       endif
@@ -207,17 +224,15 @@
   endunless
 
   # Claims, read from the whole description.
+  # only phrases that say it outright; "saldūdens pērles" (freshwater pearls) is not a promise
   assign water = false
-  if whole contains 'ūden'
-    if whole contains 'nemaina' or whole contains 'izturīg' or whole contains 'nebaidās' or whole contains 'neoksid' or whole contains 'noturīg'
+  assign water_phrases = 'saskarē ar ūden|saskarē at ūden|pret ūdeni|ūdensdroš|ūdensizturīg|pret mitrumu|contact with water|water-resistant|water resistant|waterproof' | split: '|'
+  for ph in water_phrases
+    if whole contains ph
       assign water = true
+      break
     endif
-  endif
-  if whole contains 'water'
-    if whole contains 'not change' or whole contains 'tarnish' or whole contains 'water-resistant' or whole contains 'water resistant'
-      assign water = true
-    endif
-  endif
+  endfor
   if product.metafields.custom.water_resistant.value
     assign water = true
   endif
@@ -241,12 +256,29 @@
   if mf.subtitle.value != blank
     assign subtitle = mf.subtitle.value
   endif
-  if mf.length_mm.value != blank
-    assign over = over | append: 'length¦' | append: mf.length_mm.value | append: ' mm§'
-  endif
-  if mf.width_mm.value != blank
-    assign over = over | append: 'width¦' | append: mf.width_mm.value | append: ' mm§'
-  endif
+  # numbers read the Latvian way: 45 mm, 11,5 mm, 19 cm (never 45.0, never 190 mm)
+  assign dim_keys = 'length,width' | split: ','
+  for dk in dim_keys
+    if dk == 'length'
+      assign raw_dim = mf.length_mm.value
+    else
+      assign raw_dim = mf.width_mm.value
+    endif
+    if raw_dim != blank
+      assign num = raw_dim | plus: 0
+      assign unit_label = ' mm'
+      if num >= 100
+        assign num = num | divided_by: 10.0
+        assign unit_label = ' cm'
+      endif
+      assign n = num | round: 1 | append: ''
+      assign n_end = n | slice: -2, 2
+      if n_end == '.0'
+        assign n = n | remove_last: '.0'
+      endif
+      assign over = over | append: dk | append: '¦' | append: n | replace: '.', ',' | append: unit_label | append: '§'
+    endif
+  endfor
   if mf.plating.value != blank
     assign over = over | append: 'plating¦' | append: mf.plating.value | append: '§'
   endif

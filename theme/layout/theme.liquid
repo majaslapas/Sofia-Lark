@@ -18,10 +18,7 @@
   {%- endif -%}
 
   {%- render 'seo-title' -%}
-
-  {%- if page_description -%}
-  <meta name="description" content="{{ page_description | escape }}">
-  {%- endif -%}
+  {%- render 'sl-seo' -%}
 
   {%- render 'social-meta-tags' -%}
   {%- render 'head.import-map' -%}

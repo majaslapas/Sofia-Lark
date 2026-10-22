@@ -77,6 +77,15 @@
   word-break: normal;
   hyphens: none;
 }
+.sl-ch__name {
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  min-width: 0;
+}
 .sl-ch__count {
   flex: none;
   margin-top: 0.3em;

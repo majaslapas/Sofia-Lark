@@ -74,12 +74,13 @@
       {%- if c.all_products_count == 0 -%}
         <span class="sl-tag sl-ch__tag">Tikai veikalā</span>
       {%- endif -%}
-      <h1 id="{{ head_id }}-title" class="sl-ch__title" style="--sl-chars: {{ chars }}">
-        {{- name | escape -}}
+      {%- comment -%} the heading is the name alone; the count sits beside it, outside the h1 {%- endcomment -%}
+      <div class="sl-ch__title" style="--sl-chars: {{ chars }}">
+        <h1 id="{{ head_id }}-title" class="sl-ch__name">{{ name | escape }}</h1>
         {%- if c.all_products_count > 0 -%}
           <span class="sl-ch__count">{{ c.all_products_count }}<span class="visually-hidden"> rotas</span></span>
         {%- endif -%}
-      </h1>
+      </div>
 
       {%- if lede != blank -%}
         <p class="sl-ch__lede">{{ lede | escape }}</p>

@@ -1,0 +1,34 @@
+{%- comment -%}
+  Sofia Lark: the collections page and search results get Latvian titles (Shopify names them
+  "Collections" and "Search: … results found").
+{%- endcomment -%}
+{%- liquid
+  assign shop_name = shop.name | strip
+  assign title = page_title
+  if request.page_type == 'list-collections'
+    assign title = 'Kolekcijas'
+  elsif request.page_type == 'search'
+    if search.performed
+      assign title = search.terms | escape | prepend: 'Meklēšana: '
+    else
+      assign title = 'Meklēšana'
+    endif
+  endif
+-%}
+{%- capture seo_title -%}
+  {{ title }}
+  {%- if current_tags -%}
+    {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+  {%- endif -%}
+  {%- if current_page != 1 -%}
+    &ndash; {{ current_page }}. lapa
+  {%- endif -%}
+  {%- if template == 'password' -%}
+    {{ shop.name }}
+  {%- else -%}
+    {%- unless title contains shop_name -%}
+      &ndash; {{ shop_name }}
+    {%- endunless -%}
+  {%- endif -%}
+{%- endcapture -%}
+<title>{{ seo_title | strip }}</title>

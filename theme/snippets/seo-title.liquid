@@ -15,20 +15,21 @@
     endif
   endif
 -%}
-{%- capture seo_title -%}
-  {{ title }}
-  {%- if current_tags -%}
-    {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
-  {%- endif -%}
-  {%- if current_page != 1 -%}
-    &ndash; {{ current_page }}. lapa
-  {%- endif -%}
-  {%- if template == 'password' -%}
-    {{ shop.name }}
-  {%- else -%}
-    {%- unless title contains shop_name -%}
-      &ndash; {{ shop_name }}
-    {%- endunless -%}
-  {%- endif -%}
-{%- endcapture -%}
+{%- liquid
+  assign seo_title = title
+  if current_tags
+    assign meta_tags = current_tags | join: ', ' | escape
+    assign seo_title = seo_title | append: ' &ndash; ' | append: meta_tags
+  endif
+  if current_page != 1
+    assign seo_title = seo_title | append: ' &ndash; ' | append: current_page | append: '. lapa'
+  endif
+  if template == 'password'
+    assign seo_title = shop_name
+  else
+    unless title contains shop_name
+      assign seo_title = seo_title | append: ' &ndash; ' | append: shop_name
+    endunless
+  endif
+-%}
 <title>{{ seo_title | strip }}</title>

@@ -28,9 +28,9 @@
 
   <meta property="og:site_name" content="{{ shop.name | strip }}">
   <meta property="og:url" content="{{ og_url }}">
-  <meta property="og:title" content="{{ og_title | escape }}">
+  <meta property="og:title" content="{{ og_title | escape_once }}">
   <meta property="og:type" content="{{ og_type }}">
-  <meta property="og:description" content="{{ og_description | escape }}">
+  <meta property="og:description" content="{{ og_description | escape_once }}">
   <meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}{% unless request.locale.iso_code contains '-' %}_{{ request.locale.iso_code | upcase }}{% endunless %}">
   {%- if template_base == 'product' -%}
     <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
@@ -49,5 +49,5 @@
     <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | split: 'x.com/' | last | prepend: '@' }}">
   {%- endif -%}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ og_title | escape }}">
-  <meta name="twitter:description" content="{{ og_description | escape }}">
+  <meta name="twitter:title" content="{{ og_title | escape_once }}">
+  <meta name="twitter:description" content="{{ og_description | escape_once }}">

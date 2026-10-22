@@ -73,7 +73,7 @@
               {%- if b.text_end != blank -%}<div class="sl-st__rte">{{ b.text_end }}</div>{%- endif -%}
               {%- if b.image != blank -%}
                 <figure class="sl-st__fig" style="--w: {{ b.image.width }}px">
-                  {%- assign alt = b.image.alt | escape -%}
+                  {%- assign alt = b.image.alt | default: b.title | default: b.label | default: page.title | escape -%}
                   {{- b.image | image_url: width: 1400 | image_tag: widths: '400, 600, 900, 1400', sizes: '(min-width: 990px) 40vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
                   {%- if b.caption != blank -%}<figcaption>{{ b.caption | escape }}</figcaption>{%- endif -%}
                 </figure>
@@ -119,7 +119,7 @@
           <div class="page-width sl-st__split-inner">
             {%- if b.image != blank -%}
               <figure class="sl-st__split-media" style="--w: {{ b.image.width }}px">
-                {%- assign alt = b.image.alt | escape -%}
+                {%- assign alt = b.image.alt | default: b.title | default: b.label | default: page.title | escape -%}
                 {{- b.image | image_url: width: 1400 | image_tag: widths: '400, 600, 900, 1400', sizes: '(min-width: 990px) 45vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
                 {%- if b.caption != blank -%}<figcaption>{{ b.caption | escape }}</figcaption>{%- endif -%}
               </figure>
@@ -201,7 +201,7 @@
           <div class="page-width sl-st__poem-inner">
             {%- if b.image != blank -%}
               <figure class="sl-st__poem-media">
-                {%- assign alt = b.image.alt | escape -%}
+                {%- assign alt = b.image.alt | default: b.title | default: b.label | default: page.title | escape -%}
                 {{- b.image | image_url: width: 1200 | image_tag: widths: '400, 600, 900, 1200', sizes: '(min-width: 990px) 36vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
               </figure>
             {%- endif -%}
@@ -341,7 +341,7 @@
           <div class="sl-st__close-inner">
             {%- if b.image != blank -%}
               <figure class="sl-st__close-media">
-                {%- assign alt = b.image.alt | escape -%}
+                {%- assign alt = b.image.alt | default: b.title | default: b.label | default: page.title | escape -%}
                 {{- b.image | image_url: width: 1600 | image_tag: widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
               </figure>
             {%- endif -%}

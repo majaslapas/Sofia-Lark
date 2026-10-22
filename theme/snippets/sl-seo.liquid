@@ -37,7 +37,11 @@
 {%- endif %}
 
 {%- liquid
+  # Shopify's own description arrives already escaped; the written ones are escaped below
   assign description = page_description | strip_html | strip
+  if request.page_type == 'list-collections'
+    assign description = ''
+  endif
   if description == blank
     case request.page_type
       when 'collection'
@@ -76,7 +80,7 @@
   assign description = description | replace: '  ', ' ' | truncate: 300
 -%}
 {%- if description != blank %}
-<meta name="description" content="{{ description | escape }}">
+<meta name="description" content="{{ description | escape_once }}">
 {%- endif -%}
 
 {%- liquid

@@ -4,8 +4,8 @@
   - the favicon and the home-screen icons (the bird, white on black);
   - the meta description, with a written fallback where Shopify has none (categories and
     collections without a description, the collections page);
-  - "noindex" on search results and on filtered collection pages, so only the plain pages are
-    indexed (the filter links are still followed);
+  - "noindex" on search results and on filtered collection pages (a filter, or a kind of jewellery
+    as /collections/<handle>/<tag>), so only the plain pages are indexed (the filter links are still followed);
   - structured data for Google: the shop, its website search and the shop in Rīga on the homepage
     and the shop page; each product with its price, availability and Judge.me rating; breadcrumbs
     on products and collections.
@@ -106,6 +106,9 @@
   elsif request.page_type == 'page' and quiet_pages contains page.handle
     assign noindex = true
   elsif request.page_type == 'collection'
+    if current_tags
+      assign noindex = true
+    endif
     for filter in collection.filters
       if filter.active_values.size > 0 or filter.min_value.value != nil or filter.max_value.value != nil
         assign noindex = true

@@ -63,6 +63,19 @@
     });
   });
 
+  // the Veids links open another address (/collections/<handle>/<kind>); they keep the price,
+  // material and other choices and the sort already made, but not the page number
+  root.querySelectorAll('[data-sl-keep]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const params = new URLSearchParams(window.location.search);
+      params.delete('page');
+      const url = new URL(link.href);
+      url.search = params.toString();
+      link.href = url.toString();
+      root.classList.add('is-loading');
+    });
+  });
+
   // coming back with the browser's back button shows the page as it was, not dimmed
   window.addEventListener('pageshow', () => root.classList.remove('is-loading'));
 })();

@@ -273,16 +273,21 @@
             {%- if filter.type == 'price_range' -%}
               {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
                 {%- liquid
-                  assign from = filter.min_value.value | default: 0 | divided_by: 100
-                  assign top = filter.range_max | plus: 99 | divided_by: 100
-                  assign to = top
-                  if filter.max_value.value != nil
+                  if filter.min_value.value != nil and filter.max_value.value != nil
+                    assign from = filter.min_value.value | divided_by: 100
                     assign to = filter.max_value.value | divided_by: 100
+                    assign price_label = '€' | append: from | append: '–' | append: to
+                  elsif filter.min_value.value != nil
+                    assign from = filter.min_value.value | divided_by: 100
+                    assign price_label = 'No €' | append: from
+                  else
+                    assign to = filter.max_value.value | divided_by: 100
+                    assign price_label = 'Līdz €' | append: to
                   endif
                 -%}
                 <li>
-                  <a class="sl-fl__chip" href="{{ filter.url_to_remove }}#SlFilters" aria-label="Noņemt filtru: cena {{ from }}–{{ to }} €">
-                    €{{ from }}–{{ to }}
+                  <a class="sl-fl__chip" href="{{ filter.url_to_remove }}#SlFilters" aria-label="Noņemt filtru: cena {{ price_label }}">
+                    {{ price_label }}
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" width="12" height="12"><path d="m5 5 10 10M15 5 5 15" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
                   </a>
                 </li>

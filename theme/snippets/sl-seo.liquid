@@ -132,7 +132,8 @@
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": {{ site | append: routes.search_url | append: '?q={search_term_string}' | json }}
+            {%- comment -%} written out: Shopify ends an output tag at its first closing brace, even one inside a string {%- endcomment %}
+            "urlTemplate": "{{ site }}{{ routes.search_url }}?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }

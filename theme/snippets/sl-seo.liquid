@@ -47,6 +47,11 @@
   if request.page_type == 'list-collections'
     assign description = ''
   endif
+  # a product without its own search description: Shopify runs its lines together
+  # ("tēraudsNemaina"), so the description is rebuilt with a space at each line break
+  if request.page_type == 'product' and product.metafields.global.description_tag == blank
+    assign description = product.description | replace: '</p>', ' </p>' | replace: '<br', ' <br' | replace: '</li>', ' </li>' | replace: '</h', ' </h' | strip_html | strip_newlines | replace: '&nbsp;', ' ' | strip
+  endif
   if description == blank
     case request.page_type
       when 'collection'
@@ -85,7 +90,7 @@
         endif
     endcase
   endif
-  assign description = description | replace: '  ', ' ' | truncate: 300
+  assign description = description | replace: '  ', ' ' | replace: '  ', ' ' | truncate: 200
 -%}
 {%- if description != blank %}
 <meta name="description" content="{{ description | escape_once }}">
@@ -200,7 +205,7 @@
     endif
     assign rating = product.metafields.reviews.rating.value
     assign rating_count = product.metafields.reviews.rating_count.value | default: 0
-    assign product_description = product.description | strip_html | replace: '  ', ' ' | strip | truncate: 900
+    assign product_description = product.description | replace: '</p>', ' </p>' | replace: '<br', ' <br' | replace: '</li>', ' </li>' | strip_html | strip_newlines | replace: '&nbsp;', ' ' | replace: '  ', ' ' | strip | truncate: 900
   -%}
   <script type="application/ld+json">
   {

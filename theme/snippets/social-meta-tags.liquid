@@ -13,6 +13,9 @@
 {%- if request.page_type == 'product' -%}
   {%- assign og_title = product.title | strip_html -%}
   {%- assign og_type = 'product' -%}
+  {%- if product.metafields.global.description_tag == blank -%}
+    {%- assign og_description = product.description | replace: '</p>', ' </p>' | replace: '<br', ' <br' | replace: '</li>', ' </li>' | strip_html | strip_newlines | replace: '&nbsp;', ' ' | strip -%}
+  {%- endif -%}
 {%- elsif request.page_type == 'article' -%}
   {%- assign og_title = article.title | strip_html -%}
   {%- assign og_type = 'article' -%}

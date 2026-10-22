@@ -223,6 +223,7 @@
             {%- assign shown = 1 -%}
             <figure class="sl-p__media sl-p__media--wide sl-p__media--lead" data-sl-lead>
               {%- assign lead_alt = lead.alt | default: product.title | escape -%}
+              <button type="button" class="sl-p__zoom" data-sl-zoom aria-label="Palielināt attēlu">
               {{- lead.preview_image | image_url: width: 1600 | image_tag:
                 widths: '600, 800, 1000, 1200, 1600',
                 sizes: gallery_sizes,
@@ -231,6 +232,7 @@
                 alt: lead_alt,
                 class: 'sl-p__img'
               -}}
+              </button>
             </figure>
           {%- else -%}
             <figure class="sl-p__media sl-p__media--wide">

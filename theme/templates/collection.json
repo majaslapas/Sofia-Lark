@@ -228,10 +228,18 @@
         "full_width": false,
         "space_around": true
       }
+    },
+    "sl_filters": {
+      "type": "sl-filters",
+      "settings": {
+        "menu": "galvena-izvelne-2026",
+        "menu_parent": "Rotas"
+      }
     }
   },
   "order": [
     "sl_collection_header",
+    "sl_filters",
     "main-collection",
     "reviews"
   ]

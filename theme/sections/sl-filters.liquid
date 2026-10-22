@@ -1,0 +1,39 @@
+{%- comment -%}
+  Sofia Lark filter bar for the collection pages (categories, "Visas rotas", the jewellery
+  collections). The bar itself is snippets/sl-filters.liquid; the search page renders the same one.
+{%- endcomment -%}
+{%- render 'sl-filters', source: collection, menu: section.settings.menu, menu_parent: section.settings.menu_parent -%}
+
+{% schema %}
+{
+  "name": "Sofia Lark filters",
+  "tag": "div",
+  "class": "sl-fl-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Filters come from the Search & Discovery app; add or remove them there."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu with the categories",
+      "info": "Shown as links above the filters. Leave empty to show none."
+    },
+    {
+      "type": "text",
+      "id": "menu_parent",
+      "label": "Menu item that holds the categories",
+      "default": "Rotas"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sofia Lark filters"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
+}
+{% endschema %}

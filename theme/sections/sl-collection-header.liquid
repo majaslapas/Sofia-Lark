@@ -71,13 +71,13 @@
         <a href="{{ section.settings.crumb_link | default: routes.collections_url }}">{{ section.settings.crumb_label | default: 'Kolekcijas' | escape }}</a>
       </nav>
 
-      {%- if c.products_count == 0 -%}
+      {%- if c.all_products_count == 0 -%}
         <span class="sl-tag sl-ch__tag">Tikai veikalā</span>
       {%- endif -%}
       <h1 id="{{ head_id }}-title" class="sl-ch__title" style="--sl-chars: {{ chars }}">
         {{- name | escape -}}
-        {%- if c.products_count > 0 -%}
-          <span class="sl-ch__count">{{ c.products_count }}<span class="visually-hidden"> rotas</span></span>
+        {%- if c.all_products_count > 0 -%}
+          <span class="sl-ch__count">{{ c.all_products_count }}<span class="visually-hidden"> rotas</span></span>
         {%- endif -%}
       </h1>
 

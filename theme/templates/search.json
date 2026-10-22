@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-search",
+      "settings": {
+        "enable_sidebar": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

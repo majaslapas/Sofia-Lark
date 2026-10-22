@@ -27,3 +27,20 @@ Theme (copy "Impulse – SEO labojumi (priekšskatījums)"):
 - Product structured data names the maker (Kalliope, Laviyen) as brand and carries the 30-day
   return policy.
 - Each category header has an opening line naming what it holds.
+
+## Pass 4: placeholders, collection names, blog, policies
+
+- **Products:** Aproce 5 → Arcus, Anima b → Anima, kaklarota 1m → Nexus, kaklarota 2 → Duo,
+  kaklarota 3 → Unda, kaklarota 4 → Orbis (SkyLab's naming: one Latin word); zvaigzne, bambus,
+  meža zieds, spāre, pušķis now start with a capital; TĪRĀMO LĪDZEKĻU KOMPLEKTS and ROTU KOPŠANAS
+  DRĀNIŅA are written normally. Nexus and Duo lost the unfilled line "Kaklarotas garums: ....cm"
+  (it showed as a fact on the page) and Arcus an empty image tag (`placeholder-descriptions.json`).
+  Photo alt text follows the new names (`alts-placeholder-fix.json`). Handles are unchanged.
+- **Collections:** ALL RINGS → Visi gredzeni, vissas rotas → Visas preces (it also holds the care
+  products), Gredzeni. → Gredzeni. Handles are unchanged.
+- **Blog** (`../2026-10-22-blog/news-before.atom` is the feed before): renamed News → Raksti; the
+  English article is now Latvian, at /blogs/news/juvelierterauda-auskari-un-kaklarotas (the old
+  address redirects); the two Latvian articles had their typos fixed; all three end with links to
+  Auskari / Kaklarotas and the shop in Rīga. The earrings article pointed to an article about face
+  shapes that does not exist; that sentence now points to the earrings instead.
+- **Policies:** see `../2026-10-22-policies/README.md`.

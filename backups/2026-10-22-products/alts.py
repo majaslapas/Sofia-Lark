@@ -19,6 +19,7 @@ STEMS = ['auskar', 'kaklarot', 'aproc', 'rokassprādz', 'gredzen', 'piesprau', '
 def clean(t):
     t = re.sub(r'\s+', ' ', t).strip()
     if t.upper() == t and any(c.isalpha() for c in t): t = t[0] + t[1:].lower()
+    t = t.replace('lidzekļu', 'līdzekļu')  # a typo in the product's own title
     return t
 out, n_skip = [], 0
 for p in products.values():

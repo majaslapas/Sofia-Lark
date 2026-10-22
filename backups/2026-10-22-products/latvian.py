@@ -10,9 +10,9 @@ def add(handle, title, facts, *story):
     L[handle] = {'title': title, 'body_html': body}
 
 WATER = 'Nemaina krāsu saskarē ar ūdeni.'
-STEEL = 'juveliertērauds (nerūsējošais tērauds)'
-GSTEEL = 'zeltīts juveliertērauds (nerūsējošais tērauds)'
-GBRASS = 'zeltīts misiņš (14 karātu zeltījums)'
+STEEL = 'juveliertērauds'
+GSTEEL = 'zeltīts juveliertērauds'
+GBRASS = 'misiņš ar 14 karātu zeltījumu'
 
 add('dionysus', 'Dionysus auskari',
     [('Materiāls', GSTEEL)],
@@ -20,19 +20,19 @@ add('dionysus', 'Dionysus auskari',
     'Mītiska greznība tavai rotu kolekcijai. Izturīgi juveliertērauda auskari, kas piešķir tēlam dievišķu eleganci gan īpašos svētkos, gan ikdienā.')
 
 add('isreala-earrings-copy', 'Mara auskari',
-    [('Izmērs', '3,5 × 8 cm'), ('Materiāls', 'juveliertērauds, dabīgie akmeņi, emalja')],
+    [('Izmērs', '3,5 × 8 cm'), ('Materiāls', 'juveliertērauds, emalja'), ('Akmeņi', 'dabīgie akmeņi')],
     'Mara auskari ir drosmīga un mistiska rota, ko iedvesmojusi acs kā sargājošs simbols. Košas emaljas detaļas un dabīgie akmeņi, kas viegli šūpojas, veido izteiksmīgu akcentu gan ikdienai, gan svētkiem.')
 
 add('b7450', 'Isreala auskari',
-    [('Izmērs', '3,2 × 7,2 cm'), ('Materiāls', 'juveliertērauds, dabīgie akmeņi, emalja')],
+    [('Izmērs', '3,2 × 7,2 cm'), ('Materiāls', 'juveliertērauds, emalja'), ('Akmeņi', 'dabīgie akmeņi')],
     'Isreala auskarus iedvesmojusi acs spēcīgā simbolika. Acs forma ar košu emalju un dabīgiem akmeņiem, kas karājas smalkās ķēdītēs, rada noslēpumainu un elegantu akcentu jebkuram tērpam.')
 
 add('b7351', 'Isis auskari',
-    [('Izmērs', '0,8 × 1,3 cm'), ('Materiāls', 'misiņš, saldūdens pērles')],
+    [('Izmērs', '0,8 × 1,3 cm'), ('Materiāls', 'misiņš'), ('Akmeņi', 'saldūdens pērles')],
     'Elegance vienkāršībā: misiņa auskari ar smalku saldūdens pērles lāsi un mazu mirdzošu kristāla zvaigznīti augšpusē. Klasiska rota, kas der gan ikdienai, gan īpašiem brīžiem.')
 
 add('b6799', 'Gaija auskari',
-    [('Izmērs', '3 × 8 cm'), ('Materiāls', 'nerūsējošais tērauds, kristāli')],
+    [('Izmērs', '3 × 8 cm'), ('Materiāls', 'nerūsējošais tērauds'), ('Akmeņi', 'kristāli')],
     'Gaija auskari staro greznību: faktūraina zelta krāsas augšdaļa un mirdzošu kristālu rinda, kas krīt kā bārkstis. Izteiksmīga rota, kas piešķir mirdzumu gan ikdienas, gan svētku tērpam.')
 
 add('b6654', 'Selena auskari',
@@ -44,15 +44,16 @@ add('kokete-earrings-copy', 'Zeltaini viļņoti auskari',
     'Gluda, viļņota forma ar spīdīgu zelta krāsas apdari, kas tver gaismu un iedzīvina tēlu. Vienkārši, bet pamanāmi auskari ikdienai un svētkiem.')
 
 add('star-drops', 'Zvaigžņu lāšu auskari',
-    [('Izmērs', '0,8 × 1,5 cm'), ('Materiāls', 'bronza, kristāli')],
+    [('Izmērs', '0,8 × 1,5 cm'), ('Materiāls', 'bronza'), ('Akmeņi', 'kristāli')],
     'Eleganti lāses formas auskari no bronzas, rotāti ar mirdzošiem kristāliem, kas tver gaismu katrā kustībā. Smalks mirdzums gan ikdienai, gan vakaram.')
 
 add('star-heart', 'Zvaigžņu sirds auskari',
-    [('Izmērs', '1,5 × 2,8 cm'), ('Materiāls', 'misiņš, kristāli')],
+    [('Izmērs', '1,5 × 2,8 cm'), ('Materiāls', 'misiņš'), ('Akmeņi', 'kristāli')],
     'Divu lodīšu auskari zelta krāsā: augšējā lodīte klāta ar mirdzošiem kristāliem, apakšējā – lielāka un gludi spīdīga. Rota, kas tver gaismu un piešķir tēlam greznību gan ikdienā, gan svētkos.')
 
 add('wave-ring-copy', 'Saules akmens gredzens',
-    [('Materiāls', 'nerūsējošais tērauds, ūdensizturīgs, hipoalerģisks'), ('Izmērs', '17')],
+    [('Materiāls', 'nerūsējošais tērauds'), ('Izmērs', '17')],
+    'Ūdensizturīgs un hipoalerģisks.',
     'Elegants gredzens, ko iedvesmojis dabas spēks un saules siltums. Tas neapsūbē un saglabā spīdumu arī saskarē ar ūdeni, tāpēc piemērots ikdienas valkāšanai.')
 
 add('wave-ring', 'Viļņa gredzens',
@@ -60,7 +61,7 @@ add('wave-ring', 'Viļņa gredzens',
     'Plūstoša forma, kas atgādina okeāna viļņu kustību. Zelta toņa gredzens ar minimālistisku un savdabīgu dizainu, kas der gan ikdienai, gan svinīgiem brīžiem.')
 
 add('aphrodites-ring', 'Afrodītes gredzens',
-    [('Materiāls', 'nerūsējošais tērauds, zeltīts'), ('Krāsa', 'zelta'), ('Izmērs', '18')],
+    [('Materiāls', 'zeltīts nerūsējošais tērauds'), ('Krāsa', 'zelta'), ('Izmērs', '18')],
     'Mīlestības un skaistuma dievietes iedvesmots gredzens: izteiksmīga sirds forma ar zelta apdari. Vienkāršs, bet spilgts dizains ikdienai un brīžiem, kad gribas izcelt savu stilu.')
 
 add('half-flower-earrings', 'Puszieda auskari',
@@ -129,7 +130,7 @@ add('b4485', 'Grācijas virpuļa auskari',
 add('golden-wave-charm', 'Zelta viļņa gredzens',
     [('Materiāls', GSTEEL), ('Izmērs', 'regulējams')],
     f'{WATER}',
-    'Elegants gredzens ar plūstošu formu un spīdīgu zelta apdari. Ūdensizturīgs un neapsūbē, bet regulējamais izmērs ļauj to pielāgot jebkuram pirkstam.')
+    'Elegants gredzens ar plūstošu formu un spīdīgu zelta apdari. Ūdensizturīgs un neapsūbē, un regulējamais izmērs ļauj to pielāgot jebkuram pirkstam.')
 
 add('moonlit-arch-ring', 'Mēnessgaismas arkas gredzens',
     [('Materiāls', 'zeltīts nerūsējošais tērauds'), ('Izmērs', 'regulējams')],
@@ -139,7 +140,7 @@ add('moonlit-arch-ring', 'Mēnessgaismas arkas gredzens',
 add('ball', 'Zelta lodītes gredzens',
     [('Materiāls', 'zeltīts nerūsējošais tērauds'), ('Izmērs', 'regulējams')],
     'Ūdensizturīgs, neapsūbē.',
-    'Mūsdienīgs gredzens: slaida horizontāla josla ar smalku lodīti, kas apvieno izsmalcinātību un drosmi. Izturīgais materiāls neapsūbē arī saskarē ar ūdeni, bet regulējamais izmērs ļauj gredzenu pielāgot jebkuram pirkstam.')
+    'Mūsdienīgs gredzens: slaida horizontāla josla ar smalku lodīti, kas apvieno izsmalcinātību un drosmi. Izturīgais materiāls neapsūbē arī saskarē ar ūdeni, un regulējamais izmērs ļauj gredzenu pielāgot jebkuram pirkstam.')
 
 add('ring-wave-copy', 'Četrlapu āboliņa gredzens',
     [('Materiāls', GSTEEL), ('Izmērs', 'regulējams')],
@@ -170,7 +171,7 @@ add('golden-clover-earrings-b7057', 'Zelta āboliņa auskari',
     'Āboliņa formas auskari ar greznu zelta apdari – romantiskai, mūsdienīgai sievietei, kurai patīk būt pamanītai. Pietiekami izteiksmīgi, lai izceltos, bet nepārspīlēti, gan svētkiem, gan ikdienai.')
 
 add('bouquet-of-golden-flowers', 'Zelta ziedu pušķa auskari',
-    [('Materiāls', 'juveliertērauds (nerūsējošais tērauds), zeltīts'), ('Izmērs', '4 × 4 cm')],
+    [('Materiāls', 'zeltīts juveliertērauds'), ('Izmērs', '4 × 4 cm')],
     f'{WATER}',
     'Auskari kā smalks zelta ziedu pušķis – dabas elegance un mūsdienīgs izsmalcinātums vienā rotā. Viegli, tāpēc ērti valkājami visu dienu vai vakaru. Lieliska dāvana tuvam cilvēkam vai sev.')
 
@@ -179,7 +180,7 @@ add('aproce-24-3', 'Homēra horizonta aproce',
     'Daudzpusīga aproce, kas lieliski izskatās viena vai kopā ar citām aprocēm. Tiem, kam patīk kombinēt un veidot savu stilu.')
 
 add('copy-of-pink-tourmaline-decorated-heart-earrings', 'Oniksa pušķa auskari',
-    [('Materiāls', 'juveliertērauds (nerūsējošais tērauds), onikss'), ('Izmērs', '3 × 7,5 cm')],
+    [('Materiāls', 'juveliertērauds'), ('Akmeņi', 'onikss'), ('Izmērs', '3 × 7,5 cm')],
     f'{WATER}')
 
 add('copy-of-golden-textured-clouds-earrings', 'Zelta mākoņu auskari II',
@@ -199,41 +200,41 @@ add('rhinestone-palm-leaf-earrings', 'Palmas lapas auskari ar kristāliem',
     f'{WATER}')
 
 add('modernist-auskari-24-19', 'Prizmas lāšu auskari',
-    [('Materiāls', '14 karātu zeltījums, dabīgie dārgakmeņi un kaķacs efekta kristāli'), ('Garums', '65 mm'), ('Platums', '18 mm')],
+    [('Materiāls', '14 karātu zeltījums'), ('Akmeņi', 'dabīgie dārgakmeņi, kaķacs kristāli'), ('Garums', '65 mm'), ('Platums', '18 mm')],
     'Krāsains akcents jebkuram tērpam: izteiksmīgi auskari ar pērlītēm spilgtos toņos.')
 
 add('earrings-euterpe-1', 'Euterpe auskari ar pērlēm',
-    [('Materiāls', GBRASS + ', dabīgās pērles'), ('Garums', '39 mm'), ('Platums', '16 mm')])
+    [('Materiāls', GBRASS), ('Akmeņi', 'dabīgās pērles'), ('Garums', '39 mm'), ('Platums', '16 mm')])
 
 add('sarkana-silimanita-papardes', 'Papardes auskari',
     [('Materiāls', GBRASS), ('Garums', '56 mm'), ('Platums', '38 mm')],
     'Lieli, izteiksmīgi auskari ar oriģinālu dizainu – elegance un mākslinieciskums vienā rotā.')
 
 add('bold', 'Bold auskari',
-    [('Izmērs', '3 × 7,3 cm'), ('Materiāls', 'nerūsējošais tērauds, kristāli')],
+    [('Izmērs', '3 × 7,3 cm'), ('Materiāls', 'nerūsējošais tērauds'), ('Akmeņi', 'kristāli')],
     'Auskari tiem, kas grib būt pamanīti: savdabīga ģeometriska forma ar mirdzošiem kristāliem vakaram vai īpašam notikumam. Hipoalerģiski, tāpēc piemēroti jutīgai ādai, un neapsūbē, saglabājot spīdumu.')
 
 add('earrings-euterpe', 'Euterpe auskari ar pērlēm un kvarcu',
-    [('Materiāls', GBRASS + ', dabīgās pērles un kvarcs'), ('Garums', '40 mm'), ('Platums', '22 mm')])
+    [('Materiāls', GBRASS), ('Akmeņi', 'dabīgās pērles un kvarcs'), ('Garums', '40 mm'), ('Platums', '22 mm')])
 
 add('earrings-siren', 'Sirēnas auskari',
     [('Materiāls', GBRASS)])
 
 add('earrings-calypso', 'Calypso auskari',
-    [('Materiāls', '14 karātu zeltījums, dabīgās pērles vai kristāli'), ('Garums', '61 mm'), ('Platums', '14 mm')],
+    [('Materiāls', '14 karātu zeltījums'), ('Akmeņi', 'dabīgās pērles vai kristāli'), ('Garums', '61 mm'), ('Platums', '14 mm')],
     'Jūras skaistums tavā tēlā: auskari ar 14 karātu zeltījumu un dabīgām pērlēm vai zaļu silimanītu un krāsainiem kristāliem pēc izvēles.')
 
 add('earrings-olympic-palm', 'Olimpa palmas auskari',
-    [('Materiāls', '14 karātu zeltījums, dabīgās pērles')])
+    [('Materiāls', '14 karātu zeltījums'), ('Akmeņi', 'dabīgās pērles')])
 
 add('naudinas', 'Trojas monētu auskari',
     [('Materiāls', GBRASS), ('Garums', '50 mm'), ('Platums', '34 mm')])
 
 add('la-radorita-paparde', 'Labradorīta papardes auskari',
-    [('Materiāls', GBRASS + ', dabīgs kristāls')])
+    [('Materiāls', GBRASS), ('Akmeņi', 'dabīgs kristāls')])
 
 add('lauvas-ar-kristaliem', 'Kristāla lauvas auskari',
-    [('Materiāls', GBRASS + ', dabīgs kristāls'), ('Garums', '48 mm'), ('Platums', '19 mm')])
+    [('Materiāls', GBRASS), ('Akmeņi', 'dabīgs kristāls'), ('Garums', '48 mm'), ('Platums', '19 mm')])
 
 add('labradorita-lauvas', 'Tumšās lauvas auskari',
     [('Materiāls', GBRASS), ('Garums', '48 mm'), ('Platums', '19 mm')])

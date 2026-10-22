@@ -19,16 +19,16 @@
   assign seo_title = title
   if current_tags
     assign meta_tags = current_tags | join: ', ' | escape
-    assign seo_title = seo_title | append: ' &ndash; ' | append: meta_tags
+    assign seo_title = seo_title | append: ' – ' | append: meta_tags
   endif
   if current_page != 1
-    assign seo_title = seo_title | append: ' &ndash; ' | append: current_page | append: '. lapa'
+    assign seo_title = seo_title | append: ' – ' | append: current_page | append: '. lapa'
   endif
   if template == 'password'
     assign seo_title = shop_name
   else
     unless title contains shop_name
-      assign seo_title = seo_title | append: ' &ndash; ' | append: shop_name
+      assign seo_title = seo_title | append: ' – ' | append: shop_name
     endunless
   endif
 -%}

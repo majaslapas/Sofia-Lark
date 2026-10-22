@@ -33,6 +33,14 @@
       assign image = about.settings.image
     endif
   endif
+  # the longest word of the name, so the stylesheet can size it to fit without breaking it
+  assign chars = 1
+  assign words = name | split: ' '
+  for w in words
+    if w.size > chars
+      assign chars = w.size
+    endif
+  endfor
   assign head_id = 'SlCh-' | append: section.id
   assign img_alt = image.alt | default: name
   assign focus = 'object-position: ' | append: image.presentation.focal_point
@@ -66,7 +74,7 @@
       {%- if c.products_count == 0 -%}
         <span class="sl-tag sl-ch__tag">Tikai veikalā</span>
       {%- endif -%}
-      <h1 id="{{ head_id }}-title" class="sl-ch__title">
+      <h1 id="{{ head_id }}-title" class="sl-ch__title" style="--sl-chars: {{ chars }}">
         {{- name | escape -}}
         {%- if c.products_count > 0 -%}
           <span class="sl-ch__count">{{ c.products_count }}<span class="visually-hidden"> rotas</span></span>

@@ -1,0 +1,134 @@
+{
+  "sections": {
+    "story": {
+      "type": "sl-story",
+      "blocks": {
+        "open": {
+          "type": "opening",
+          "settings": {
+            "crumb_label": "Mūsu stāsts",
+            "crumb_link": "shopify://pages/filozofija",
+            "title": "Rotas sievietēm ar raksturu",
+            "lede": "Rotas, kas palīdz sievietei satikt sevi.",
+            "image": "shopify://shop_images/JurisZolbergs-5988.jpg"
+          }
+        },
+        "world": {
+          "type": "split",
+          "settings": {
+            "label": "",
+            "heading": "SOFIA LARK pasaule",
+            "text": "<p>SOFIA LARK rada rotas sievietēm, kuras izvēlas skaistumu ar raksturu, sajūtu un stāstu.</p><p>Mēs veidojam vidi, kur sieviete var atrast rotu, kas saskan ar viņas personību, dzīves ritmu un iekšējo spēku. Rotu, kas papildina viņas tēlu un vienlaikus atgādina par to, kas viņā jau dzīvo.</p>",
+            "lines": "",
+            "quote": "SOFIA LARK pasaulē rota kļūst par sajūtu, par ikdienas rituālu un par mazu spēka simbolu.",
+            "image": "shopify://shop_images/hf_20260313_075549_f5ff5f0d-6c56-4678-a6a5-f3c361a45406.jpg",
+            "image_side": "right",
+            "tone": "white"
+          }
+        },
+        "esi": {
+          "type": "tiles",
+          "settings": {
+            "label": "01",
+            "heading": "Esi tu",
+            "text": "<p>Mēs radām rotu kolekcijas sievietēm, kuras izvēlas būt pašas.</p>",
+            "item_1_title": "Ar savu raksturu",
+            "item_2_title": "Ar savu maigumu",
+            "item_3_title": "Ar savu drosmi",
+            "item_4_title": "Ar savu iekšējo pasauli",
+            "text_after": "<p>Mēs ticam, ka skaistums sākas brīdī, kad cilvēks atrod harmoniju ar sevi. Tieši tāpēc SOFIA LARK rotas ir radītas sievietēm, kuras vēlas izcelt savu individualitāti un justies pārliecināti savā tēlā.</p>",
+            "quote": "ESI TU ir mūsu aicinājums dzīvot skaisti, patiesi un ar pilnu klātbūtni.",
+            "tone": "white"
+          }
+        },
+        "alive": {
+          "type": "poem",
+          "settings": {
+            "label": "02",
+            "heading": "Skaistums ir dzīvs",
+            "lines": "Kustībā.\nRaksturā.\nProporcijā.\nFaktūrā.\nSajūtā.",
+            "text": "<p>SOFIA LARK tic dzīvajam skaistumam. Tas rodas kustībā, raksturā, proporcijā, faktūrā un sajūtā, un ir redzams cilvēka individualitātē, dabas formās un priekšmetos, kuriem ir dvēsele.</p><p>Tieši tāpēc mūsu rotās sastopamas organiskas līnijas, dabas iedvesmotas faktūras, izteiksmīgas formas un silta materiālu klātbūtne.</p>",
+            "quote": "Mēs radām dizaina rotas, kas papildina sievietes personību un palīdz viņai justies tuvāk sev.",
+            "tone": "sage"
+          }
+        },
+        "power": {
+          "type": "tiles",
+          "settings": {
+            "label": "03",
+            "heading": "Rota kā spēka simbols",
+            "text": "<p>Rota var būt maza lieta ar lielu nozīmi.</p>",
+            "items_title": "Tā var",
+            "item_1_title": "Iedot drosmi",
+            "item_1_text": "svarīgai sarunai",
+            "item_2_title": "Pacelt noskaņojumu",
+            "item_2_text": "darba dienā",
+            "item_3_title": "Kļūt par daļu",
+            "item_3_text": "no svētkiem, ceļojuma, teātra vakara vai īpaša dzīves brīža",
+            "quote": "Dažreiz pietiek ar vienu rotu, lai sieviete iztaisnotu plecus, pasmaidītu un sāktu starot.",
+            "text_after": "<p>Tieši šim mirklim mēs radām.</p>",
+            "tone": "stone"
+          }
+        },
+        "chosen": {
+          "type": "split",
+          "settings": {
+            "label": "04",
+            "heading": "Rūpīgi atlasītas rotu kolekcijas",
+            "text": "<p>SOFIA LARK kolekcijās ir gan Laura Lark radītās autora rotas, gan rūpīgi atlasīti citu dizaineru darbi. Katru rotu izvēlamies pēc:</p>",
+            "lines": "Sajūtas\nKvalitātes\nDizaina\nRakstura",
+            "text_after": "<p>Mūsu mērķis ir veidot rotu veikalu Rīgā un tiešsaistē, kur sieviete var atrast īpašu rotu ikdienai, svētkiem un nozīmīgiem dzīves mirkļiem.</p>",
+            "quote": "Katru izvēli vieno viena doma — rota palīdz sievietei justies vairāk pašai.",
+            "image": "shopify://shop_images/Copy_of_Vieta_kur_majo_prieks.png",
+            "image_side": "left",
+            "link_label": "Kolekcijas",
+            "link": "shopify://collections",
+            "tone": "white"
+          }
+        },
+        "meaning": {
+          "type": "statement",
+          "settings": {
+            "label": "05",
+            "heading": "Lietas ar nozīmi",
+            "text": "<p>SOFIA LARK izvēlas rotas ar stāstu.</p><p>Mēs ticam kvalitātei, personiskai izvēlei un dizainam, kas atstāj sajūtu.</p>",
+            "contrast_title": "Rotas, kuras",
+            "no_lines": "",
+            "yes_lines": "dzīvo ilgāk par vienu sezonu.\nkļūst par daļu no sievietes tēla, noskaņojuma un dzīves pieredzes.",
+            "yes_size": "text",
+            "quote": "Tāpēc katra kolekcija tiek veidota ar domu par sievieti, kura rotu izvēlēsies, nēsās un ļaus tai kļūt par daļu no sava stāsta."
+          }
+        },
+        "close": {
+          "type": "closing",
+          "settings": {
+            "label": "Mūsu vēlējums",
+            "heading": "Esi tu.",
+            "text": "Mēs vēlamies, lai katra sieviete, ienākot SOFIA LARK pasaulē, atrod rotu, kas saskan ar viņas būtību.\nRotu, kas dod prieku. Rotu, kas iedod pārliecību. Rotu, kas palīdz sajust savu skaistumu, spēku un brīvību būt pašai.",
+            "image": "shopify://shop_images/kalliope-GD1921-worn-model_25acc14a-656c-41fc-8009-dbb6ba5dcb95.jpg",
+            "link_1_label": "Kolekcijas",
+            "link_1_url": "shopify://collections",
+            "link_2_label": "Laura Lark",
+            "link_2_url": "shopify://pages/laura-lark",
+            "link_3_label": "Veikals Rīgā",
+            "link_3_url": "shopify://pages/sofia-lark-veikals"
+          }
+        }
+      },
+      "block_order": [
+        "open",
+        "world",
+        "esi",
+        "alive",
+        "power",
+        "chosen",
+        "meaning",
+        "close"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "story"
+  ]
+}

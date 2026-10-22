@@ -1,0 +1,267 @@
+/* Sofia Lark collection header. A short, quiet opening: the name set large on the left with one
+   line and two facts under it, the story folded away, one worn photograph on the right. It stays
+   low enough that the first row of products starts on the first screen. */
+
+.sl-ch {
+  --sl-ink: #000;
+  --sl-muted: #5a5a5a;            /* 6.9:1 on white */
+  --sl-ground: #f1efea;
+  --sl-line: rgba(0, 0, 0, 0.18);
+  /* little room underneath: the product grid brings its own top spacing */
+  padding: clamp(28px, 3.5vw, 52px) 0 clamp(4px, 1vw, 16px);
+  color: var(--sl-ink);
+}
+
+.sl-ch__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.sl-ch--plain .sl-ch__inner { grid-template-columns: minmax(0, 1fr); }
+
+/* the column is a size container, so the name can be sized to fit it (see .sl-ch__title) */
+.sl-ch__text { grid-column: 1; grid-row: 1; min-width: 0; container-type: inline-size; }
+
+.sl-ch__media {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  height: min(380px, 30vw);
+  overflow: hidden;
+  background: var(--sl-ground);
+}
+.sl-ch__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- words ---------- */
+
+.sl-ch__crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
+  margin-bottom: clamp(16px, 2vw, 28px);
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 14px;
+  color: var(--sl-muted);
+}
+.sl-ch__crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: inherit;
+  text-decoration: none;
+}
+.sl-ch__crumbs a:hover { color: var(--sl-ink); text-decoration: underline; text-underline-offset: 4px; }
+.sl-ch__crumbs span { display: inline-flex; align-items: center; }
+
+/* The name never breaks inside a word. --sl-chars is the length of its longest word (set by the
+   section), so a long word ("KAKLAROTAS") is set just small enough to fit the column with its
+   count, and short names keep the full size. Names of several words still wrap between them. */
+.sl-ch__title {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.18em;
+  margin: 0;
+  font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
+  font-weight: 400;
+  font-size: min(clamp(52px, 7.2vw, 112px), calc(100cqi / (var(--sl-chars, 10) * 0.8 + 1.4)));
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.sl-ch__count {
+  flex: none;
+  margin-top: 0.3em;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--sl-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sl-ch__lede {
+  max-width: 42ch;
+  margin: clamp(18px, 2vw, 28px) 0 0;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 19px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.sl-ch__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 48px;
+  margin: 24px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--sl-line);
+  max-width: 640px;
+}
+.sl-ch__fact { min-width: 0; }
+.sl-ch__fact dt {
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 14px;
+  color: var(--sl-muted);
+}
+.sl-ch__fact dd {
+  margin: 4px 0 0;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* a quiet notice, e.g. "only in the shop for now" */
+.sl-ch__note {
+  max-width: 560px;
+  margin: 22px 0 0;
+  padding: 14px 18px;
+  background: var(--sl-ground);
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.sl-ch__note a {
+  color: var(--sl-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
+/* "only in the shop" label above the name */
+.sl-ch__tag { margin-bottom: 14px; }
+.sl-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  background: var(--sl-ground, #f1efea);
+  color: #000;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* lookbook row: the middle photograph sits a little lower */
+.sl-ch__look {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(12px, 1.6vw, 24px);
+  align-items: start;
+  margin-top: clamp(40px, 5vw, 72px);
+  padding-bottom: clamp(24px, 3vw, 48px);
+}
+.sl-ch__frame {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--sl-ground);
+}
+.sl-ch__frame:nth-child(2) { margin-top: clamp(32px, 5vw, 80px); }
+.sl-ch__look-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- the story, folded ---------- */
+
+.sl-ch__more { margin-top: 14px; }
+.sl-ch__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  touch-action: manipulation;
+}
+.sl-ch__toggle::-webkit-details-marker { display: none; }
+.sl-ch__toggle svg { transition: transform 0.25s ease; }
+.sl-ch__more[open] .sl-ch__toggle svg { transform: rotate(45deg); }
+.sl-ch__toggle:focus-visible { outline: 2px solid var(--sl-ink); outline-offset: 4px; }
+
+.sl-ch__story {
+  max-width: 62ch;
+  padding: 8px 0 4px;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.sl-ch__story p { margin: 0 0 1em; }
+.sl-ch__story p:last-child { margin-bottom: 0; }
+
+/* ---------- the product grid, in the same hand as the homepage cards ---------- */
+
+body:has(.sl-ch) .grid-product .grid__image-ratio { background: var(--sl-ch-ground, #f1efea); }
+body:has(.sl-ch) .grid-product .grid__image-ratio img { mix-blend-mode: multiply; }
+body:has(.sl-ch) .grid-product__meta { padding-top: 12px; text-align: left; }
+body:has(.sl-ch) .grid-product__title {
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+}
+body:has(.sl-ch) .grid-product__price {
+  margin-top: 2px;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+body:has(.sl-ch) .grid-product__tag {
+  top: 10px;
+  right: auto;
+  left: 10px;
+  padding: 4px 8px;
+  background: #fff;
+  color: #000;
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- phone ---------- */
+
+@media only screen and (max-width: 768px) {
+  .sl-ch { padding-top: 0; }
+  .sl-ch__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  /* the photograph becomes a short strip across the top, edge to edge */
+  .sl-ch__media {
+    grid-column: 1;
+    grid-row: 1;
+    height: auto;
+    aspect-ratio: 5 / 2;
+    margin: 0 -17px;
+  }
+  .sl-ch__text { grid-column: 1; grid-row: 2; }
+  .sl-ch--plain .sl-ch__text { grid-row: 1; padding-top: 24px; }
+  .sl-ch__crumbs { margin-bottom: 8px; }
+  .sl-ch__title { font-size: min(clamp(40px, 12vw, 56px), calc(100cqi / (var(--sl-chars, 10) * 0.8 + 1.4))); }
+  .sl-ch__lede { margin-top: 14px; font-size: 17px; }
+  .sl-ch__facts { gap: 12px 28px; margin-top: 18px; padding-top: 14px; }
+  .sl-ch__fact dd { font-size: 15px; }
+  .sl-ch__look { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 32px; }
+  .sl-ch__frame:first-child { grid-column: 1 / 3; aspect-ratio: 1 / 1; }
+  .sl-ch__frame:nth-child(2) { margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-ch__toggle svg { transition: none; }
+}

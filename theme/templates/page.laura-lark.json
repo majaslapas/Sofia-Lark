@@ -39,72 +39,91 @@
             "tone": "stone"
           }
         },
-        "ch2": {
-          "type": "chapter",
+        "studies": {
+          "type": "split",
           "settings": {
             "label": "02",
             "heading": "Studijas un darbnīca",
-            "text": "<p>Lai pilnveidotu savu meistarību, studēju <strong>Latvijas Mākslas akadēmijas Metāla dizaina nodaļā</strong>, kur apguvu rotu mākslu un metāla dizainu. Studiju laikā papildināju zināšanas arī <strong>Venēcijas Mākslas akadēmijā</strong>, kur iepazinu citu skatījumu uz mākslu, materiāliem un radošo procesu.</p>",
+            "text": "<p>Lai pilnveidotu savu meistarību, studēju Latvijas Mākslas akadēmijas Metāla dizaina nodaļā, kur apguvu rotu mākslu un metāla dizainu. Studiju laikā papildināju zināšanas arī Venēcijas Mākslas akadēmijā, kur iepazinu citu skatījumu uz mākslu, materiāliem un radošo procesu.</p>",
+            "fact_1_label": "Rīga",
+            "fact_1_value": "Latvijas Mākslas akadēmija, Metāla dizaina nodaļa: rotu māksla un metāla dizains",
+            "fact_2_label": "Venēcija",
+            "fact_2_value": "Venēcijas Mākslas akadēmija: cits skatījums uz mākslu, materiāliem un radošo procesu",
             "quote": "Šī pieredze iemācīja man vienu – rota var būt daudz vairāk nekā rotājums. Tā var kļūt par personības turpinājumu.",
-            "text_end": "<p>Pēdējos gadus mana ikdiena paiet starp darbnīcu, skicēm, klientēm un nepārtrauktu jaunu ideju meklēšanu. Tieši šī ikdienas saskarsme ar sievietēm palīdz man radīt rotas, kuras dzīvo ārpus skicēm un vitrīnām.</p>",
+            "text_after": "<p>Pēdējos gadus mana ikdiena paiet starp darbnīcu, skicēm, klientēm un nepārtrauktu jaunu ideju meklēšanu. Tieši šī ikdienas saskarsme ar sievietēm palīdz man radīt rotas, kuras dzīvo ārpus skicēm un vitrīnām.</p>",
             "image": "shopify://shop_images/Untitled_design_7_09fc58ed-5953-4508-b5da-6c340bd4d5b2.png",
+            "image_side": "left",
             "link_label": "Kā top rotas",
             "link": "shopify://pages/ka-top-rotas",
             "tone": "white"
           }
         },
-        "ch3": {
-          "type": "chapter",
+        "brand": {
+          "type": "statement",
           "settings": {
             "label": "03",
             "heading": "SOFIA LARK nav tikai zīmols. Tā ir mana dzīves filozofija.",
-            "text": "<p>Es radu autorkolekcijas, bet vienlaikus rūpīgi atlasu arī citu dizaineru darbus.</p><p>Ne tāpēc, lai veikals būtu lielāks.</p><p>Bet tāpēc, ka vēlos, lai sieviete vienuviet var atrast rotas, kurām ir raksturs, kvalitāte un stāsts.</p>",
-            "lines": "Katru rotu izvēlos pati.\nNe pēc zīmola nosaukuma.\nNe pēc tendencēm.\nPēc sajūtas.\nPēc dizaina.",
+            "text": "<p>Es radu autorkolekcijas, bet vienlaikus rūpīgi atlasu arī citu dizaineru darbus.</p><p>Ne tāpēc, lai veikals būtu lielāks, bet tāpēc, ka vēlos, lai sieviete vienuviet var atrast rotas, kurām ir raksturs, kvalitāte un stāsts.</p>",
+            "contrast_title": "Katru rotu izvēlos pati",
+            "no_lines": "Ne pēc zīmola nosaukuma.\nNe pēc tendencēm.",
+            "yes_lines": "Pēc sajūtas.\nPēc dizaina.",
+            "yes_size": "large",
             "text_after": "<p>Jo katrai rotai, kas nonāk SOFIA LARK, ir jābūt tādai, kuru pati nēsātu ar lepnumu.</p>",
             "quote": "SOFIA LARK ir vieta, kur satiekas manis radītās rotas un rūpīgi izvēlēti dizaini, kurus vieno viena ideja – palīdzēt sievietei atrast rotu, kurā viņa jūtas pati.",
             "link_label": "Kolekcijas",
-            "link": "shopify://collections",
-            "tone": "white"
+            "link": "shopify://collections"
           }
         },
-        "ch4": {
-          "type": "chapter",
+        "nature": {
+          "type": "poem",
           "settings": {
             "label": "04",
             "heading": "Mani iedvesmo daba.",
             "lines": "Daba man ir vieta, kur atgriezties pie sevis.\nTur es atrodu mieru.\nTur atgūstu spēku.\nTur rodas lielākā daļa manu ideju.",
-            "text_after": "<p>Organiskas formas, faktūras un nepilnības mani fascinē daudz vairāk nekā perfekta simetrija.</p>",
+            "text": "<p>Organiskas formas, faktūras un nepilnības mani fascinē daudz vairāk nekā perfekta simetrija.</p>",
             "quote": "Jo arī cilvēks nav radīts pilnībai.\nViņš ir radīts dzīvei.",
-            "tone": "stone"
+            "image": "shopify://shop_images/hf_20260310_112108_c8d5c3f0-6a8a-47d0-ac4c-72b73058bdbf.jpg",
+            "tone": "sage"
           }
         },
-        "ch5": {
-          "type": "chapter",
+        "wish": {
+          "type": "tiles",
           "settings": {
             "label": "05",
             "heading": "Mans lielākais vēlējums",
             "text": "<p>Es vēlos, lai sieviete, uzliekot rotu no Sofia Lark piedāvājuma klāsta, jūtas kā „savā ādā”.</p>",
-            "lines": "Es vēlos, lai viņa jūtas sevi.\nLai viņa atceras savu spēku.\nSavu skaistumu.\nSavu individualitāti.",
+            "items_title": "Lai viņa jūtas sevi un atceras",
+            "item_1_title": "Savu spēku",
+            "item_2_title": "Savu skaistumu",
+            "item_3_title": "Savu individualitāti",
             "text_after": "<p>Jo es ticu, ka skaistums nav vienāds visiem.</p>",
             "quote": "Tas dzimst brīdī, kad cilvēks uzdrošinās būt pats.",
-            "tone": "white"
+            "tone": "stone"
           }
         },
-        "ch6": {
-          "type": "chapter",
+        "name": {
+          "type": "origin",
           "settings": {
             "label": "06",
             "heading": "Kāpēc Lark?",
-            "text": "<p>Lark ir mans pseidonīms.</p><p>Tas radies no manas vecmāmiņas Sofijas meitas uzvārda – <strong>Cīrule</strong>. Angliski cīrulis ir <em>lark</em>.</p><p>Izvēloties šo vārdu, es vēlējos saglabāt saikni ar savām saknēm un sievietēm manā dzimtā, kuras man iemācīja mīlestību pret skaistumu, radošumu un darbu.</p><p>Tieši viņām par godu radās nosaukums <strong>SOFIA LARK</strong>.</p>",
-            "tone": "white"
+            "text": "<p>Lark ir mans pseidonīms. Tas radies no manas vecmāmiņas Sofijas meitas uzvārda – <strong>Cīrule</strong>. Angliski cīrulis ir <em>lark</em>.</p>",
+            "word_1": "Sofia",
+            "cap_1": "vecmāmiņa Sofija",
+            "word_2": "Lark",
+            "cap_2": "Cīrule, viņas meitas uzvārds",
+            "word_3": "Sofia Lark",
+            "cap_3": "viņām par godu",
+            "text_after": "<p>Izvēloties šo vārdu, es vēlējos saglabāt saikni ar savām saknēm un sievietēm manā dzimtā, kuras man iemācīja mīlestību pret skaistumu, radošumu un darbu. Tieši viņām par godu radās nosaukums <strong>SOFIA LARK</strong>.</p>"
           }
         },
         "close": {
           "type": "closing",
           "settings": {
+            "label": "Laura Lark vēlējums",
             "heading": "Esi tu.",
-            "text": "Dzīve ir pārāk skaista, lai to dzīvotu kādu stereotipu vai trendu ietekmē.",
-            "signature": "ESI TU.\nEsi ar visām savām „neperfekcijām” pati skaistākā!\nar mīlestību\nTava\nLaura Lark ❤️",
+            "text": "Dzīve ir pārāk skaista, lai to dzīvotu kādu stereotipu vai trendu ietekmē.\nEsi ar visām savām „neperfekcijām” pati skaistākā!",
+            "signature": "Ar mīlestību,\nTava Laura Lark ❤️",
+            "image": "shopify://shop_images/1-IMG_0303-Edit.jpg",
             "link_1_label": "Kolekcijas",
             "link_1_url": "shopify://collections",
             "link_2_label": "Kā top rotas",
@@ -118,11 +137,11 @@
         "open",
         "ch1",
         "gen",
-        "ch2",
-        "ch3",
-        "ch4",
-        "ch5",
-        "ch6",
+        "studies",
+        "brand",
+        "nature",
+        "wish",
+        "name",
         "close"
       ],
       "settings": {}

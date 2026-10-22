@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "intro": {
+      "type": "sl-story",
+      "blocks": {
+        "open": {
+          "type": "opening",
+          "settings": {
+            "crumb_label": "Mūsu stāsts",
+            "crumb_link": "shopify://pages/filozofija",
+            "title": "Veikals Rīgā",
+            "lede": "Vieta, kur rotas vari sajust, pielaikot un izvēlēties sev piemērotāko. Blaumaņa iela 17, Rīga.",
+            "image": "shopify://shop_images/Copy_of_Vieta_kur_majo_prieks.png"
+          }
+        }
+      },
+      "block_order": [
+        "open"
+      ],
+      "settings": {}
+    },
+    "veikals": {
+      "type": "sl-store",
+      "settings": {
+        "heading": "Adrese un darba laiks",
+        "text": "SOFIA LARK veikals. Atnāc apskatīt un pielaikot rotas klātienē.",
+        "address": "Blaumaņa iela 17, Rīga",
+        "directions_link": "https://www.google.com/maps/dir/?api=1&destination=Blauma%C5%86a%20iela%2017%2C%20R%C4%ABga",
+        "phone": "+371 22066496",
+        "hours_1": "",
+        "hours_2": "12:00–19:00",
+        "hours_3": "12:00–19:00",
+        "hours_4": "12:00–19:00",
+        "hours_5": "12:00–19:00",
+        "hours_6": "",
+        "hours_7": "",
+        "image": "shopify://shop_images/hf_20260312_190032_debc68f2-e28a-4556-81ae-b7ff905a9657.jpg",
+        "image_detail": "shopify://shop_images/IMG_5656.jpg",
+        "button_label": "Google Maps",
+        "link_label": "Waze",
+        "link": "https://waze.com/ul?q=Blauma%C5%86a%20iela%2017%2C%20R%C4%ABga&navigate=yes"
+      }
+    },
+    "more": {
+      "type": "sl-story",
+      "blocks": {
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "heading": "Sazinies ar mums",
+            "phone_label": "Tālrunis",
+            "phone": "+371 22066496",
+            "phone_note": "Ja esi noskatījusi kādu konkrētu rotu vai rodas jautājumi par pieejamību, droši zvani mums. Telefona zvans ir ērtākais un ātrākais veids, kā saņemt atbildi.",
+            "phone_button": "Zvanīt",
+            "email_label": "E-pasts",
+            "email": "info@lauralark.lv",
+            "email_button": "Rakstīt e-pastu",
+            "extra_label": "Klātienē",
+            "extra_title": "Pielaiko pirms izvēlies",
+            "extra_note": "Veikalā vari apskatīt un pielaikot mūsu rotas, un bieži vien tur pieejams pat plašāks rotu klāsts nekā interneta veikalā.",
+            "extra_link_label": "Kā nokļūt",
+            "extra_link": "https://www.google.com/maps/dir/?api=1&destination=Blauma%C5%86a%20iela%2017%2C%20R%C4%ABga",
+            "tone": "white"
+          }
+        },
+        "feel": {
+          "type": "split",
+          "settings": {
+            "label": "",
+            "heading": "Vieta, kur rotas vari sajust",
+            "text": "<p>SOFIA LARK veikals Rīgā ir vieta sievietēm, kuras vēlas rotu ne tikai apskatīt, bet arī sajust.</p><p>Šeit vari pielaikot auskarus, gredzenus, kaklarotas, piespraudes un aproces, apskatīt rotas dzīvē un atrast to, kas vislabāk saskan ar Tavu personību, stilu un sajūtu.</p>",
+            "quote": "Mēs ticam, ka īstā rota ir tā, kuru uzliekot, sieviete iztaisno plecus, pasmaida un sajūt — jā, šī ir mana.",
+            "image": "shopify://shop_images/kalliope-GK1873-model-view_76b28c7a-a68c-48b2-9cf7-80191add3076.jpg",
+            "image_side": "left",
+            "link_label": "Skaties video par veikalu",
+            "link": "https://www.youtube.com/watch?v=huCrXEauF3Q",
+            "tone": "white"
+          }
+        },
+        "find": {
+          "type": "tiles",
+          "settings": {
+            "label": "",
+            "heading": "Ko atradīsi veikalā?",
+            "text": "<p>Veikalā pieejamas SOFIA LARK rotu kolekcijas ikdienai, svētkiem un īpašiem dzīves mirkļiem.</p>",
+            "item_1_title": "Auskari",
+            "item_1_link": "shopify://collections/all-earrings",
+            "item_2_title": "Gredzeni",
+            "item_2_link": "shopify://collections/gredzeni",
+            "item_3_title": "Kaklarotas",
+            "item_3_link": "shopify://collections/necklaces",
+            "item_4_title": "Piespraudes",
+            "item_4_link": "shopify://collections/piespraudes-1",
+            "item_5_title": "Aproces",
+            "item_5_link": "shopify://collections/all-bracletes",
+            "item_6_title": "Rotu kopšana",
+            "item_6_text": "Rotu kopšanas līdzekļi",
+            "item_6_link": "shopify://collections/cleaning-chemicals",
+            "item_7_title": "Dizaina rotas",
+            "item_7_text": "Rūpīgi atlasītas citu dizaineru rotas",
+            "item_7_link": "shopify://collections",
+            "item_8_title": "Dogon Art",
+            "item_8_text": "Kolekcija, kas pagaidām ir tikai veikalā",
+            "item_8_link": "shopify://collections/dogonart",
+            "text_after": "<p>Daļa rotu ir pieejamas ierobežotā daudzumā, tāpēc veikals ir laba vieta, kur atrast arī kaut ko īpašu un neatkārtojamu.</p>",
+            "tone": "stone"
+          }
+        },
+        "why": {
+          "type": "split",
+          "settings": {
+            "label": "",
+            "heading": "Kāpēc apmeklēt veikalu klātienē?",
+            "text": "<p>Rotas dzīvē vienmēr atklājas citādi. Veikalā vari redzēt:</p>",
+            "lines": "Proporcijas\nFaktūras\nSpīdumu\nSvaru\nSajūtu uz sevis",
+            "text_after": "<p>Tas ir īpaši svarīgi, izvēloties izteiksmīgas rotas, gredzenus vai auskarus īpašam notikumam. Klātienē ir vieglāk saprast, kura rota piestāv Tavam sejas ovālam, ādas tonim, augumam, stilam un noskaņai.</p>",
+            "quote": "Mēs palīdzēsim izvēlēties rotu, kas skaisti papildina Tavu tēlu un palīdz izcelt Tavu personību.",
+            "image": "shopify://shop_images/kalliope-GS1873a-model_36b293b0-3ccb-4398-83ea-babe74f4bb74.jpg",
+            "image_side": "right",
+            "tone": "white"
+          }
+        },
+        "close": {
+          "type": "closing",
+          "settings": {
+            "label": "Atrodi rotu, kas ir par Tevi",
+            "heading": "Esi tu.",
+            "text": "SOFIA LARK veikals Rīgā ir vairāk nekā vieta, kur iegādāties rotu. Tā ir vieta, kur uz mirkli apstāties, pielaikot skaistumu un izvēlēties sajūtu, kuru vēlies paņemt līdzi.\nAtnāc, pielaiko un atrodi rotu, kas saskan ar Tavu raksturu, Tavu spēku un Tavu stāstu.",
+            "image": "shopify://shop_images/JurisZolbergs-5988.jpg",
+            "link_1_label": "Kā nokļūt",
+            "link_1_url": "https://www.google.com/maps/dir/?api=1&destination=Blauma%C5%86a%20iela%2017%2C%20R%C4%ABga",
+            "link_2_label": "Apskatīt rotas tiešsaistē",
+            "link_2_url": "shopify://collections/visas-rotas",
+            "link_3_label": "Waze",
+            "link_3_url": "https://waze.com/ul?q=Blauma%C5%86a%20iela%2017%2C%20R%C4%ABga&navigate=yes"
+          }
+        }
+      },
+      "block_order": [
+        "contact",
+        "feel",
+        "find",
+        "why",
+        "close"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "intro",
+    "veikals",
+    "more"
+  ]
+}

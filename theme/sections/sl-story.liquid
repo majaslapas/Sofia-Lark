@@ -2,10 +2,17 @@
   Sofia Lark story page (Laura Lark, Kā top rotas): a long text set as a sequence of chapters.
   Blocks, used in any order:
   - opening: the page's name set large, one line under it and a photograph;
+  - split: a photograph beside a heading, words, short points or facts and a large sentence;
+  - statement: a sentence set very large, then a "not this / but this" list, then a black band;
+  - poem: short lines set large on a sage, stone or black field, beside a photograph;
+  - tiles: a few words, each in its own tile (what something is made of, what a wish is for);
+  - origin: where a name comes from, set as word + word = name;
+  - contact: telephone and e-mail as cards with their buttons;
   - chapter: a number and heading on the left, the words on the right, with optional short lines
     set one under another, a sentence set large, a photograph, and a stone background;
   - steps: up to four numbered items side by side (generations, the stages of making a piece);
-  - closing: a large last word, a few lines, a signature, and links onward.
+  - closing: a black band with a photograph, a large last word, a few lines, a signature and
+    links onward.
   Small photographs are never shown wider than they are, so nothing looks soft.
 {%- endcomment -%}
 {{ 'sl-story.css' | asset_url | stylesheet_tag }}
@@ -106,22 +113,246 @@
           </div>
         </section>
 
-      {%- when 'closing' -%}
-        <section class="sl-st__close" {{ block.shopify_attributes }}>
-          <div class="page-width">
-            <h2 class="sl-st__big">{{ b.heading | escape }}</h2>
-            {%- if b.text != blank -%}<p class="sl-st__close-text">{{ b.text | escape }}</p>{%- endif -%}
-            {%- if b.signature != blank -%}
-              <p class="sl-st__sign">{{ b.signature | escape | newline_to_br }}</p>
+      {%- when 'split' -%}
+        {%- assign sp_id = sid | append: '-' | append: forloop.index -%}
+        <section class="sl-st__split sl-st--{{ b.tone }}{% if b.image_side == 'right' %} sl-st__split--right{% endif %}{% if b.image == blank %} sl-st__split--plain{% endif %}" aria-labelledby="{{ sp_id }}" {{ block.shopify_attributes }}>
+          <div class="page-width sl-st__split-inner">
+            {%- if b.image != blank -%}
+              <figure class="sl-st__split-media" style="--w: {{ b.image.width }}px">
+                {%- assign alt = b.image.alt | escape -%}
+                {{- b.image | image_url: width: 1400 | image_tag: widths: '400, 600, 900, 1400', sizes: '(min-width: 990px) 45vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
+                {%- if b.caption != blank -%}<figcaption>{{ b.caption | escape }}</figcaption>{%- endif -%}
+              </figure>
             {%- endif -%}
-            <div class="sl-st__links">
-              {%- for i in (1..3) -%}
-                {%- assign k_label = 'link_' | append: i | append: '_label' -%}
-                {%- assign k_url = 'link_' | append: i | append: '_url' -%}
-                {%- if b[k_label] != blank and b[k_url] != blank -%}
-                  <a class="sl-st__btn{% if forloop.first %} sl-st__btn--solid{% endif %}" href="{{ b[k_url] }}">{{ b[k_label] | escape }}</a>
+            <div class="sl-st__split-text">
+              {%- if b.label != blank -%}<p class="sl-st__num">{{ b.label | escape }}</p>{%- endif -%}
+              <h2 id="{{ sp_id }}" class="sl-st__h2">{{ b.heading | escape }}</h2>
+              {%- if b.text != blank -%}<div class="sl-st__rte">{{ b.text }}</div>{%- endif -%}
+              {%- if b.lines != blank -%}
+                <ul class="sl-st__ticks" role="list">
+                  {%- assign lines = b.lines | newline_to_br | split: '<br />' -%}
+                  {%- for line in lines -%}
+                    {%- assign l = line | strip -%}
+                    {%- if l != blank -%}<li>{{ l | escape }}</li>{%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if b.fact_1_value != blank or b.fact_2_value != blank -%}
+                <dl class="sl-st__facts">
+                  {%- for i in (1..3) -%}
+                    {%- assign kl = 'fact_' | append: i | append: '_label' -%}
+                    {%- assign kv = 'fact_' | append: i | append: '_value' -%}
+                    {%- if b[kv] != blank -%}<div><dt>{{ b[kl] | escape }}</dt><dd>{{ b[kv] | escape }}</dd></div>{%- endif -%}
+                  {%- endfor -%}
+                </dl>
+              {%- endif -%}
+              {%- if b.text_after != blank -%}<div class="sl-st__rte">{{ b.text_after }}</div>{%- endif -%}
+              {%- if b.quote != blank -%}
+                <blockquote class="sl-st__quote"><p>{{ b.quote | escape | newline_to_br }}</p></blockquote>
+              {%- endif -%}
+              {%- if b.link_label != blank and b.link != blank -%}
+                <a class="sl-st__link" href="{{ b.link }}"{% if b.link contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ b.link_label | escape }}</a>
+              {%- endif -%}
+            </div>
+          </div>
+        </section>
+
+      {%- when 'statement' -%}
+        {%- assign stm_id = sid | append: '-' | append: forloop.index -%}
+        <section class="sl-st__stm" aria-labelledby="{{ stm_id }}" {{ block.shopify_attributes }}>
+          <div class="page-width">
+            {%- if b.label != blank -%}<p class="sl-st__num">{{ b.label | escape }}</p>{%- endif -%}
+            <h2 id="{{ stm_id }}" class="sl-st__display">{{ b.heading | escape }}</h2>
+            <div class="sl-st__stm-grid">
+              {%- if b.text != blank -%}<div class="sl-st__rte sl-st__stm-text">{{ b.text }}</div>{%- endif -%}
+              <div class="sl-st__contrast">
+                {%- if b.contrast_title != blank -%}<p class="sl-st__contrast-title">{{ b.contrast_title | escape }}</p>{%- endif -%}
+                <ul class="sl-st__contrast-list{% if b.yes_size == 'text' %} sl-st__contrast-list--text{% endif %}" role="list">
+                  {%- assign nos = b.no_lines | newline_to_br | split: '<br />' -%}
+                  {%- for line in nos -%}
+                    {%- assign l = line | strip -%}
+                    {%- if l != blank -%}<li class="is-no">{{ l | escape }}</li>{%- endif -%}
+                  {%- endfor -%}
+                  {%- assign yeses = b.yes_lines | newline_to_br | split: '<br />' -%}
+                  {%- for line in yeses -%}
+                    {%- assign l = line | strip -%}
+                    {%- if l != blank -%}<li class="is-yes">{{ l | escape }}</li>{%- endif -%}
+                  {%- endfor -%}
+                </ul>
+                {%- if b.text_after != blank -%}<div class="sl-st__rte">{{ b.text_after }}</div>{%- endif -%}
+              </div>
+            </div>
+          </div>
+          {%- if b.quote != blank -%}
+            <div class="sl-st__band">
+              <div class="page-width">
+                <blockquote class="sl-st__band-quote"><p>{{ b.quote | escape | newline_to_br }}</p></blockquote>
+                {%- if b.link_label != blank and b.link != blank -%}
+                  <a class="sl-st__link sl-st__link--light" href="{{ b.link }}">{{ b.link_label | escape }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </section>
+
+      {%- when 'poem' -%}
+        {%- assign pm_id = sid | append: '-' | append: forloop.index -%}
+        <section class="sl-st__poem sl-st--{{ b.tone }}{% if b.image == blank %} sl-st__poem--plain{% endif %}" aria-labelledby="{{ pm_id }}" {{ block.shopify_attributes }}>
+          <div class="page-width sl-st__poem-inner">
+            {%- if b.image != blank -%}
+              <figure class="sl-st__poem-media">
+                {%- assign alt = b.image.alt | escape -%}
+                {{- b.image | image_url: width: 1200 | image_tag: widths: '400, 600, 900, 1200', sizes: '(min-width: 990px) 36vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
+              </figure>
+            {%- endif -%}
+            <div class="sl-st__poem-text">
+              {%- if b.label != blank -%}<p class="sl-st__num">{{ b.label | escape }}</p>{%- endif -%}
+              <h2 id="{{ pm_id }}" class="sl-st__h2">{{ b.heading | escape }}</h2>
+              {%- if b.lines != blank -%}
+                <p class="sl-st__verse">
+                  {%- assign lines = b.lines | newline_to_br | split: '<br />' -%}
+                  {%- for line in lines -%}
+                    {%- assign l = line | strip -%}
+                    {%- if l != blank -%}<span>{{ l | escape }}</span>{%- endif -%}
+                  {%- endfor -%}
+                </p>
+              {%- endif -%}
+              {%- if b.text != blank -%}<div class="sl-st__rte">{{ b.text }}</div>{%- endif -%}
+              {%- if b.quote != blank -%}<p class="sl-st__poem-quote">{{ b.quote | escape | newline_to_br }}</p>{%- endif -%}
+            </div>
+          </div>
+        </section>
+
+      {%- when 'tiles' -%}
+        {%- assign tl_id = sid | append: '-' | append: forloop.index -%}
+        <section class="sl-st__tiles sl-st--{{ b.tone }}" aria-labelledby="{{ tl_id }}" {{ block.shopify_attributes }}>
+          <div class="page-width">
+            <div class="sl-st__tiles-head">
+              <div>
+                {%- if b.label != blank -%}<p class="sl-st__num">{{ b.label | escape }}</p>{%- endif -%}
+                <h2 id="{{ tl_id }}" class="sl-st__h2">{{ b.heading | escape }}</h2>
+              </div>
+              {%- if b.text != blank -%}<div class="sl-st__rte">{{ b.text }}</div>{%- endif -%}
+            </div>
+            {%- if b.items_title != blank -%}<p class="sl-st__items-title">{{ b.items_title | escape }}</p>{%- endif -%}
+            <ul class="sl-st__tile-grid" role="list">
+              {%- for i in (1..8) -%}
+                {%- liquid
+                  assign k_t = 'item_' | append: i | append: '_title'
+                  assign k_x = 'item_' | append: i | append: '_text'
+                  assign k_l = 'item_' | append: i | append: '_link'
+                  assign t = b[k_t]
+                -%}
+                {%- if t != blank -%}
+                  <li class="sl-st__tile">
+                    {%- if b[k_l] != blank -%}
+                      <a class="sl-st__tile-word" href="{{ b[k_l] }}">{{ t | escape }}</a>
+                    {%- else -%}
+                      <span class="sl-st__tile-word">{{ t | escape }}</span>
+                    {%- endif -%}
+                    {%- if b[k_x] != blank -%}<span class="sl-st__tile-text">{{ b[k_x] | escape }}</span>{%- endif -%}
+                  </li>
                 {%- endif -%}
               {%- endfor -%}
+            </ul>
+            {%- if b.text_after != blank or b.quote != blank -%}
+              <div class="sl-st__tiles-foot">
+                {%- if b.text_after != blank -%}<div class="sl-st__rte">{{ b.text_after }}</div>{%- endif -%}
+                {%- if b.quote != blank -%}<blockquote class="sl-st__quote"><p>{{ b.quote | escape | newline_to_br }}</p></blockquote>{%- endif -%}
+                {%- if b.link_label != blank and b.link != blank -%}<a class="sl-st__link" href="{{ b.link }}">{{ b.link_label | escape }}</a>{%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </section>
+
+      {%- when 'origin' -%}
+        {%- assign or_id = sid | append: '-' | append: forloop.index -%}
+        <section class="sl-st__origin" aria-labelledby="{{ or_id }}" {{ block.shopify_attributes }}>
+          <div class="page-width">
+            <div class="sl-st__tiles-head">
+              <div>
+                {%- if b.label != blank -%}<p class="sl-st__num">{{ b.label | escape }}</p>{%- endif -%}
+                <h2 id="{{ or_id }}" class="sl-st__h2">{{ b.heading | escape }}</h2>
+              </div>
+              {%- if b.text != blank -%}<div class="sl-st__rte">{{ b.text }}</div>{%- endif -%}
+            </div>
+            <div class="sl-st__sum" role="group" aria-label="{{ b.word_1 | append: ' + ' | append: b.word_2 | append: ' = ' | append: b.word_3 | escape }}">
+              <div class="sl-st__term"><span class="sl-st__term-word">{{ b.word_1 | escape }}</span><span class="sl-st__term-cap">{{ b.cap_1 | escape }}</span></div>
+              <span class="sl-st__op" aria-hidden="true">+</span>
+              <div class="sl-st__term"><span class="sl-st__term-word">{{ b.word_2 | escape }}</span><span class="sl-st__term-cap">{{ b.cap_2 | escape }}</span></div>
+              <span class="sl-st__op" aria-hidden="true">=</span>
+              <div class="sl-st__term sl-st__term--total"><span class="sl-st__term-word">{{ b.word_3 | escape }}</span><span class="sl-st__term-cap">{{ b.cap_3 | escape }}</span></div>
+            </div>
+            {%- if b.text_after != blank -%}<div class="sl-st__rte sl-st__origin-after">{{ b.text_after }}</div>{%- endif -%}
+          </div>
+        </section>
+
+      {%- when 'contact' -%}
+        <section class="sl-st__contact sl-st--{{ b.tone }}" {{ block.shopify_attributes }}>
+          <div class="page-width">
+            {%- if b.heading != blank -%}<h2 class="sl-st__h2 sl-st__contact-title">{{ b.heading | escape }}</h2>{%- endif -%}
+            <div class="sl-st__contact-grid">
+              {%- if b.phone != blank -%}
+                <div class="sl-st__card sl-st__card--main">
+                  <p class="sl-st__card-label">{{ b.phone_label | default: 'Tālrunis' | escape }}</p>
+                  <a class="sl-st__card-value" href="tel:{{ b.phone | remove: ' ' }}">{{ b.phone | escape }}</a>
+                  {%- if b.phone_note != blank -%}<p class="sl-st__card-note">{{ b.phone_note | escape }}</p>{%- endif -%}
+                  <a class="sl-st__btn sl-st__btn--solid" href="tel:{{ b.phone | remove: ' ' }}">{{ b.phone_button | default: 'Zvanīt' | escape }}</a>
+                </div>
+              {%- endif -%}
+              {%- if b.email != blank -%}
+                <div class="sl-st__card">
+                  <p class="sl-st__card-label">{{ b.email_label | default: 'E-pasts' | escape }}</p>
+                  <a class="sl-st__card-value" href="mailto:{{ b.email }}">{{ b.email | escape }}</a>
+                  {%- if b.email_note != blank -%}<p class="sl-st__card-note">{{ b.email_note | escape }}</p>{%- endif -%}
+                  <a class="sl-st__btn" href="mailto:{{ b.email }}">{{ b.email_button | default: 'Rakstīt' | escape }}</a>
+                </div>
+              {%- endif -%}
+              {%- if b.extra_title != blank -%}
+                <div class="sl-st__card">
+                  <p class="sl-st__card-label">{{ b.extra_label | escape }}</p>
+                  <p class="sl-st__card-value">{{ b.extra_title | escape }}</p>
+                  {%- if b.extra_note != blank -%}<p class="sl-st__card-note">{{ b.extra_note | escape }}</p>{%- endif -%}
+                  {%- if b.extra_link_label != blank and b.extra_link != blank -%}<a class="sl-st__btn" href="{{ b.extra_link }}">{{ b.extra_link_label | escape }}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </section>
+
+      {%- when 'closing' -%}
+        <section class="sl-st__close{% if b.image != blank %} sl-st__close--image{% endif %}" {{ block.shopify_attributes }}>
+          <div class="sl-st__close-inner">
+            {%- if b.image != blank -%}
+              <figure class="sl-st__close-media">
+                {%- assign alt = b.image.alt | escape -%}
+                {{- b.image | image_url: width: 1600 | image_tag: widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
+              </figure>
+            {%- endif -%}
+            <div class="sl-st__close-text">
+              {%- if b.label != blank -%}<p class="sl-st__close-label">{{ b.label | escape }}</p>{%- endif -%}
+              <h2 class="sl-st__big">{{ b.heading | escape }}</h2>
+              {%- if b.text != blank -%}
+                <div class="sl-st__close-body">
+                  {%- assign paras = b.text | newline_to_br | split: '<br />' -%}
+                  {%- for para in paras -%}
+                    {%- assign t = para | strip -%}
+                    {%- if t != blank -%}<p>{{ t | escape }}</p>{%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              {%- if b.signature != blank -%}
+                <p class="sl-st__sign">{{ b.signature | escape | newline_to_br }}</p>
+              {%- endif -%}
+              <div class="sl-st__links">
+                {%- for i in (1..3) -%}
+                  {%- assign k_label = 'link_' | append: i | append: '_label' -%}
+                  {%- assign k_url = 'link_' | append: i | append: '_url' -%}
+                  {%- if b[k_label] != blank and b[k_url] != blank -%}
+                    <a class="sl-st__btn sl-st__btn--light{% if forloop.first %} sl-st__btn--solid{% endif %}" href="{{ b[k_url] }}"{% if b[k_url] contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ b[k_label] | escape }}</a>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
             </div>
           </div>
         </section>
@@ -140,36 +371,114 @@
       "name": "Opening",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "crumb_label", "label": "Breadcrumb", "default": "Mūsu stāsts" },
-        { "type": "url", "id": "crumb_link", "label": "Breadcrumb link" },
-        { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the page's title." },
-        { "type": "textarea", "id": "lede", "label": "One line under the title" },
-        { "type": "image_picker", "id": "image", "label": "Photograph" }
+        {
+          "type": "text",
+          "id": "crumb_label",
+          "label": "Breadcrumb",
+          "default": "Mūsu stāsts"
+        },
+        {
+          "type": "url",
+          "id": "crumb_link",
+          "label": "Breadcrumb link"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Leave empty to use the page's title."
+        },
+        {
+          "type": "textarea",
+          "id": "lede",
+          "label": "One line under the title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph"
+        }
       ]
     },
     {
       "type": "chapter",
       "name": "Chapter",
       "settings": [
-        { "type": "text", "id": "label", "label": "Number", "info": "For example 01." },
-        { "type": "text", "id": "heading", "label": "Heading" },
-        { "type": "richtext", "id": "text", "label": "Text" },
-        { "type": "textarea", "id": "lines", "label": "Short lines", "info": "One per line; set one under another." },
-        { "type": "richtext", "id": "text_after", "label": "Text after the lines" },
-        { "type": "textarea", "id": "quote", "label": "A sentence set large" },
-        { "type": "text", "id": "quote_by", "label": "Whose words" },
-        { "type": "richtext", "id": "text_end", "label": "Text at the end" },
-        { "type": "image_picker", "id": "image", "label": "Photograph" },
-        { "type": "text", "id": "caption", "label": "Under the photograph" },
-        { "type": "text", "id": "link_label", "label": "Link" },
-        { "type": "url", "id": "link", "label": "Link to" },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Number",
+          "info": "For example 01."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "textarea",
+          "id": "lines",
+          "label": "Short lines",
+          "info": "One per line; set one under another."
+        },
+        {
+          "type": "richtext",
+          "id": "text_after",
+          "label": "Text after the lines"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "A sentence set large"
+        },
+        {
+          "type": "text",
+          "id": "quote_by",
+          "label": "Whose words"
+        },
+        {
+          "type": "richtext",
+          "id": "text_end",
+          "label": "Text at the end"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Under the photograph"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link to"
+        },
         {
           "type": "select",
           "id": "tone",
           "label": "Background",
           "options": [
-            { "value": "white", "label": "White" },
-            { "value": "stone", "label": "Stone" }
+            {
+              "value": "white",
+              "label": "White"
+            },
+            {
+              "value": "stone",
+              "label": "Stone"
+            }
           ],
           "default": "white"
         }
@@ -179,28 +488,702 @@
       "type": "steps",
       "name": "Steps",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading" },
-        { "type": "richtext", "id": "text", "label": "Text" },
-        { "type": "text", "id": "item_1_title", "label": "1: title" },
-        { "type": "textarea", "id": "item_1_text", "label": "1: text" },
-        { "type": "url", "id": "item_1_link", "label": "1: link" },
-        { "type": "text", "id": "item_2_title", "label": "2: title" },
-        { "type": "textarea", "id": "item_2_text", "label": "2: text" },
-        { "type": "url", "id": "item_2_link", "label": "2: link" },
-        { "type": "text", "id": "item_3_title", "label": "3: title" },
-        { "type": "textarea", "id": "item_3_text", "label": "3: text" },
-        { "type": "url", "id": "item_3_link", "label": "3: link" },
-        { "type": "text", "id": "item_4_title", "label": "4: title" },
-        { "type": "textarea", "id": "item_4_text", "label": "4: text" },
-        { "type": "url", "id": "item_4_link", "label": "4: link" },
-        { "type": "richtext", "id": "text_after", "label": "Text after" },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "item_1_title",
+          "label": "1: title"
+        },
+        {
+          "type": "textarea",
+          "id": "item_1_text",
+          "label": "1: text"
+        },
+        {
+          "type": "url",
+          "id": "item_1_link",
+          "label": "1: link"
+        },
+        {
+          "type": "text",
+          "id": "item_2_title",
+          "label": "2: title"
+        },
+        {
+          "type": "textarea",
+          "id": "item_2_text",
+          "label": "2: text"
+        },
+        {
+          "type": "url",
+          "id": "item_2_link",
+          "label": "2: link"
+        },
+        {
+          "type": "text",
+          "id": "item_3_title",
+          "label": "3: title"
+        },
+        {
+          "type": "textarea",
+          "id": "item_3_text",
+          "label": "3: text"
+        },
+        {
+          "type": "url",
+          "id": "item_3_link",
+          "label": "3: link"
+        },
+        {
+          "type": "text",
+          "id": "item_4_title",
+          "label": "4: title"
+        },
+        {
+          "type": "textarea",
+          "id": "item_4_text",
+          "label": "4: text"
+        },
+        {
+          "type": "url",
+          "id": "item_4_link",
+          "label": "4: link"
+        },
+        {
+          "type": "richtext",
+          "id": "text_after",
+          "label": "Text after"
+        },
         {
           "type": "select",
           "id": "tone",
           "label": "Background",
           "options": [
-            { "value": "white", "label": "White" },
-            { "value": "stone", "label": "Stone" }
+            {
+              "value": "white",
+              "label": "White"
+            },
+            {
+              "value": "stone",
+              "label": "Stone"
+            }
+          ],
+          "default": "white"
+        }
+      ]
+    },
+    {
+      "type": "split",
+      "name": "Photograph and words",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Number"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "textarea",
+          "id": "lines",
+          "label": "Short points",
+          "info": "One per line."
+        },
+        {
+          "type": "text",
+          "id": "fact_1_label",
+          "label": "Fact 1, label"
+        },
+        {
+          "type": "text",
+          "id": "fact_1_value",
+          "label": "Fact 1"
+        },
+        {
+          "type": "text",
+          "id": "fact_2_label",
+          "label": "Fact 2, label"
+        },
+        {
+          "type": "text",
+          "id": "fact_2_value",
+          "label": "Fact 2"
+        },
+        {
+          "type": "text",
+          "id": "fact_3_label",
+          "label": "Fact 3, label"
+        },
+        {
+          "type": "text",
+          "id": "fact_3_value",
+          "label": "Fact 3"
+        },
+        {
+          "type": "richtext",
+          "id": "text_after",
+          "label": "Text after"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "A sentence set large"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Under the photograph"
+        },
+        {
+          "type": "select",
+          "id": "image_side",
+          "label": "Photograph on the",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link to"
+        },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Background",
+          "options": [
+            {
+              "value": "white",
+              "label": "White"
+            },
+            {
+              "value": "stone",
+              "label": "Stone"
+            },
+            {
+              "value": "sage",
+              "label": "Sage"
+            },
+            {
+              "value": "black",
+              "label": "Black"
+            }
+          ],
+          "default": "white"
+        }
+      ]
+    },
+    {
+      "type": "statement",
+      "name": "Statement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Number"
+        },
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Statement"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "contrast_title",
+          "label": "Above the list"
+        },
+        {
+          "type": "textarea",
+          "id": "no_lines",
+          "label": "Not this",
+          "info": "One per line; shown struck through."
+        },
+        {
+          "type": "textarea",
+          "id": "yes_lines",
+          "label": "But this",
+          "info": "One per line; shown large."
+        },
+        {
+          "type": "select",
+          "id": "yes_size",
+          "label": "\"But this\" set",
+          "options": [
+            {
+              "value": "large",
+              "label": "Large"
+            },
+            {
+              "value": "text",
+              "label": "As text, for longer lines"
+            }
+          ],
+          "default": "large"
+        },
+        {
+          "type": "richtext",
+          "id": "text_after",
+          "label": "Text after the list"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Sentence on a black band"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link on the band"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link to"
+        }
+      ]
+    },
+    {
+      "type": "poem",
+      "name": "Verse",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Number"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "lines",
+          "label": "Lines",
+          "info": "One per line, set large."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Last words"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph"
+        },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Background",
+          "options": [
+            {
+              "value": "white",
+              "label": "White"
+            },
+            {
+              "value": "stone",
+              "label": "Stone"
+            },
+            {
+              "value": "sage",
+              "label": "Sage"
+            },
+            {
+              "value": "black",
+              "label": "Black"
+            }
+          ],
+          "default": "sage"
+        }
+      ]
+    },
+    {
+      "type": "tiles",
+      "name": "Words in tiles",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Number"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "items_title",
+          "label": "Above the tiles"
+        },
+        {
+          "type": "text",
+          "id": "item_1_title",
+          "label": "1: word"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "1: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_1_link",
+          "label": "1: link"
+        },
+        {
+          "type": "text",
+          "id": "item_2_title",
+          "label": "2: word"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "2: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_2_link",
+          "label": "2: link"
+        },
+        {
+          "type": "text",
+          "id": "item_3_title",
+          "label": "3: word"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "3: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_3_link",
+          "label": "3: link"
+        },
+        {
+          "type": "text",
+          "id": "item_4_title",
+          "label": "4: word"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "4: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_4_link",
+          "label": "4: link"
+        },
+        {
+          "type": "text",
+          "id": "item_5_title",
+          "label": "5: word"
+        },
+        {
+          "type": "text",
+          "id": "item_5_text",
+          "label": "5: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_5_link",
+          "label": "5: link"
+        },
+        {
+          "type": "text",
+          "id": "item_6_title",
+          "label": "6: word"
+        },
+        {
+          "type": "text",
+          "id": "item_6_text",
+          "label": "6: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_6_link",
+          "label": "6: link"
+        },
+        {
+          "type": "text",
+          "id": "item_7_title",
+          "label": "7: word"
+        },
+        {
+          "type": "text",
+          "id": "item_7_text",
+          "label": "7: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_7_link",
+          "label": "7: link"
+        },
+        {
+          "type": "text",
+          "id": "item_8_title",
+          "label": "8: word"
+        },
+        {
+          "type": "text",
+          "id": "item_8_text",
+          "label": "8: small text"
+        },
+        {
+          "type": "url",
+          "id": "item_8_link",
+          "label": "8: link"
+        },
+        {
+          "type": "richtext",
+          "id": "text_after",
+          "label": "Text after"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "A sentence set large"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link to"
+        },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Background",
+          "options": [
+            {
+              "value": "white",
+              "label": "White"
+            },
+            {
+              "value": "stone",
+              "label": "Stone"
+            },
+            {
+              "value": "sage",
+              "label": "Sage"
+            },
+            {
+              "value": "black",
+              "label": "Black"
+            }
+          ],
+          "default": "white"
+        }
+      ]
+    },
+    {
+      "type": "origin",
+      "name": "Where a name comes from",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Number"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "word_1",
+          "label": "First word"
+        },
+        {
+          "type": "text",
+          "id": "cap_1",
+          "label": "Under the first word"
+        },
+        {
+          "type": "text",
+          "id": "word_2",
+          "label": "Second word"
+        },
+        {
+          "type": "text",
+          "id": "cap_2",
+          "label": "Under the second word"
+        },
+        {
+          "type": "text",
+          "id": "word_3",
+          "label": "Together"
+        },
+        {
+          "type": "text",
+          "id": "cap_3",
+          "label": "Under it"
+        },
+        {
+          "type": "richtext",
+          "id": "text_after",
+          "label": "Text after"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Contact",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "phone_label",
+          "label": "Phone, label"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone"
+        },
+        {
+          "type": "textarea",
+          "id": "phone_note",
+          "label": "Phone, note"
+        },
+        {
+          "type": "text",
+          "id": "phone_button",
+          "label": "Phone button"
+        },
+        {
+          "type": "text",
+          "id": "email_label",
+          "label": "E-mail, label"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "E-mail"
+        },
+        {
+          "type": "textarea",
+          "id": "email_note",
+          "label": "E-mail, note"
+        },
+        {
+          "type": "text",
+          "id": "email_button",
+          "label": "E-mail button"
+        },
+        {
+          "type": "text",
+          "id": "extra_label",
+          "label": "Third card, label"
+        },
+        {
+          "type": "text",
+          "id": "extra_title",
+          "label": "Third card"
+        },
+        {
+          "type": "textarea",
+          "id": "extra_note",
+          "label": "Third card, note"
+        },
+        {
+          "type": "text",
+          "id": "extra_link_label",
+          "label": "Third card, link"
+        },
+        {
+          "type": "url",
+          "id": "extra_link",
+          "label": "Third card, link to"
+        },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Background",
+          "options": [
+            {
+              "value": "white",
+              "label": "White"
+            },
+            {
+              "value": "stone",
+              "label": "Stone"
+            },
+            {
+              "value": "sage",
+              "label": "Sage"
+            },
+            {
+              "value": "black",
+              "label": "Black"
+            }
           ],
           "default": "white"
         }
@@ -211,15 +1194,62 @@
       "name": "Closing",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "heading", "label": "Large last word" },
-        { "type": "textarea", "id": "text", "label": "Text" },
-        { "type": "textarea", "id": "signature", "label": "Signature" },
-        { "type": "text", "id": "link_1_label", "label": "First link" },
-        { "type": "url", "id": "link_1_url", "label": "First link to" },
-        { "type": "text", "id": "link_2_label", "label": "Second link" },
-        { "type": "url", "id": "link_2_url", "label": "Second link to" },
-        { "type": "text", "id": "link_3_label", "label": "Third link" },
-        { "type": "url", "id": "link_3_url", "label": "Third link to" }
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Above"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Large last word"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "info": "Each line is a paragraph."
+        },
+        {
+          "type": "textarea",
+          "id": "signature",
+          "label": "Signature"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph"
+        },
+        {
+          "type": "text",
+          "id": "link_1_label",
+          "label": "First link"
+        },
+        {
+          "type": "url",
+          "id": "link_1_url",
+          "label": "First link to"
+        },
+        {
+          "type": "text",
+          "id": "link_2_label",
+          "label": "Second link"
+        },
+        {
+          "type": "url",
+          "id": "link_2_url",
+          "label": "Second link to"
+        },
+        {
+          "type": "text",
+          "id": "link_3_label",
+          "label": "Third link"
+        },
+        {
+          "type": "url",
+          "id": "link_3_url",
+          "label": "Third link to"
+        }
       ]
     }
   ],
@@ -229,7 +1259,9 @@
     }
   ],
   "enabled_on": {
-    "templates": ["page"]
+    "templates": [
+      "page"
+    ]
   }
 }
 {% endschema %}

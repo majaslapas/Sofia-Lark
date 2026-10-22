@@ -77,13 +77,15 @@
           "type": "closing",
           "settings": {
             "heading": "Esi tu.",
-            "text": "Rotas, kas palīdz sievietei satikt sevi.",
+            "text": "Rotas, kas palīdz sievietei satikt sevi.\nApskati tās tiešsaistē vai pielaiko klātienē mūsu veikalā Rīgā, Blaumaņa ielā 17.",
             "link_1_label": "Kolekcijas",
             "link_1_url": "shopify://collections",
             "link_2_label": "Visas rotas",
             "link_2_url": "shopify://collections/visas-rotas",
             "link_3_label": "Rotu kopšana",
-            "link_3_url": "shopify://collections/cleaning-chemicals"
+            "link_3_url": "shopify://collections/cleaning-chemicals",
+            "label": "SOFIA LARK",
+            "image": "shopify://shop_images/hf_20260313_075549_f5ff5f0d-6c56-4678-a6a5-f3c361a45406.jpg"
           }
         }
       },

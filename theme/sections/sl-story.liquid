@@ -235,7 +235,23 @@
               {%- if b.text != blank -%}<div class="sl-st__rte">{{ b.text }}</div>{%- endif -%}
             </div>
             {%- if b.items_title != blank -%}<p class="sl-st__items-title">{{ b.items_title | escape }}</p>{%- endif -%}
-            <ul class="sl-st__tile-grid" role="list">
+            {%- liquid
+              # an even grid: up to four in one row, five or six in rows of three, more in rows of four
+              assign n = 0
+              for i in (1..8)
+                assign k_t = 'item_' | append: i | append: '_title'
+                if b[k_t] != blank
+                  assign n = n | plus: 1
+                endif
+              endfor
+              assign cols = n
+              if n == 5 or n == 6
+                assign cols = 3
+              elsif n > 6
+                assign cols = 4
+              endif
+            -%}
+            <ul class="sl-st__tile-grid" role="list" style="--cols: {{ cols }}">
               {%- for i in (1..8) -%}
                 {%- liquid
                   assign k_t = 'item_' | append: i | append: '_title'

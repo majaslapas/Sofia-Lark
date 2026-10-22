@@ -257,10 +257,13 @@
 
 /* the sentence that sums it up, white on black across the page */
 .sl-st__band { padding: clamp(72px, 9vw, 144px) 0; background: #000; color: #fff; }
-.sl-st__band-quote { max-width: 26ch; margin: 0 auto; padding: 0; border: 0; text-align: center; quotes: none; }
+/* the measure is set on the paragraph, so it counts in the quote's own large letters */
+.sl-st__band-quote { margin: 0 auto; padding: 0; border: 0; text-align: center; quotes: none; }
 .sl-st__band-quote::before, .sl-st__band-quote::after { content: none; }
 .sl-st__band-quote p {
   font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
+  max-width: 26ch;
+  margin: 0 auto;
   font-size: clamp(28px, 3.4vw, 54px);
   line-height: 1.15;
   text-wrap: balance;
@@ -309,7 +312,7 @@
 .sl-st__items-title { margin-bottom: 16px !important; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sl-muted); }
 .sl-st__tile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
   gap: clamp(8px, 1vw, 16px);
 }
 .sl-st__tile {
@@ -320,12 +323,14 @@
   min-height: clamp(150px, 14vw, 210px);
   padding: 24px 24px 22px;
   background: var(--sl-ground);
+  container-type: inline-size;
 }
 .sl-st--stone .sl-st__tile, .sl-st--sage .sl-st__tile { background: #fff; }
 .sl-st--black .sl-st__tile { background: #1a1a1a; }
+/* a long single word ("PIESPRAUDES") gets smaller rather than leaving its tile */
 .sl-st__tile-word {
   font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
-  font-size: clamp(22px, 2vw, 30px);
+  font-size: min(clamp(22px, 2vw, 30px), 11cqi);
   line-height: 1.15;
   text-transform: uppercase;
   letter-spacing: 0.01em;
@@ -468,6 +473,7 @@ a.sl-st__card-value:hover { text-decoration: underline; text-underline-offset: 6
   .sl-st__close--image .sl-st__close-inner { grid-template-columns: minmax(0, 1fr); }
   .sl-st__close-media { aspect-ratio: 4 / 3; }
   .sl-st__sum { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .sl-st__tile-grid { grid-template-columns: repeat(min(var(--cols, 4), 2), minmax(0, 1fr)); }
   .sl-st__open { align-items: start; }
   .sl-st__open-media { justify-self: start; order: -1; max-width: min(var(--w, 100%), 100%, 460px); }
   .sl-st__title { margin-top: 24px; }

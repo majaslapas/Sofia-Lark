@@ -5,15 +5,13 @@
   admin has, the bar shows, in Latvian. Each filter opens a small panel of choices with how many
   pieces each has (a sheet from the bottom on phones); a choice reloads the page at once. Under the
   bar: how many pieces are shown, the choices in force (each one removes itself) and "Notīrīt visu".
+  A collection of fewer than six pieces gets no bar.
   Without script it is a plain form with a "Rādīt" button.
 
   - source: the 'collection' or 'search' object
   - menu: optional menu whose parent link `menu_parent` lists the categories, shown as chips above
   - menu_parent: title of that parent link, e.g. "Rotas"
 {%- endcomment -%}
-{{ 'sl-filters.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'sl-filters.js' | asset_url }}" defer="defer"></script>
-
 {%- liquid
   if source.results
     assign is_search = true
@@ -38,6 +36,12 @@
     endif
   endfor
 
+  # a collection of only a few pieces (or none yet, like Dogon Art) needs no filters
+  assign hide = false
+  if is_search == false and source.all_products_count < 6 and active_count == 0
+    assign hide = true
+  endif
+
   assign sort_by = source.sort_by | default: source.default_sort_by
 
   assign last = count | modulo: 10
@@ -58,6 +62,9 @@
     endfor
   endif
 -%}
+{%- unless hide -%}
+{{ 'sl-filters.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sl-filters.js' | asset_url }}" defer="defer"></script>
 
 <div class="sl-fl" id="SlFilters" data-sl-filters>
   <div class="page-width">
@@ -326,3 +333,4 @@
     {%- endif -%}
   </div>
 </div>
+{%- endunless -%}

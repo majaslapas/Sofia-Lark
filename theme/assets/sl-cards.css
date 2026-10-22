@@ -4,20 +4,21 @@
    already show them; here it reaches every grid the theme draws (categories, search, "you may also
    like", recently viewed) and the cards of the Sofia Lark sections. Loaded on every page. */
 
-/* the theme's own grid cards (`body` outweighs the theme's single-class rules) */
+/* the theme's own grid cards (`body .grid-product` outweighs the theme's rules, which are scoped by
+   attributes on <body> such as [data-type_product_capitalize=true]) */
 body .grid-product .grid__image-ratio { background: #f1efea; }
 body .grid-product .grid__image-ratio img,
 body .grid-product .grid-product__secondary-image img { mix-blend-mode: multiply; }
-body .grid-product__meta { padding-top: 12px; text-align: left; }
-body .grid-product__title {
+body .grid-product .grid-product__meta { padding-top: 12px; text-align: left; }
+body .grid-product .grid-product__title {
   font-family: var(--typeBasePrimary), var(--typeBaseFallback);
   font-size: 15px;
   line-height: 1.4;
   letter-spacing: 0;
   text-transform: none;
 }
-body .grid-product__price { margin-top: 2px; font-size: 15px; font-variant-numeric: tabular-nums; }
-body .grid-product__tag {
+body .grid-product .grid-product__price { margin-top: 2px; font-size: 15px; font-variant-numeric: tabular-nums; }
+body .grid-product .grid-product__tag {
   top: 10px;
   right: auto;
   left: 10px;
@@ -28,7 +29,7 @@ body .grid-product__tag {
   line-height: 1.3;
   letter-spacing: 0.04em;
 }
-body .grid-product__colors { justify-content: flex-start; }
+body .grid-product .grid-product__colors { justify-content: flex-start; }
 
 /* the Sofia Lark card (homepage rows, "Sader kopā", collections page): square like the rest */
 body .sl-pc .sl-pc__media { aspect-ratio: 1 / 1; }

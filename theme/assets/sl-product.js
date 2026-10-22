@@ -361,7 +361,12 @@
     var opener = null;
     function show(i) {
       at = (i + list.length) % list.length;
-      img.src = bigSrc(list[at]);
+      /* the photograph already on the page shows at once; the large file takes over once loaded */
+      var shown = at;
+      var big = new Image();
+      big.onload = function () { if (shown === at) img.src = big.src; };
+      img.src = list[at].currentSrc || list[at].src;
+      big.src = bigSrc(list[at]);
       img.alt = list[at].alt || '';
       count.textContent = list.length > 1 ? (at + 1) + ' / ' + list.length : '';
       d.classList.toggle('is-single', list.length < 2);

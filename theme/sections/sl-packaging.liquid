@@ -1,47 +1,40 @@
 {%- comment -%}
-  Sofia Lark packaging: the short film of a piece being wrapped and boxed, framed beside a few
-  words about how every order is packed. The film plays silently in a loop while it is on screen
-  and has a pause button; with reduced motion it waits for a press.
-
-  The film is a video uploaded to Shopify when one is chosen, otherwise the YouTube link. A
-  YouTube film can be stopped before its end (to leave out closing titles) and starts from its
-  cover picture, which stays in place if YouTube cannot play.
+  Sofia Lark packaging: how every order arrives, as a large photograph with a smaller detail
+  beside it, and a few words. A video uploaded to Shopify can take the large photograph's place;
+  it plays silently in a loop while on screen, has a pause button, and with reduced motion waits
+  for a press. (YouTube is left out on purpose: its player always shows some of its own buttons.)
 {%- endcomment -%}
 {%- liquid
   assign sid = 'SlFilm-' | append: section.id
   assign video = section.settings.video
-  assign yt_id = ''
-  if video == blank and section.settings.video_url != blank
-    if section.settings.video_url.type == 'youtube'
-      assign yt_id = section.settings.video_url.id
-    endif
-  endif
-  assign poster = section.settings.poster
-  if poster == blank and video != blank
-    assign poster = video.preview_image
-  endif
+  assign image = section.settings.image
+  assign detail = section.settings.image_detail
 -%}
 {{ 'sl-product.css' | asset_url | stylesheet_tag }}
 
-{%- if video != blank or yt_id != '' -%}
-<section class="sl-film" aria-labelledby="{{ sid }}-title" data-sl-film{% if yt_id != '' %} data-yt="{{ yt_id }}" data-start="{{ section.settings.start }}" data-end="{{ section.settings.end }}"{% endif %}>
+{%- if video != blank or image != blank -%}
+<section class="sl-film{% if detail != blank %} sl-film--pair{% endif %}" aria-labelledby="{{ sid }}-title"{% if video != blank %} data-sl-film{% endif %}>
   <div class="page-width sl-film__inner">
-    <div class="sl-film__frame" data-sl-rise>
-      <div class="sl-film__player" data-sl-film-player>
+    <div class="sl-film__media">
+      <div class="sl-film__frame" data-sl-rise>
         {%- if video != blank -%}
-          {{- video | video_tag: muted: true, loop: true, playsinline: true, preload: 'none', class: 'sl-film__video', image_size: '1200x' -}}
+          <div class="sl-film__player" data-sl-film-player>
+            {{- video | video_tag: muted: true, loop: true, playsinline: true, preload: 'none', class: 'sl-film__video', image_size: '1400x' -}}
+          </div>
+          <button type="button" class="sl-film__toggle" data-sl-film-toggle aria-label="Atskaņot video" hidden>
+            <span class="sl-film__icon" aria-hidden="true"></span>
+          </button>
+        {%- else -%}
+          {%- assign image_alt = image.alt | default: section.settings.heading | escape -%}
+          {{- image | image_url: width: 1800 | image_tag: widths: '600, 900, 1200, 1500, 1800', sizes: '(min-width: 990px) 48vw, 100vw', loading: 'lazy', alt: image_alt, class: 'sl-film__img' -}}
         {%- endif -%}
       </div>
-      {%- if poster != blank -%}
-        {{- poster | image_url: width: 1400 | image_tag: widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 56vw, 100vw', loading: 'lazy', alt: '', class: 'sl-film__poster' -}}
-      {%- elsif yt_id != '' -%}
-        {%- # theme-check-disable RemoteAsset -%}
-        <img class="sl-film__poster" src="https://i.ytimg.com/vi/{{ yt_id }}/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720">
-        {%- # theme-check-enable RemoteAsset -%}
+      {%- if detail != blank -%}
+        <div class="sl-film__detail" data-sl-rise style="--d: 120ms">
+          {%- assign detail_alt = detail.alt | escape -%}
+          {{- detail | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 20vw, 44vw', loading: 'lazy', alt: detail_alt, class: 'sl-film__img' -}}
+        </div>
       {%- endif -%}
-      <button type="button" class="sl-film__toggle" data-sl-film-toggle aria-label="Atskaņot video" hidden>
-        <span class="sl-film__icon" aria-hidden="true"></span>
-      </button>
     </div>
 
     <div class="sl-film__text">
@@ -65,47 +58,26 @@
 
 {% schema %}
 {
-  "name": "Sofia Lark packaging film",
+  "name": "Sofia Lark packaging",
   "tag": "div",
   "class": "sl-film-section",
   "settings": [
     {
-      "type": "video",
-      "id": "video",
-      "label": "Video uploaded to Shopify",
-      "info": "Used instead of the YouTube link when chosen. Plays without YouTube's buttons and branding."
-    },
-    {
-      "type": "video_url",
-      "id": "video_url",
-      "label": "YouTube link",
-      "accept": ["youtube"],
-      "default": "https://www.youtube.com/watch?v=hmWurPb8c2s"
-    },
-    {
-      "type": "range",
-      "id": "start",
-      "label": "YouTube: start at (seconds)",
-      "min": 0,
-      "max": 60,
-      "step": 1,
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "end",
-      "label": "YouTube: loop back at (seconds)",
-      "info": "0 plays to the end. Set it to leave out closing titles.",
-      "min": 0,
-      "max": 60,
-      "step": 1,
-      "default": 0
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photograph"
     },
     {
       "type": "image_picker",
-      "id": "poster",
-      "label": "Cover picture",
-      "info": "Shown until the film plays. Leave empty to use the video's own."
+      "id": "image_detail",
+      "label": "Detail photograph (optional)",
+      "info": "A smaller picture beside the large one."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video uploaded to Shopify (optional)",
+      "info": "Shown in place of the large photograph. Plays silently in a loop, with no player buttons but a small pause button."
     },
     {
       "type": "text",
@@ -143,7 +115,7 @@
   ],
   "presets": [
     {
-      "name": "Sofia Lark packaging film"
+      "name": "Sofia Lark packaging"
     }
   ]
 }

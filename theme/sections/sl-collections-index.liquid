@@ -1,0 +1,192 @@
+{%- comment -%}
+  Sofia Lark collections page (/collections): the design collections only, not the jewellery
+  categories. Each collection is one block: its name, one line about it, two short facts, and a row
+  of its pieces that scrolls sideways like the homepage rows (sl-rail.js moves it), ending in a card
+  with its photograph that opens the collection. A collection with nothing online yet shows its
+  lookbook photographs and where to see it instead.
+{%- endcomment -%}
+{{ 'sl-shop.css' | asset_url | stylesheet_tag }}
+{{ 'sl-collection.css' | asset_url | stylesheet_tag }}
+{{ 'sl-collections-index.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sl-rail.js' | asset_url }}" defer="defer"></script>
+
+{%- assign sid = 'SlCi-' | append: section.id -%}
+{%- assign sizes = '(min-width: 1280px) 19vw, (min-width: 990px) 24vw, (min-width: 750px) 32vw, 45vw' -%}
+
+<div class="sl-ci">
+  <div class="page-width sl-ci__top">
+    <nav class="sl-ch__crumbs" aria-label="Atrašanās vieta">
+      <a href="{{ routes.root_url }}">Sākums</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ section.settings.heading | escape }}</span>
+    </nav>
+    <h1 class="sl-ci__title">{{ section.settings.heading | escape }}</h1>
+    {%- if section.settings.text != blank -%}
+      <p class="sl-ci__intro">{{ section.settings.text | escape }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign c = block.settings.collection
+      if c == blank
+        continue
+      endif
+      assign rail_id = sid | append: '-' | append: forloop.index
+      assign name = block.settings.label | default: c.title
+      assign photo = block.settings.image | default: c.image
+      assign shown = 0
+    -%}
+    <section class="sl-rail sl-ci__item" data-sl-rail aria-labelledby="{{ rail_id }}-title" {{ block.shopify_attributes }}>
+      <div class="page-width">
+        <div class="sl-rail__head">
+          <h2 id="{{ rail_id }}-title" class="sl-rail__title">
+            <a href="{{ c.url }}">{{ name | escape }}</a>
+            {%- if c.products_count > 0 -%}
+              <span class="sl-rail__count">{{ c.products_count }}</span>
+            {%- else -%}
+              <span class="sl-tag sl-ci__tag">Tikai veikalā</span>
+            {%- endif -%}
+          </h2>
+          <div class="sl-rail__controls">
+            <a class="sl-btn sl-rail__all sl-rail__all--head" href="{{ c.url }}">{{ section.settings.view_label | escape }}</a>
+            {%- if c.products_count > 0 -%}
+              <button type="button" class="sl-arrow" data-sl-rail-prev aria-controls="{{ rail_id }}" aria-label="Iepriekšējās rotas" disabled>
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" width="18" height="18"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+              </button>
+              <button type="button" class="sl-arrow" data-sl-rail-next aria-controls="{{ rail_id }}" aria-label="Nākamās rotas">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" width="18" height="18"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="sl-ci__about">
+          {%- if block.settings.lede != blank -%}
+            <p class="sl-ci__lede">{{ block.settings.lede | escape | newline_to_br }}</p>
+          {%- endif -%}
+          {%- if block.settings.fact_1_value != blank or block.settings.fact_2_value != blank -%}
+            <dl class="sl-ch__facts sl-ci__facts">
+              {%- if block.settings.fact_1_value != blank -%}
+                <div class="sl-ch__fact"><dt>{{ block.settings.fact_1_label | escape }}</dt><dd>{{ block.settings.fact_1_value | escape }}</dd></div>
+              {%- endif -%}
+              {%- if block.settings.fact_2_value != blank -%}
+                <div class="sl-ch__fact"><dt>{{ block.settings.fact_2_label | escape }}</dt><dd>{{ block.settings.fact_2_value | escape }}</dd></div>
+              {%- endif -%}
+            </dl>
+          {%- endif -%}
+        </div>
+
+        {%- if c.products_count > 0 -%}
+          <div class="sl-rail__body sl-rail__body--card">
+            <ul id="{{ rail_id }}" class="sl-rail__track" role="list" tabindex="0" aria-label="{{ name | escape }}" data-sl-rail-track>
+              {%- for product in c.products limit: 48 -%}
+                {%- if shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+                {%- unless product.available -%}{%- continue -%}{%- endunless -%}
+                {%- assign shown = shown | plus: 1 -%}
+                <li class="sl-rail__item">
+                  {%- render 'sl-product-card', product: product, collection: c, sizes: sizes -%}
+                </li>
+              {%- endfor -%}
+              <li class="sl-rail__item sl-rail__spacer" aria-hidden="true"></li>
+            </ul>
+            <a class="sl-rail__end{% if photo != blank %} sl-rail__end--image{% endif %}" href="{{ c.url }}" data-sl-rail-card>
+              {%- if photo != blank -%}
+                {{- photo | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: sizes, alt: '', class: 'sl-rail__end-img' -}}
+              {%- endif -%}
+              <span class="sl-rail__end-text">
+                <span class="sl-rail__end-name">{{ name | escape }}</span>
+                <span class="sl-rail__end-count">{{ c.products_count }} rotas</span>
+                <span class="sl-rail__end-link">{{ section.settings.view_label | escape }}</span>
+              </span>
+            </a>
+          </div>
+        {%- else -%}
+          {%- comment -%} nothing online yet: the lookbook, and where to see the pieces {%- endcomment -%}
+          <div class="sl-ci__look">
+            {%- for i in (1..3) -%}
+              {%- assign key = 'look_' | append: i -%}
+              {%- assign pic = block.settings[key] -%}
+              {%- if pic != blank -%}
+                <span class="sl-ch__frame">
+                  {{- pic | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 769px) 33vw, 100vw', alt: '', class: 'sl-ch__look-img' -}}
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- if block.settings.note != blank -%}
+            <p class="sl-ci__note">{{ block.settings.note | escape }}</p>
+          {%- endif -%}
+        {%- endif -%}
+
+        <a class="sl-btn sl-rail__all sl-rail__all--foot" href="{{ c.url }}">{{ section.settings.view_label | escape }}</a>
+      </div>
+    </section>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Sofia Lark collections",
+  "tag": "div",
+  "class": "sl-ci-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kolekcijas"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Katrai kolekcijai savs stāsts."
+    },
+    {
+      "type": "text",
+      "id": "view_label",
+      "label": "Link to a collection",
+      "default": "Par kolekciju"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Pieces in each row",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Name shown", "info": "Leave empty to use the collection's name." },
+        { "type": "textarea", "id": "lede", "label": "A few words about it" },
+        { "type": "text", "id": "fact_1_label", "label": "First fact, label", "default": "Izcelsme" },
+        { "type": "text", "id": "fact_1_value", "label": "First fact" },
+        { "type": "text", "id": "fact_2_label", "label": "Second fact, label", "default": "Materiāli" },
+        { "type": "text", "id": "fact_2_value", "label": "Second fact" },
+        { "type": "image_picker", "id": "image", "label": "Photograph for the last card", "info": "Leave empty to use the collection image." },
+        { "type": "header", "content": "Only for a collection with nothing online yet" },
+        { "type": "image_picker", "id": "look_1", "label": "Photograph 1" },
+        { "type": "image_picker", "id": "look_2", "label": "Photograph 2" },
+        { "type": "image_picker", "id": "look_3", "label": "Photograph 3" },
+        { "type": "textarea", "id": "note", "label": "Where to see it" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sofia Lark collections"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["list-collections"]
+  }
+}
+{% endschema %}

@@ -342,9 +342,37 @@
           {%- endif -%}
         </div>
 
+        {%- liquid
+          # one small line drawing per kind of fact, drawn in the text colour
+          assign svg_open = '<svg class="sl-p__fact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">'
+          capture ico_size
+            echo svg_open
+            echo '<path d="M3.5 16.5 16.5 3.5l4 4-13 13z"/><path d="M7 13l1.8 1.8M9.5 10.5l1.8 1.8M12 8l1.8 1.8"/></svg>'
+          endcapture
+          capture ico_metal
+            echo svg_open
+            echo '<circle cx="12" cy="14" r="6"/><path d="M9.5 3.5h5L16 6l-4 2.5L8 6z"/></svg>'
+          endcapture
+          capture ico_stone
+            echo svg_open
+            echo '<path d="M6.5 4h11l3.5 5-9 11L3 9z"/><path d="M3 9h18M9.5 4 12 20 14.5 4"/></svg>'
+          endcapture
+          capture ico_water
+            echo svg_open
+            echo '<path d="M12 3.5s6 6.6 6 10.5a6 6 0 0 1-12 0c0-3.9 6-10.5 6-10.5z"/></svg>'
+          endcapture
+          capture ico_skin
+            echo svg_open
+            echo '<path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>'
+          endcapture
+          capture ico_hand
+            echo svg_open
+            echo '<path d="M8 12.5V6.8a1.4 1.4 0 0 1 2.8 0V11m0-5.6V4.4a1.4 1.4 0 0 1 2.8 0V11m0-5.4a1.4 1.4 0 0 1 2.8 0V12m0-3.6a1.4 1.4 0 0 1 2.8 0v5.2a7 7 0 0 1-7 7h-.6a6.4 6.4 0 0 1-5.3-2.8L5 15.2a1.5 1.5 0 0 1 2.4-1.8L8 14"/></svg>'
+          endcapture
+        -%}
         {%- capture facts -%}
-          {%- if dims != '' -%}<li><b>{{ dims | escape }}</b></li>{%- endif -%}
-          {%- if finish != '' -%}<li>{{ finish | escape }}</li>{%- endif -%}
+          {%- if dims != '' -%}<li class="sl-p__fact">{{ ico_size }}<span>{{ dims | escape }}</span></li>{%- endif -%}
+          {%- if finish != '' -%}<li class="sl-p__fact">{{ ico_metal }}<span>{{ finish | escape }}</span></li>{%- endif -%}
           {%- liquid
             # plating as a fact of its own, unless the material already says it ("Gold-plated (14 carats)")
             assign show_plating = false
@@ -354,11 +382,11 @@
               endunless
             endif
           -%}
-          {%- if show_plating -%}<li>{{ f_plating | escape }}</li>{%- endif -%}
-          {%- if f_stone != '' -%}<li>{{ f_stone | truncate: 40, '…' | escape }}</li>{%- endif -%}
-          {%- if f_water -%}<li>Nemaina krāsu ūdenī</li>{%- elsif f_tarnish -%}<li>Nemaina krāsu</li>{%- endif -%}
-          {%- if f_hypo -%}<li>Hipoalerģiska</li>{%- endif -%}
-          {%- if f_greece -%}<li>Roku darbs, Grieķija</li>{%- endif -%}
+          {%- if show_plating -%}<li class="sl-p__fact">{{ ico_metal }}<span>{{ f_plating | escape }}</span></li>{%- endif -%}
+          {%- if f_stone != '' -%}<li class="sl-p__fact">{{ ico_stone }}<span>{{ f_stone | truncate: 40, '…' | escape }}</span></li>{%- endif -%}
+          {%- if f_water -%}<li class="sl-p__fact">{{ ico_water }}<span>Nemaina krāsu ūdenī</span></li>{%- elsif f_tarnish -%}<li class="sl-p__fact">{{ ico_water }}<span>Nemaina krāsu</span></li>{%- endif -%}
+          {%- if f_hypo -%}<li class="sl-p__fact">{{ ico_skin }}<span>Hipoalerģiska</span></li>{%- endif -%}
+          {%- if f_greece -%}<li class="sl-p__fact">{{ ico_hand }}<span>Roku darbs, Grieķija</span></li>{%- endif -%}
         {%- endcapture -%}
         {%- if facts != blank -%}
           <ul class="sl-p__facts" role="list" aria-label="Galvenais">{{ facts }}</ul>
@@ -372,7 +400,13 @@
               {%- for option in product.options_with_values -%}
                 {%- liquid
                   assign opt_index = forloop.index0
-                  # photo tiles when every value of this option has a photograph of its own
+                  # photo tiles when every value of this option has a photograph of its own; a colour
+                  # option without them shows flat colour swatches, anything else shows words
+                  assign option_key = option.name | downcase | handleize
+                  assign is_color_option = false
+                  if option_key contains 'kras' or option_key contains 'color' or option_key contains 'colour' or option_key contains 'metal' or option_key contains 'finish'
+                    assign is_color_option = true
+                  endif
                   assign visual = true
                   assign seen = ','
                   for value in option.values
@@ -394,6 +428,10 @@
                     endif
                     assign seen = seen | append: value_media.id | append: ','
                   endfor
+                  assign swatches = false
+                  if is_color_option and visual == false
+                    assign swatches = true
+                  endif
                 -%}
                 <fieldset class="sl-p__option{% if visual %} sl-p__option--tray{% endif %}" data-sl-option="{{ opt_index }}">
                   <legend class="sl-p__legend">{{ option.name | escape }}: <b data-sl-option-value>{{ option.selected_value | escape }}</b></legend>
@@ -422,9 +460,60 @@
                         value="{{ value | escape }}"
                         {% if option.selected_value == value %}checked{% endif %}
                       >
+                      {%- assign swatch_background = '' -%}
+                      {%- if swatches -%}
+                        {%- liquid
+                          assign color_key = value | strip | downcase | replace: ' ', ''
+                          # Shopify's own swatch for the value first: its picture over its colour
+                          assign swatch_background = value.swatch.color | append: ''
+                          if value.swatch.image
+                            assign swatch_image = value.swatch.image | image_url: width: 120
+                            assign swatch_background = 'url(' | append: swatch_image | append: ') center / cover ' | append: swatch_background
+                          endif
+                          # otherwise a colour from the value's name
+                          if swatch_background == blank
+                            case color_key
+                              when 'sudraba', 'sudrabs', 'silver'
+                                assign swatch_background = '#c8cacc'
+                              when 'sudrabs/zelts', 'sudraba/zelta', 'silver/gold', 'gold/silver'
+                                assign swatch_background = 'linear-gradient(90deg, #c8cacc 0 50%, #d9aa24 50% 100%)'
+                              when 'zelts', 'zelta', 'zeltaina', 'zeltains', 'gold', 'golden'
+                                assign swatch_background = '#d9aa24'
+                              when 'rožozelts', 'rozaudrab', 'rosegold', 'pinkgold'
+                                assign swatch_background = '#b76e79'
+                              when 'balta', 'balts', 'white'
+                                assign swatch_background = '#ffffff'
+                              when 'melna', 'melns', 'black'
+                                assign swatch_background = '#171717'
+                              when 'rozā', 'roza', 'pink'
+                                assign swatch_background = '#d98ca4'
+                              when 'sarkana', 'sarkans', 'red'
+                                assign swatch_background = '#a3313a'
+                              when 'zaļa', 'zala', 'green'
+                                assign swatch_background = '#577b55'
+                              when 'zila', 'zils', 'blue'
+                                assign swatch_background = '#527fa0'
+                              when 'violeta', 'violets', 'purple'
+                                assign swatch_background = '#71508c'
+                              when 'brūna', 'bruna', 'brown'
+                                assign swatch_background = '#8a6447'
+                              when 'pelēka', 'peleka', 'gray', 'grey'
+                                assign swatch_background = '#9a9d9f'
+                              when 'oranža', 'oranza', 'orange'
+                                assign swatch_background = '#d77a37'
+                              when 'caurspīdīga', 'caurspidiga', 'crystal'
+                                assign swatch_background = '#f4f3f0'
+                            endcase
+                          endif
+                        -%}
+                      {%- endif -%}
                       {%- if visual and value_image -%}
                         <label for="{{ value_id }}" class="sl-p__stone{% unless value_available %} is-out{% endunless %}" title="{{ value | escape }}">
                           {{- value_image | image_url: width: 240 | image_tag: widths: '120, 160, 240', sizes: '80px', loading: 'lazy', alt: '', class: 'sl-p__stone-img' -}}
+                          <span class="visually-hidden">{{ value | escape }}{% unless value_available %}, izpārdots{% endunless %}</span>
+                        </label>
+                      {%- elsif swatches and swatch_background != blank -%}
+                        <label for="{{ value_id }}" class="sl-p__stone sl-p__stone--swatch{% unless value_available %} is-out{% endunless %}" style="background: {{ swatch_background }};" title="{{ value | escape }}">
                           <span class="visually-hidden">{{ value | escape }}{% unless value_available %}, izpārdots{% endunless %}</span>
                         </label>
                       {%- else -%}

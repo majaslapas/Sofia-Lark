@@ -1,0 +1,216 @@
+{
+  "type": "footer",
+  "name": "t:sections.footer-group.name",
+  "sections": {
+    "1704193058cb133dcb": {
+      "type": "apps",
+      "blocks": {
+        "afd697ef-9b18-4c88-98b6-9b6c682661a7": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": ""
+          }
+        }
+      },
+      "block_order": [
+        "afd697ef-9b18-4c88-98b6-9b6c682661a7"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "space_around": false
+      }
+    },
+    "footer-promotions": {
+      "type": "footer-promotions",
+      "blocks": {
+        "footer-promotions-0": {
+          "type": "promotion",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/2_baa3a680-a174-4b6c-a2a3-76c05392a071.png",
+            "image_mask": "portrait",
+            "title": "Site-wide promotion",
+            "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+            "button_label": "Optional button",
+            "button_link": "shopify://collections"
+          }
+        },
+        "footer-promotions-1": {
+          "type": "promotion",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Untitled_design_41.png",
+            "image_mask": "portrait",
+            "title": "Site-wide promotion",
+            "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+            "button_label": "Optional button",
+            "button_link": ""
+          }
+        },
+        "footer-promotions-2": {
+          "type": "promotion",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/2_4bd019b0-12f0-47c1-aae4-6827df68f764.png",
+            "image_mask": "portrait",
+            "title": "Site-wide promotion",
+            "text": "<p>Use this section to promote content throughout every page of your site. Add images for further impact.</p>",
+            "button_label": "Optional button",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "footer-promotions-0",
+        "footer-promotions-1",
+        "footer-promotions-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "hide_homepage": false
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-1": {
+          "type": "menu",
+          "disabled": true,
+          "settings": {
+            "show_footer_title": false,
+            "menu": "footer",
+            "container_width": 25
+          }
+        },
+        "footer2": {
+          "type": "newsletter",
+          "settings": {
+            "show_footer_title": true,
+            "title": "Pieraksties jaunumiem",
+            "text": "<p>Un esi pirmā, kas saņem jaunumus un īpašos klienta piedāvājumus!</p>",
+            "container_width": 33
+          }
+        },
+        "footer-0": {
+          "type": "logo_social",
+          "disabled": true,
+          "settings": {
+            "desktop_logo_height": 50,
+            "container_width": 95
+          }
+        },
+        "59c98ffe-e04b-4e3e-84e1-359617f4f330": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": false,
+            "menu": "footer",
+            "container_width": 25
+          }
+        }
+      },
+      "block_order": [
+        "footer-1",
+        "footer2",
+        "footer-0",
+        "59c98ffe-e04b-4e3e-84e1-359617f4f330"
+      ],
+      "disabled": true,
+      "settings": {
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": true,
+        "show_payment_icons": false,
+        "show_copyright": true,
+        "copyright_text": "Visas tiesības aizsargātas"
+      }
+    },
+    "sl_footer": {
+      "type": "sl-footer",
+      "blocks": {
+        "col_rotas": {
+          "type": "menu",
+          "settings": {
+            "title": "Rotas",
+            "menu": "galvena-izvelne-2026",
+            "parent": "Rotas",
+            "extra_1_label": "Rotu kopšana",
+            "extra_1_link": "shopify://collections/cleaning-chemicals",
+            "extra_2_label": "",
+            "extra_2_link": ""
+          }
+        },
+        "col_kolekcijas": {
+          "type": "menu",
+          "settings": {
+            "title": "Kolekcijas",
+            "menu": "galvena-izvelne-2026",
+            "parent": "Kolekcijas",
+            "extra_1_label": "Jaunumi",
+            "extra_1_link": "shopify://collections/kalliope-jewelry",
+            "extra_2_label": "",
+            "extra_2_link": ""
+          }
+        },
+        "col_stasts": {
+          "type": "menu",
+          "settings": {
+            "title": "Sofia Lark",
+            "menu": "galvena-izvelne-2026",
+            "parent": "Mūsu stāsts",
+            "extra_1_label": "Veikals Rīgā",
+            "extra_1_link": "shopify://pages/sofia-lark-veikals",
+            "extra_2_label": "",
+            "extra_2_link": ""
+          }
+        },
+        "col_klientiem": {
+          "type": "menu",
+          "settings": {
+            "title": "Klientiem",
+            "menu": "footer",
+            "parent": "",
+            "extra_1_label": "",
+            "extra_1_link": "",
+            "extra_2_label": "",
+            "extra_2_link": ""
+          }
+        },
+        "store": {
+          "type": "store",
+          "settings": {
+            "title": "Veikals Rīgā",
+            "address": "Blaumaņa iela 17, Rīga",
+            "hours": "Otrdiena–piektdiena 12:00–19:00",
+            "link_label": "Par veikalu",
+            "link": "shopify://pages/sofia-lark-veikals"
+          }
+        }
+      },
+      "block_order": [
+        "col_rotas",
+        "col_kolekcijas",
+        "col_stasts",
+        "col_klientiem",
+        "store"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/sofia-lark-logo-01.png",
+        "claim": "Uzdrošinies būt pati",
+        "show_newsletter": true,
+        "newsletter_title": "Pieraksties jaunumiem",
+        "newsletter_text": "Un esi pirmā, kas saņem jaunumus un īpašos klienta piedāvājumus.",
+        "newsletter_button": "Pieteikties",
+        "show_wordmark": true,
+        "wordmark": "Sofia Lark",
+        "copyright": "Visas tiesības aizsargātas."
+      }
+    }
+  },
+  "order": [
+    "1704193058cb133dcb",
+    "footer-promotions",
+    "footer",
+    "sl_footer"
+  ]
+}

@@ -334,6 +334,83 @@
     }, { passive: true });
   };
 
+  /* ---------- photographs open large: arrows, swipe, Esc ---------- */
+
+  /* The large picture is the same file at a bigger width, read from the picture as it is now,
+     so a photograph swapped by choosing a colour opens as that colour. */
+  function bigSrc(img) {
+    var src = img.currentSrc || img.src;
+    return /[?&]width=\d+/.test(src) ? src.replace(/([?&]width=)\d+/, function (m, k) { return k + '2000'; }) : src + (src.indexOf('?') < 0 ? '?' : '&') + 'width=2000';
+  }
+
+  var viewer = null;
+  function Viewer() {
+    var d = document.createElement('dialog');
+    d.className = 'sl-lb';
+    d.setAttribute('aria-label', 'Produkta attēli');
+    d.innerHTML = '<img class="sl-lb__img" alt="">' +
+      '<button type="button" class="sl-lb__btn sl-lb__close" aria-label="Aizvērt"></button>' +
+      '<button type="button" class="sl-lb__btn sl-lb__prev" aria-label="Iepriekšējais attēls"></button>' +
+      '<button type="button" class="sl-lb__btn sl-lb__next" aria-label="Nākamais attēls"></button>' +
+      '<p class="sl-lb__count" aria-live="polite"></p>';
+    document.body.appendChild(d);
+    var img = d.querySelector('.sl-lb__img');
+    var count = d.querySelector('.sl-lb__count');
+    var list = [];
+    var at = 0;
+    var opener = null;
+    function show(i) {
+      at = (i + list.length) % list.length;
+      img.src = bigSrc(list[at]);
+      img.alt = list[at].alt || '';
+      count.textContent = list.length > 1 ? (at + 1) + ' / ' + list.length : '';
+      d.classList.toggle('is-single', list.length < 2);
+    }
+    d.querySelector('.sl-lb__close').addEventListener('click', function () { d.close(); });
+    d.querySelector('.sl-lb__prev').addEventListener('click', function () { show(at - 1); });
+    d.querySelector('.sl-lb__next').addEventListener('click', function () { show(at + 1); });
+    /* a press on the backdrop, not on the picture or a button, closes */
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') show(at - 1);
+      else if (e.key === 'ArrowRight') show(at + 1);
+    });
+    var x0 = null;
+    d.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    d.addEventListener('touchend', function (e) {
+      if (x0 == null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 40) show(at + (dx < 0 ? 1 : -1));
+    });
+    d.addEventListener('close', function () {
+      document.documentElement.classList.remove('sl-lb-open');
+      if (opener) opener.focus({ preventScroll: true });
+    });
+    return {
+      open: function (imgs, i, from) {
+        list = imgs;
+        opener = from;
+        show(i);
+        document.documentElement.classList.add('sl-lb-open');
+        d.showModal();
+      }
+    };
+  }
+
+  function zoom(root) {
+    var gallery = root.querySelector('[data-sl-gallery]');
+    if (!gallery || typeof HTMLDialogElement !== 'function') return;
+    gallery.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-sl-zoom]');
+      if (!btn) return;
+      var buttons = Array.prototype.slice.call(gallery.querySelectorAll('[data-sl-zoom]'));
+      var imgs = buttons.map(function (b) { return b.querySelector('img'); });
+      viewer = viewer || Viewer();
+      viewer.open(imgs, buttons.indexOf(btn), btn);
+    });
+  }
+
   /* ---------- "goes with": add a piece without leaving the page ---------- */
 
   function Pair(root) {
@@ -379,97 +456,32 @@
 
   /* ---------- packaging film: plays silently while on screen, with a pause button ---------- */
 
-  /* The YouTube player script is loaded once, the first time a film comes near the screen. It is
-     waited for by polling rather than through onYouTubeIframeAPIReady, which the theme may own. */
-  var ytWaiting = [];
-  function withYouTube(cb) {
-    if (window.YT && window.YT.Player) return cb();
-    ytWaiting.push(cb);
-    if (ytWaiting.length > 1) return;
-    var s = document.createElement('script');
-    s.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(s);
-    var tries = 0;
-    var t = setInterval(function () {
-      if (window.YT && window.YT.Player) {
-        clearInterval(t);
-        ytWaiting.splice(0).forEach(function (f) { f(); });
-      } else if (++tries > 150) {
-        clearInterval(t); /* no YouTube: the cover picture stays */
-      }
-    }, 100);
-  }
-
   function Film(root) {
-    var holder = root.querySelector('[data-sl-film-player]');
+    var video = root.querySelector('[data-sl-film-player] video');
     var toggle = root.querySelector('[data-sl-film-toggle]');
-    var video = holder.querySelector('video');
-    var yt = root.dataset.yt;
-    var start = Number(root.dataset.start) || 0;
-    var end = Number(root.dataset.end) || 0;
-    var player = null;
+    if (!video || !toggle) return;
     var wanted = !reduceMotion; /* the visitor's choice: play or stay paused */
     var visible = false;
-
+    video.removeAttribute('controls');
     function playing(on) {
       if (on) root.classList.add('is-started');
       root.classList.toggle('is-playing', on);
       toggle.setAttribute('aria-label', on ? 'Apturēt video' : 'Atskaņot video');
     }
     function apply() {
-      var go = wanted && visible;
-      if (video) {
-        if (go) video.play().then(function () { playing(true); }).catch(function () {});
-        else { video.pause(); playing(false); }
-      } else if (player && player.playVideo) {
-        if (go) player.playVideo(); else player.pauseVideo();
-      }
+      if (wanted && visible) video.play().then(function () { playing(true); }).catch(function () {});
+      else { video.pause(); playing(false); }
     }
-    function build() {
-      if (player || !yt) return;
-      player = true;
-      var el = document.createElement('div');
-      holder.appendChild(el);
-      withYouTube(function () {
-        var vars = { autoplay: 0, mute: 1, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3, modestbranding: 1, playsinline: 1, rel: 0, start: start };
-        if (end > start) vars.end = end;
-        player = new window.YT.Player(el, {
-          videoId: yt,
-          host: 'https://www.youtube-nocookie.com',
-          playerVars: vars,
-          events: {
-            onReady: function (e) {
-              e.target.mute();
-              e.target.getIframe().setAttribute('tabindex', '-1');
-              e.target.getIframe().setAttribute('title', 'Video');
-              toggle.hidden = false;
-              apply();
-            },
-            onStateChange: function (e) {
-              var st = window.YT.PlayerState;
-              if (e.data === st.PLAYING) playing(true);
-              else if (e.data === st.PAUSED) playing(false);
-              else if (e.data === st.ENDED) { e.target.seekTo(start, true); e.target.playVideo(); }
-            }
-          }
-        });
-      });
-    }
-
-    if (video) toggle.hidden = false;
+    toggle.hidden = false;
     toggle.addEventListener('click', function () {
       wanted = !root.classList.contains('is-playing');
-      build();
       apply();
     });
-
-    if (!('IntersectionObserver' in window)) { visible = true; if (wanted) build(); apply(); return; }
+    if (!('IntersectionObserver' in window)) { visible = true; apply(); return; }
     new IntersectionObserver(function (entries) {
       visible = entries[0].isIntersecting;
-      if (visible && wanted) build();
       apply();
     }, { rootMargin: '200px 0px' }).observe(root);
-    if (reduceMotion && yt) toggle.hidden = false;
   }
 
   /* ---------- entrances: heading, then text, then picture ---------- */
@@ -496,6 +508,7 @@
     scope.querySelectorAll('[data-sl-product]').forEach(function (el) {
       if (el.slProduct) return;
       el.slProduct = new Product(el);
+      zoom(el);
     });
     scope.querySelectorAll('[data-sl-pair]').forEach(function (el) {
       if (el.slPair) return;

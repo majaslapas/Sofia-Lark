@@ -1,0 +1,287 @@
+{%- comment -%}
+  Sofia Lark collection header, for the jewellery collections (Kalliope, Venus, SkyLab, Habaha,
+  Dogon Art, Laura Lark) and the jewellery categories (Auskari, Kaklarotas …).
+  A compact opening that gets out of the way of the products: the collection's name set large,
+  one line on what it is, two short facts, the story folded away under "Par kolekciju", and one
+  photograph of the pieces being worn. Each collection has its own block (picked by collection) with
+  its own words and photograph; without a block, or with an empty story, the header falls back to
+  the collection's own title, description and image from Shopify admin.
+{%- endcomment -%}
+{{ 'sl-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign c = collection
+  assign about = nil
+  for block in section.blocks
+    if block.settings.collection != blank and block.settings.collection.handle == c.handle
+      assign about = block
+      break
+    endif
+  endfor
+
+  assign name = c.title
+  assign lede = ''
+  assign story = c.description
+  assign image = c.image
+  if about
+    assign name = about.settings.label | default: c.title
+    assign lede = about.settings.lede
+    if about.settings.story != blank
+      assign story = about.settings.story
+    endif
+    if about.settings.image != blank
+      assign image = about.settings.image
+    endif
+  endif
+  assign head_id = 'SlCh-' | append: section.id
+  assign img_alt = image.alt | default: name
+  assign focus = 'object-position: ' | append: image.presentation.focal_point
+  if about
+    assign focus = 'object-position: ' | append: about.settings.focus_x | append: '% ' | append: about.settings.focus_y | append: '%'
+  endif
+-%}
+
+<section class="sl-ch{% if image == blank %} sl-ch--plain{% endif %}" aria-labelledby="{{ head_id }}-title" {{ about.shopify_attributes }}>
+  <div class="page-width sl-ch__inner">
+    {%- if image != blank -%}
+      <figure class="sl-ch__media">
+        {{- image | image_url: width: 1600 | image_tag:
+            widths: '480, 720, 960, 1200, 1600',
+            sizes: '(min-width: 769px) 40vw, 100vw',
+            alt: img_alt,
+            class: 'sl-ch__img',
+            style: focus,
+            fetchpriority: 'high'
+        -}}
+      </figure>
+    {%- endif -%}
+
+    <div class="sl-ch__text">
+      <nav class="sl-ch__crumbs" aria-label="Atrašanās vieta">
+        <a href="{{ routes.root_url }}">Sākums</a>
+        <span aria-hidden="true">/</span>
+        <a href="{{ section.settings.crumb_link | default: routes.collections_url }}">{{ section.settings.crumb_label | default: 'Kolekcijas' | escape }}</a>
+      </nav>
+
+      {%- if c.products_count == 0 -%}
+        <span class="sl-tag sl-ch__tag">Tikai veikalā</span>
+      {%- endif -%}
+      <h1 id="{{ head_id }}-title" class="sl-ch__title">
+        {{- name | escape -}}
+        {%- if c.products_count > 0 -%}
+          <span class="sl-ch__count">{{ c.products_count }}<span class="visually-hidden"> rotas</span></span>
+        {%- endif -%}
+      </h1>
+
+      {%- if lede != blank -%}
+        <p class="sl-ch__lede">{{ lede | escape }}</p>
+      {%- endif -%}
+
+      {%- if about and about.settings.fact_1_value != blank or about.settings.fact_2_value != blank -%}
+        <dl class="sl-ch__facts">
+          {%- if about.settings.fact_1_value != blank -%}
+            <div class="sl-ch__fact">
+              <dt>{{ about.settings.fact_1_label | escape }}</dt>
+              <dd>{{ about.settings.fact_1_value | escape }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if about.settings.fact_2_value != blank -%}
+            <div class="sl-ch__fact">
+              <dt>{{ about.settings.fact_2_label | escape }}</dt>
+              <dd>{{ about.settings.fact_2_value | escape }}</dd>
+            </div>
+          {%- endif -%}
+        </dl>
+      {%- endif -%}
+
+      {%- if about.settings.note != blank -%}
+        <p class="sl-ch__note">
+          {{- about.settings.note | escape -}}
+          {%- if about.settings.note_link != blank %}
+            <a href="{{ about.settings.note_link }}">{{ about.settings.note_link_label | default: 'Veikals Rīgā' | escape }}</a>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- if story != blank -%}
+        <details class="sl-ch__more">
+          <summary class="sl-ch__toggle">
+            <span>{{ section.settings.more_label | default: 'Par kolekciju' | escape }}</span>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="14" height="14"><path d="M8 2v12M2 8h12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+          </summary>
+          <div class="sl-ch__story">{{ story }}</div>
+        </details>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if about.settings.look_1 != blank -%}
+    {%- comment -%} a few lookbook photographs, for a collection that has no products online yet {%- endcomment -%}
+    <div class="page-width">
+      <div class="sl-ch__look">
+        {%- for i in (1..3) -%}
+          {%- assign key = 'look_' | append: i -%}
+          {%- assign pic = about.settings[key] -%}
+          {%- if pic != blank -%}
+            <span class="sl-ch__frame">
+              {{- pic | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480, 720, 960, 1200', sizes: '(min-width: 769px) 33vw, 100vw', alt: '', class: 'sl-ch__look-img' -}}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "SL collection header",
+  "tag": "div",
+  "class": "sl-ch-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "Story button",
+      "default": "Par kolekciju"
+    },
+    {
+      "type": "text",
+      "id": "crumb_label",
+      "label": "Second step of the breadcrumb",
+      "default": "Kolekcijas",
+      "info": "For example \"Rotas\" on the jewellery category pages."
+    },
+    {
+      "type": "url",
+      "id": "crumb_link",
+      "label": "Its link",
+      "info": "Leave empty for the page of all collections."
+    },
+    {
+      "type": "paragraph",
+      "content": "Add one block per collection. A collection without a block shows its name, description and image from Shopify admin."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "about",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Name shown",
+          "info": "Leave empty to use the collection's name."
+        },
+        {
+          "type": "textarea",
+          "id": "lede",
+          "label": "One line about the collection"
+        },
+        {
+          "type": "text",
+          "id": "fact_1_label",
+          "label": "First fact, label",
+          "default": "Materiāli"
+        },
+        {
+          "type": "text",
+          "id": "fact_1_value",
+          "label": "First fact"
+        },
+        {
+          "type": "text",
+          "id": "fact_2_label",
+          "label": "Second fact, label",
+          "default": "Izcelsme"
+        },
+        {
+          "type": "text",
+          "id": "fact_2_value",
+          "label": "Second fact"
+        },
+        {
+          "type": "richtext",
+          "id": "story",
+          "label": "Story (under \"Par kolekciju\")",
+          "info": "Leave empty to use the collection description from Shopify admin."
+        },
+        {
+          "type": "textarea",
+          "id": "note",
+          "label": "Note",
+          "info": "For example, that the collection can for now only be seen in the shop in Riga."
+        },
+        {
+          "type": "text",
+          "id": "note_link_label",
+          "label": "Note link label",
+          "default": "Veikals Rīgā"
+        },
+        {
+          "type": "url",
+          "id": "note_link",
+          "label": "Note link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph",
+          "info": "A piece being worn works best."
+        },
+        {
+          "type": "image_picker",
+          "id": "look_1",
+          "label": "Lookbook photograph 1",
+          "info": "Lookbook photographs show in a row under the header. Useful for a collection that is not online yet."
+        },
+        {
+          "type": "image_picker",
+          "id": "look_2",
+          "label": "Lookbook photograph 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "look_3",
+          "label": "Lookbook photograph 3"
+        },
+        {
+          "type": "range",
+          "id": "focus_x",
+          "label": "Photograph focus, across",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "focus_y",
+          "label": "Photograph focus, down",
+          "info": "Keeps the jewellery in view when the photograph is cropped, most of all on phones.",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SL collection header"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
+}
+{% endschema %}

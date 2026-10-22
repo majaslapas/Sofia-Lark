@@ -128,15 +128,13 @@
     "iepakojums": {
       "type": "sl-packaging",
       "settings": {
-        "video_url": "https://www.youtube.com/watch?v=hmWurPb8c2s",
-        "start": 0,
-        "end": 14,
+        "image": "shopify://shop_images/maza_izmera_sofia_lark_iepakojums.jpg",
+        "image_detail": "shopify://shop_images/sofia-lark-iepakojums-video-vaks.jpg",
         "eyebrow": "Iepakojums",
         "heading": "Katra rota skaisti iepakota",
         "text": "<p>Katru pasūtījumu iesaiņojam skaistā, dabai draudzīgā iepakojumā.</p>",
         "quote": "Pasūtījumu saņēmu ļoti ātri un jauki iepakotu.",
-        "quote_name": "Margriet",
-        "poster": "shopify://shop_images/sofia-lark-iepakojums-video-vaks.jpg"
+        "quote_name": "Margriet"
       }
     }
   },

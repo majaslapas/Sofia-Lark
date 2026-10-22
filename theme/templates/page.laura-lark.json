@@ -1,0 +1,134 @@
+{
+  "sections": {
+    "story": {
+      "type": "sl-story",
+      "blocks": {
+        "open": {
+          "type": "opening",
+          "settings": {
+            "crumb_label": "Mūsu stāsts",
+            "crumb_link": "shopify://pages/filozofija",
+            "title": "Laura Lark",
+            "lede": "SOFIA LARK dibinātāja, rotu māksliniece un dizainere",
+            "image": "shopify://shop_images/Untitled_design_5_20432338-f3ac-49ae-9194-d3c07042e851.png"
+          }
+        },
+        "ch1": {
+          "type": "chapter",
+          "settings": {
+            "label": "01",
+            "heading": "Es radu rotas, jo tā es elpoju.",
+            "text": "<p>Rotu radīšana man nav tikai profesija. Tā ir mana valoda. Veids, kā domāju, jūtu un izstāstu pasauli.</p><p>Ja man nebūtu jādomā par praktiskumu vai pārdošanu, es tik un tā radītu. Varbūt tās būtu konceptuālas formas, kuras nekad nenonāktu veikalā. Bet tās tik un tā būtu rotas.</p><p>Man patīk mirklis, kad auksts metāls kļūst par stāstu un rota sāk savu dzīvi kopā ar sievieti, kura to izvēlas. Bet vislielākais prieks ir redzēt, kā sieviete, uzvelkot manis radīto rotu, iztaisno plecus, pasmaida un sāk starot.</p>",
+            "quote": "Tajā brīdī saprotu, ka esmu radījusi ne tikai rotu. Esmu radījusi sajūtu.",
+            "text_end": "<p>Un, ja ar to varu kaut mazliet padarīt pasauli skaistāku un priecīgāku, tad zinu, ka daru to, kas man patiesi ir jādara.</p>",
+            "tone": "white"
+          }
+        },
+        "gen": {
+          "type": "steps",
+          "settings": {
+            "heading": "Rotas ir mana dzimtas valoda.",
+            "text": "<p>Rotu radīšana mūsu ģimenē turpinās jau <strong>trešajā paaudzē</strong>.</p>",
+            "item_1_title": "Vectēvs Vladislavs",
+            "item_1_text": "Mans vectēvs Vladislavs bija rotkalis.",
+            "item_2_title": "Mamma",
+            "item_2_text": "Mana mamma bija juveliere.",
+            "item_3_title": "Vecmāmiņa Sofija",
+            "item_3_text": "Mana vecmāmiņa Sofija bija modes māksliniece, kura iemācīja man redzēt skaistumu detaļās un ticēt, ka elegance nav atkarīga no apstākļiem.",
+            "text_after": "<p>Var teikt, ka mana dzīve darbnīcā sākās daudz agrāk nekā studijas.</p>",
+            "tone": "stone"
+          }
+        },
+        "ch2": {
+          "type": "chapter",
+          "settings": {
+            "label": "02",
+            "heading": "Studijas un darbnīca",
+            "text": "<p>Lai pilnveidotu savu meistarību, studēju <strong>Latvijas Mākslas akadēmijas Metāla dizaina nodaļā</strong>, kur apguvu rotu mākslu un metāla dizainu. Studiju laikā papildināju zināšanas arī <strong>Venēcijas Mākslas akadēmijā</strong>, kur iepazinu citu skatījumu uz mākslu, materiāliem un radošo procesu.</p>",
+            "quote": "Šī pieredze iemācīja man vienu – rota var būt daudz vairāk nekā rotājums. Tā var kļūt par personības turpinājumu.",
+            "text_end": "<p>Pēdējos gadus mana ikdiena paiet starp darbnīcu, skicēm, klientēm un nepārtrauktu jaunu ideju meklēšanu. Tieši šī ikdienas saskarsme ar sievietēm palīdz man radīt rotas, kuras dzīvo ārpus skicēm un vitrīnām.</p>",
+            "image": "shopify://shop_images/Untitled_design_7_09fc58ed-5953-4508-b5da-6c340bd4d5b2.png",
+            "link_label": "Kā top rotas",
+            "link": "shopify://pages/ka-top-rotas",
+            "tone": "white"
+          }
+        },
+        "ch3": {
+          "type": "chapter",
+          "settings": {
+            "label": "03",
+            "heading": "SOFIA LARK nav tikai zīmols. Tā ir mana dzīves filozofija.",
+            "text": "<p>Es radu autorkolekcijas, bet vienlaikus rūpīgi atlasu arī citu dizaineru darbus.</p><p>Ne tāpēc, lai veikals būtu lielāks.</p><p>Bet tāpēc, ka vēlos, lai sieviete vienuviet var atrast rotas, kurām ir raksturs, kvalitāte un stāsts.</p>",
+            "lines": "Katru rotu izvēlos pati.\nNe pēc zīmola nosaukuma.\nNe pēc tendencēm.\nPēc sajūtas.\nPēc dizaina.",
+            "text_after": "<p>Jo katrai rotai, kas nonāk SOFIA LARK, ir jābūt tādai, kuru pati nēsātu ar lepnumu.</p>",
+            "quote": "SOFIA LARK ir vieta, kur satiekas manis radītās rotas un rūpīgi izvēlēti dizaini, kurus vieno viena ideja – palīdzēt sievietei atrast rotu, kurā viņa jūtas pati.",
+            "link_label": "Kolekcijas",
+            "link": "shopify://collections",
+            "tone": "white"
+          }
+        },
+        "ch4": {
+          "type": "chapter",
+          "settings": {
+            "label": "04",
+            "heading": "Mani iedvesmo daba.",
+            "lines": "Daba man ir vieta, kur atgriezties pie sevis.\nTur es atrodu mieru.\nTur atgūstu spēku.\nTur rodas lielākā daļa manu ideju.",
+            "text_after": "<p>Organiskas formas, faktūras un nepilnības mani fascinē daudz vairāk nekā perfekta simetrija.</p>",
+            "quote": "Jo arī cilvēks nav radīts pilnībai.\nViņš ir radīts dzīvei.",
+            "tone": "stone"
+          }
+        },
+        "ch5": {
+          "type": "chapter",
+          "settings": {
+            "label": "05",
+            "heading": "Mans lielākais vēlējums",
+            "text": "<p>Es vēlos, lai sieviete, uzliekot rotu no Sofia Lark piedāvājuma klāsta, jūtas kā „savā ādā”.</p>",
+            "lines": "Es vēlos, lai viņa jūtas sevi.\nLai viņa atceras savu spēku.\nSavu skaistumu.\nSavu individualitāti.",
+            "text_after": "<p>Jo es ticu, ka skaistums nav vienāds visiem.</p>",
+            "quote": "Tas dzimst brīdī, kad cilvēks uzdrošinās būt pats.",
+            "tone": "white"
+          }
+        },
+        "ch6": {
+          "type": "chapter",
+          "settings": {
+            "label": "06",
+            "heading": "Kāpēc Lark?",
+            "text": "<p>Lark ir mans pseidonīms.</p><p>Tas radies no manas vecmāmiņas Sofijas meitas uzvārda – <strong>Cīrule</strong>. Angliski cīrulis ir <em>lark</em>.</p><p>Izvēloties šo vārdu, es vēlējos saglabāt saikni ar savām saknēm un sievietēm manā dzimtā, kuras man iemācīja mīlestību pret skaistumu, radošumu un darbu.</p><p>Tieši viņām par godu radās nosaukums <strong>SOFIA LARK</strong>.</p>",
+            "tone": "white"
+          }
+        },
+        "close": {
+          "type": "closing",
+          "settings": {
+            "heading": "Esi tu.",
+            "text": "Dzīve ir pārāk skaista, lai to dzīvotu kādu stereotipu vai trendu ietekmē.",
+            "signature": "ESI TU.\nEsi ar visām savām „neperfekcijām” pati skaistākā!\nar mīlestību\nTava\nLaura Lark ❤️",
+            "link_1_label": "Kolekcijas",
+            "link_1_url": "shopify://collections",
+            "link_2_label": "Kā top rotas",
+            "link_2_url": "shopify://pages/ka-top-rotas",
+            "link_3_label": "Veikals Rīgā",
+            "link_3_url": "shopify://pages/sofia-lark-veikals"
+          }
+        }
+      },
+      "block_order": [
+        "open",
+        "ch1",
+        "gen",
+        "ch2",
+        "ch3",
+        "ch4",
+        "ch5",
+        "ch6",
+        "close"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "story"
+  ]
+}

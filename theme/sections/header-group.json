@@ -1,0 +1,139 @@
+{
+  "type": "header",
+  "name": "t:sections.header-group.name",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_YWnDMP": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "",
+            "show_images": true,
+            "image_aspect_ratio": "landscape",
+            "center_content": false,
+            "promo_text_alignment": "left",
+            "promo_heading_size": "medium",
+            "promo1_image_shape": "landscape",
+            "promo1_link": "",
+            "promo1_heading": "",
+            "promo1_text": "",
+            "promo1_button_label": "",
+            "promo1_position": "after",
+            "promo2_image_shape": "landscape",
+            "promo2_link": "",
+            "promo2_heading": "",
+            "promo2_text": "",
+            "promo2_button_label": "",
+            "promo2_position": "after"
+          }
+        },
+        "mega_menu_xMzAhb": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "Mūsu stāsts",
+            "show_images": true,
+            "image_aspect_ratio": "landscape",
+            "center_content": true,
+            "promo_text_alignment": "right",
+            "promo_heading_size": "medium",
+            "promo1_image": "shopify://shop_images/Laura_Lark_rotu_studija.png",
+            "promo1_image_shape": "landscape",
+            "promo1_link": "shopify://pages/ka-top-rotas",
+            "promo1_heading": "Kā top rotas",
+            "promo1_text": "Ieskats Laura Lark rotu darbnīcā.",
+            "promo1_button_label": "Lasīt vairāk",
+            "promo1_position": "after",
+            "promo2_image_shape": "landscape",
+            "promo2_link": "",
+            "promo2_heading": "",
+            "promo2_text": "",
+            "promo2_button_label": "",
+            "promo2_position": "after"
+          }
+        },
+        "mega_menu_sl_store": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "Veikals Rīgā",
+            "show_images": true,
+            "image_aspect_ratio": "landscape",
+            "center_content": false,
+            "promo_text_alignment": "left",
+            "promo_heading_size": "medium",
+            "promo1_image": "shopify://shop_images/Copy_of_Vieta_kur_majo_prieks.png",
+            "promo1_image_shape": "landscape",
+            "promo1_link": "shopify://pages/sofia-lark-veikals",
+            "promo1_heading": "Blaumaņa iela 17, Rīga",
+            "promo1_text": "Otrdiena–piektdiena 12:00–19:00",
+            "promo1_button_label": "Kā mūs atrast",
+            "promo1_position": "after",
+            "promo2_image_shape": "landscape",
+            "promo2_link": "",
+            "promo2_heading": "",
+            "promo2_text": "",
+            "promo2_button_label": "",
+            "promo2_position": "after"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_YWnDMP",
+        "mega_menu_xMzAhb",
+        "mega_menu_sl_store"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/sofia-lark-logo-02_1.png",
+        "logo_inverted": "shopify://shop_images/sofia-lark-logo-01.png",
+        "desktop_logo_width": 110,
+        "mobile_logo_width": 70,
+        "main_menu_link_list": "galvena-izvelne-2026",
+        "hover_menu": true,
+        "main_menu_alignment": "left",
+        "header_style": "normal",
+        "sticky_index": true,
+        "sticky_collection": false,
+        "toolbar_menu": "",
+        "toolbar_social": true,
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": false
+      }
+    },
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "announcement-0": {
+          "type": "announcement",
+          "settings": {
+            "text": "Pirkumiem virs 50 Euro Omniva 🎁 dāvanā",
+            "link_text": "",
+            "link": ""
+          }
+        },
+        "announcement-1": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "returns",
+            "link_text": "30-day  returns",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement-0",
+        "announcement-1"
+      ],
+      "settings": {
+        "announcement_compact": true,
+        "sticky_on_scroll": true,
+        "sticky_on_mobile": false
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

@@ -1,20 +1,11 @@
 {%- comment -%}
-  One piece in "Sader kopā": its photograph, name and price, then the way to buy it in place
-  (pieces with more than one variant link to their own page to choose). Accepts: item (a product).
+  One piece in "Sader kopā": the Sofia Lark product card (the same as everywhere else), then the
+  way to buy it in place (pieces with more than one variant link to their own page to choose).
+  Accepts: item (a product).
 {%- endcomment -%}
-{%- liquid
-  assign img = item.featured_media.preview_image
-  assign img_alt = img.alt | default: item.title | escape
--%}
 <li class="sl-pair__card" data-sl-pair-row>
-  <a class="sl-pair__media" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
-    {%- if img -%}
-      {{- img | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 22vw, 46vw', loading: 'lazy', alt: img_alt, class: 'sl-pair__img' -}}
-    {%- endif -%}
-  </a>
   <div class="sl-pair__info">
-    <a class="sl-pair__name" href="{{ item.url }}">{{ item.title | escape }}</a>
-    <p class="sl-pair__price">{% if item.price_varies %}no {% endif %}{{ item.price | money }}</p>
+    {%- render 'sl-product-card', product: item, sizes: '(min-width: 990px) 22vw, 46vw' -%}
   </div>
   {%- if item.has_only_default_variant -%}
     {%- form 'product', item, class: 'sl-pair__form' -%}

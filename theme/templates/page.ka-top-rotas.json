@@ -1,0 +1,104 @@
+{
+  "sections": {
+    "story": {
+      "type": "sl-story",
+      "blocks": {
+        "open": {
+          "type": "opening",
+          "settings": {
+            "crumb_label": "Mūsu stāsts",
+            "crumb_link": "shopify://pages/filozofija",
+            "title": "Kā top rotas",
+            "lede": "Ieskats Laura Lark rotu darbnīcā: no idejas līdz rotai, kas sāk savu dzīvi kopā ar tevi.",
+            "image": "shopify://shop_images/Untitled_design_7_09fc58ed-5953-4508-b5da-6c340bd4d5b2.png"
+          }
+        },
+        "steps": {
+          "type": "steps",
+          "settings": {
+            "heading": "No idejas līdz rotai",
+            "item_1_title": "Ideja",
+            "item_1_text": "Lielākā daļa ideju rodas dabā. Organiskas formas, faktūras un nepilnības Laurai ir tuvākas par perfektu simetriju.",
+            "item_2_title": "Skice",
+            "item_2_text": "Idejas top skicēs. Lauras ikdiena paiet starp darbnīcu, skicēm, klientēm un jaunu ideju meklēšanu.",
+            "item_3_title": "Darbnīca",
+            "item_3_text": "Darbnīcā auksts metāls kļūst par stāstu. Rotu mākslu un metāla dizainu Laura apguva Latvijas Mākslas akadēmijā un Venēcijas Mākslas akadēmijā.",
+            "item_4_title": "Tava rota",
+            "item_4_text": "Rota ir gatava, kad sāk savu dzīvi kopā ar sievieti, kura to izvēlas. Saskarsme ar klientēm palīdz radīt rotas, kuras dzīvo ārpus skicēm un vitrīnām.",
+            "tone": "white"
+          }
+        },
+        "words": {
+          "type": "chapter",
+          "settings": {
+            "label": "",
+            "heading": "Trešajā paaudzē",
+            "text": "<p>Rotu darināšana Lauras ģimenē turpinās jau trešajā paaudzē: vectēvs Vladislavs bija rotkalis, mamma – juveliere, bet vecmāmiņa Sofija – modes māksliniece.</p>",
+            "quote": "Man patīk mirklis, kad auksts metāls kļūst par stāstu un rota sāk savu dzīvi kopā ar sievieti, kura to izvēlas.",
+            "quote_by": "Laura Lark",
+            "link_label": "Laura Lark stāsts",
+            "link": "shopify://pages/laura-lark",
+            "tone": "stone"
+          }
+        },
+        "makers": {
+          "type": "steps",
+          "settings": {
+            "heading": "Citu meistaru rotas",
+            "text": "<p>Blakus Lauras autorkolekcijām SOFIA LARK ir rūpīgi atlasīti citu dizaineru darbi. Katru rotu Laura izvēlas pati: pēc sajūtas, kvalitātes, dizaina un rakstura.</p>",
+            "item_1_title": "Kalliope",
+            "item_1_text": "Ar rokām darinātas Grieķijā, kopš 1987. gada. Nelielas apdares nianses piešķir katrai rotai individuālu raksturu.",
+            "item_1_link": "shopify://collections/kalliope-jewelry",
+            "item_2_title": "Dogon Art",
+            "item_2_text": "Darinātas ar rokām Togo un Ganā, ciešā sadarbībā ar amatniekiem: melnkoks, Vatusi govs rags un 24 karātu zeltījums.",
+            "item_2_link": "shopify://collections/dogonart",
+            "item_3_title": "SkyLab",
+            "item_3_text": "Itālijā, pēc tradicionālām itāļu rotu darināšanas tehnoloģijām, no aluzink jeb zamak metālu sakausējuma.",
+            "item_3_link": "shopify://collections/aluzink",
+            "item_4_title": "Venus un Habaha",
+            "item_4_text": "No Parīzes: pērles ar zeltītiem elementiem, un juveliertērauds ar dabīgiem pusdārgakmeņiem.",
+            "item_4_link": "shopify://collections",
+            "tone": "white"
+          }
+        },
+        "pack": {
+          "type": "chapter",
+          "settings": {
+            "label": "",
+            "heading": "Ceļš pie tevis",
+            "text": "<p>Katru pasūtījumu iesaiņojam skaistā, dabai draudzīgā iepakojumā. Rotas vari arī pielaikot klātienē mūsu veikalā Rīgā, Blaumaņa ielā 17.</p>",
+            "image": "shopify://shop_images/maza_izmera_sofia_lark_iepakojums.jpg",
+            "link_label": "Veikals Rīgā",
+            "link": "shopify://pages/sofia-lark-veikals",
+            "tone": "white"
+          }
+        },
+        "close": {
+          "type": "closing",
+          "settings": {
+            "heading": "Esi tu.",
+            "text": "Rotas, kas palīdz sievietei satikt sevi.",
+            "link_1_label": "Kolekcijas",
+            "link_1_url": "shopify://collections",
+            "link_2_label": "Visas rotas",
+            "link_2_url": "shopify://collections/visas-rotas",
+            "link_3_label": "Rotu kopšana",
+            "link_3_url": "shopify://collections/cleaning-chemicals"
+          }
+        }
+      },
+      "block_order": [
+        "open",
+        "steps",
+        "words",
+        "makers",
+        "pack",
+        "close"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "story"
+  ]
+}

@@ -1,0 +1,235 @@
+{%- comment -%}
+  Sofia Lark story page (Laura Lark, Kā top rotas): a long text set as a sequence of chapters.
+  Blocks, used in any order:
+  - opening: the page's name set large, one line under it and a photograph;
+  - chapter: a number and heading on the left, the words on the right, with optional short lines
+    set one under another, a sentence set large, a photograph, and a stone background;
+  - steps: up to four numbered items side by side (generations, the stages of making a piece);
+  - closing: a large last word, a few lines, a signature, and links onward.
+  Small photographs are never shown wider than they are, so nothing looks soft.
+{%- endcomment -%}
+{{ 'sl-story.css' | asset_url | stylesheet_tag }}
+{%- assign sid = 'SlSt-' | append: section.id -%}
+
+<div class="sl-st">
+  {%- for block in section.blocks -%}
+    {%- assign b = block.settings -%}
+    {%- case block.type -%}
+
+      {%- when 'opening' -%}
+        <header class="sl-st__open page-width{% if b.image == blank %} sl-st__open--plain{% endif %}" {{ block.shopify_attributes }}>
+          <div class="sl-st__open-text">
+            <nav class="sl-st__crumbs" aria-label="Atrašanās vieta">
+              <a href="{{ routes.root_url }}">Sākums</a>
+              {%- if b.crumb_label != blank -%}
+                <span aria-hidden="true">/</span>
+                {%- if b.crumb_link != blank -%}<a href="{{ b.crumb_link }}">{{ b.crumb_label | escape }}</a>{%- else -%}<span>{{ b.crumb_label | escape }}</span>{%- endif -%}
+              {%- endif -%}
+            </nav>
+            <h1 class="sl-st__title">{{ b.title | default: page.title | escape }}</h1>
+            {%- if b.lede != blank -%}<p class="sl-st__lede">{{ b.lede | escape }}</p>{%- endif -%}
+          </div>
+          {%- if b.image != blank -%}
+            <figure class="sl-st__open-media" style="--w: {{ b.image.width }}px">
+              {%- assign alt = b.image.alt | default: b.title | escape -%}
+              {{- b.image | image_url: width: 1200 | image_tag: widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 34vw, 100vw', alt: alt, class: 'sl-st__img', fetchpriority: 'high' -}}
+            </figure>
+          {%- endif -%}
+        </header>
+
+      {%- when 'chapter' -%}
+        {%- assign ch_id = sid | append: '-' | append: forloop.index -%}
+        <section class="sl-st__ch{% if b.tone == 'stone' %} sl-st__ch--stone{% endif %}" aria-labelledby="{{ ch_id }}" {{ block.shopify_attributes }}>
+          <div class="page-width sl-st__ch-inner">
+            <div class="sl-st__ch-head">
+              {%- if b.label != blank -%}<p class="sl-st__num">{{ b.label | escape }}</p>{%- endif -%}
+              <h2 id="{{ ch_id }}" class="sl-st__h2">{{ b.heading | escape }}</h2>
+            </div>
+            <div class="sl-st__ch-body">
+              {%- if b.text != blank -%}<div class="sl-st__rte">{{ b.text }}</div>{%- endif -%}
+              {%- if b.lines != blank -%}
+                <ul class="sl-st__lines" role="list">
+                  {%- assign lines = b.lines | newline_to_br | split: '<br />' -%}
+                  {%- for line in lines -%}
+                    {%- assign l = line | strip -%}
+                    {%- if l != blank -%}<li>{{ l | escape }}</li>{%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if b.text_after != blank -%}<div class="sl-st__rte">{{ b.text_after }}</div>{%- endif -%}
+              {%- if b.quote != blank -%}
+                <blockquote class="sl-st__quote">
+                  <p>{{ b.quote | escape | newline_to_br }}</p>
+                  {%- if b.quote_by != blank -%}<footer>{{ b.quote_by | escape }}</footer>{%- endif -%}
+                </blockquote>
+              {%- endif -%}
+              {%- if b.text_end != blank -%}<div class="sl-st__rte">{{ b.text_end }}</div>{%- endif -%}
+              {%- if b.image != blank -%}
+                <figure class="sl-st__fig" style="--w: {{ b.image.width }}px">
+                  {%- assign alt = b.image.alt | escape -%}
+                  {{- b.image | image_url: width: 1400 | image_tag: widths: '400, 600, 900, 1400', sizes: '(min-width: 990px) 40vw, 100vw', loading: 'lazy', alt: alt, class: 'sl-st__img' -}}
+                  {%- if b.caption != blank -%}<figcaption>{{ b.caption | escape }}</figcaption>{%- endif -%}
+                </figure>
+              {%- endif -%}
+              {%- if b.link_label != blank and b.link != blank -%}
+                <a class="sl-st__link" href="{{ b.link }}">{{ b.link_label | escape }}</a>
+              {%- endif -%}
+            </div>
+          </div>
+        </section>
+
+      {%- when 'steps' -%}
+        <section class="sl-st__steps{% if b.tone == 'stone' %} sl-st__ch--stone{% endif %}" {{ block.shopify_attributes }}>
+          <div class="page-width">
+            {%- if b.heading != blank -%}<h2 class="sl-st__h2 sl-st__steps-title">{{ b.heading | escape }}</h2>{%- endif -%}
+            {%- if b.text != blank -%}<div class="sl-st__rte sl-st__steps-text">{{ b.text }}</div>{%- endif -%}
+            <ol class="sl-st__grid" role="list">
+              {%- for i in (1..4) -%}
+                {%- liquid
+                  assign k_title = 'item_' | append: i | append: '_title'
+                  assign k_text = 'item_' | append: i | append: '_text'
+                  assign k_link = 'item_' | append: i | append: '_link'
+                  assign t = b[k_title]
+                -%}
+                {%- if t != blank -%}
+                  <li class="sl-st__step">
+                    <span class="sl-st__step-num">{{ i | prepend: '0' }}</span>
+                    <h3 class="sl-st__h3">
+                      {%- if b[k_link] != blank -%}<a href="{{ b[k_link] }}">{{ t | escape }}</a>{%- else -%}{{ t | escape }}{%- endif -%}
+                    </h3>
+                    <p>{{ b[k_text] | escape }}</p>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ol>
+            {%- if b.text_after != blank -%}<div class="sl-st__rte sl-st__steps-text">{{ b.text_after }}</div>{%- endif -%}
+          </div>
+        </section>
+
+      {%- when 'closing' -%}
+        <section class="sl-st__close" {{ block.shopify_attributes }}>
+          <div class="page-width">
+            <h2 class="sl-st__big">{{ b.heading | escape }}</h2>
+            {%- if b.text != blank -%}<p class="sl-st__close-text">{{ b.text | escape }}</p>{%- endif -%}
+            {%- if b.signature != blank -%}
+              <p class="sl-st__sign">{{ b.signature | escape | newline_to_br }}</p>
+            {%- endif -%}
+            <div class="sl-st__links">
+              {%- for i in (1..3) -%}
+                {%- assign k_label = 'link_' | append: i | append: '_label' -%}
+                {%- assign k_url = 'link_' | append: i | append: '_url' -%}
+                {%- if b[k_label] != blank and b[k_url] != blank -%}
+                  <a class="sl-st__btn{% if forloop.first %} sl-st__btn--solid{% endif %}" href="{{ b[k_url] }}">{{ b[k_label] | escape }}</a>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </section>
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Sofia Lark story",
+  "tag": "div",
+  "class": "sl-st-section",
+  "blocks": [
+    {
+      "type": "opening",
+      "name": "Opening",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "crumb_label", "label": "Breadcrumb", "default": "Mūsu stāsts" },
+        { "type": "url", "id": "crumb_link", "label": "Breadcrumb link" },
+        { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the page's title." },
+        { "type": "textarea", "id": "lede", "label": "One line under the title" },
+        { "type": "image_picker", "id": "image", "label": "Photograph" }
+      ]
+    },
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Number", "info": "For example 01." },
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "textarea", "id": "lines", "label": "Short lines", "info": "One per line; set one under another." },
+        { "type": "richtext", "id": "text_after", "label": "Text after the lines" },
+        { "type": "textarea", "id": "quote", "label": "A sentence set large" },
+        { "type": "text", "id": "quote_by", "label": "Whose words" },
+        { "type": "richtext", "id": "text_end", "label": "Text at the end" },
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "text", "id": "caption", "label": "Under the photograph" },
+        { "type": "text", "id": "link_label", "label": "Link" },
+        { "type": "url", "id": "link", "label": "Link to" },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Background",
+          "options": [
+            { "value": "white", "label": "White" },
+            { "value": "stone", "label": "Stone" }
+          ],
+          "default": "white"
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "name": "Steps",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "text", "id": "item_1_title", "label": "1: title" },
+        { "type": "textarea", "id": "item_1_text", "label": "1: text" },
+        { "type": "url", "id": "item_1_link", "label": "1: link" },
+        { "type": "text", "id": "item_2_title", "label": "2: title" },
+        { "type": "textarea", "id": "item_2_text", "label": "2: text" },
+        { "type": "url", "id": "item_2_link", "label": "2: link" },
+        { "type": "text", "id": "item_3_title", "label": "3: title" },
+        { "type": "textarea", "id": "item_3_text", "label": "3: text" },
+        { "type": "url", "id": "item_3_link", "label": "3: link" },
+        { "type": "text", "id": "item_4_title", "label": "4: title" },
+        { "type": "textarea", "id": "item_4_text", "label": "4: text" },
+        { "type": "url", "id": "item_4_link", "label": "4: link" },
+        { "type": "richtext", "id": "text_after", "label": "Text after" },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Background",
+          "options": [
+            { "value": "white", "label": "White" },
+            { "value": "stone", "label": "Stone" }
+          ],
+          "default": "white"
+        }
+      ]
+    },
+    {
+      "type": "closing",
+      "name": "Closing",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Large last word" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "textarea", "id": "signature", "label": "Signature" },
+        { "type": "text", "id": "link_1_label", "label": "First link" },
+        { "type": "url", "id": "link_1_url", "label": "First link to" },
+        { "type": "text", "id": "link_2_label", "label": "Second link" },
+        { "type": "url", "id": "link_2_url", "label": "Second link to" },
+        { "type": "text", "id": "link_3_label", "label": "Third link" },
+        { "type": "url", "id": "link_3_url", "label": "Third link to" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sofia Lark story"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}

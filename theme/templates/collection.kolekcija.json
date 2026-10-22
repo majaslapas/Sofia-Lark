@@ -1,0 +1,200 @@
+{
+  "sections": {
+    "sl_collection_header": {
+      "type": "sl-collection-header",
+      "blocks": {
+        "about_kalliope": {
+          "type": "about",
+          "settings": {
+            "collection": "kalliope-jewelry",
+            "label": "Kalliope",
+            "lede": "Grieķijā ar rokām darinātas rotas ar skulpturālām formām, zeltainas bronzas siltumu un kristālu mirdzumu.",
+            "fact_1_label": "Materiāli",
+            "fact_1_value": "Zeltīta bronza, kristāli, pērles, polimērs",
+            "fact_2_label": "Izcelsme",
+            "fact_2_value": "Grieķija, kopš 1987. gada",
+            "story": "",
+            "note": "",
+            "note_link_label": "Veikals Rīgā",
+            "note_link": "",
+            "image": "shopify://shop_images/JurisZolbergs-5988.jpg",
+            "focus_x": 50,
+            "focus_y": 55
+          }
+        },
+        "about_venus": {
+          "type": "about",
+          "settings": {
+            "collection": "venus",
+            "label": "Venus",
+            "lede": "Rotas no modes mekas, Parīzes!\nŠim zīmolam raksturīgas ir dabīgu pēļu kombinācijas ar zeltītiem elementiem. Radot smalku un maigi sievišķigu tēlu.",
+            "fact_1_label": "Izcelsme",
+            "fact_1_value": "Francija, Parīze",
+            "fact_2_label": "Materiāli",
+            "fact_2_value": "Pērles, zeltīta bronza",
+            "story": "<p>Venus rotas nāk no Francijas, no fantastiskās bižutērijas mekas Parīzes. Kas gan vēl varētu būt lielāka bižutērijas meka par Koko Šaneles iemīļoto Parīzi?</p><p>Šim zīmolam tradicionāli raksturīgas pērles: daudz dažādu, izteiksmīgu pērļu kombinācijās ar zelta elementiem. Lielākais uzsvars ir tieši uz pērlēm un sievišķīgām, izteiksmīgām rotām, kuras var valkāt arī katru dienu.</p>",
+            "note": "",
+            "note_link_label": "Veikals Rīgā",
+            "note_link": "",
+            "image": "shopify://shop_images/hf_20260313_075549_f5ff5f0d-6c56-4678-a6a5-f3c361a45406.jpg",
+            "focus_x": 50,
+            "focus_y": 65
+          }
+        },
+        "about_aluzink": {
+          "type": "about",
+          "settings": {
+            "collection": "aluzink",
+            "label": "SkyLab",
+            "lede": "Itāļu zīmols ar tradicionālām rotu darināšanas tehnoloģijām: lielas, izteiksmīgas rotas sievietēm, kuras nebaidās būt pamanītas.",
+            "fact_1_label": "Izcelsme",
+            "fact_1_value": "Itālija",
+            "fact_2_label": "Materiāls",
+            "fact_2_value": "Aluzink jeb zamak metālu sakausējums",
+            "story": "<p>SkyLab ir itāļu zīmols, kas rotas darina pēc tradicionālām itāļu tehnoloģijām. Tās top no metālu sakausējuma, ko pasaulē pazīst ar diviem nosaukumiem, aluzink jeb zamak; latviski tam īsta nosaukuma nav. Tas ir līdzīgs bronzai, tikai cita veida: zemas kušanas materiālu maisījums.</p><p>Itālijā šāda materiāla rotas ir ārkārtīgi izplatītas, bet mūsu veikalā un arī Latvijā kopumā tās ir salīdzinoši kas jauns. Zīmolam raksturīgas lielas, izteiksmīgas rotas: garas, interesantu formu ķēdes, kuras var valkāt gan vienā kārtā, gan dubultā, un ārkārtīgi skaistas aproces, gan uz gumijas, gan ar klasisku aizdari.</p><p>Praktiskas, ērtas un izteiksmīgas rotas tieši tādām sievietēm kā Sofia Lark klientes: sievietēm, kuras nebaidās būt pamanītas.</p>",
+            "note": "",
+            "note_link_label": "Veikals Rīgā",
+            "note_link": "",
+            "image": "shopify://shop_images/1-IMG_0303-Edit.jpg",
+            "focus_x": 50,
+            "focus_y": 40
+          }
+        },
+        "about_habaha": {
+          "type": "about",
+          "settings": {
+            "collection": "habaha",
+            "label": "Habaha",
+            "lede": "Rotas no Parīzes: juveliertērauds, izteiksmīgas formas un dabīgi pusdārgakmeņi.",
+            "fact_1_label": "Izcelsme",
+            "fact_1_value": "Francija, Parīze",
+            "fact_2_label": "Materiāli",
+            "fact_2_value": "Juveliertērauds, dabīgi pusdārgakmeņi",
+            "story": "<p>Habaha ir zīmols no Francijas, no pašas modes un bižutērijas mekas Parīzes. Rotas lielākoties ir izgatavotas no juveliertērauda: tas ir ļoti draudzīgs ķermenim, nemelnē pat saskarē ar ūdeni, un tā kvalitāte ir izcila.</p><p>Šim zīmolam daudzās rotās tradicionāli ir izteiksmīgas formas, un bieži akcenti tajās ir dabīgi pusdārgakmeņi.</p>",
+            "note": "",
+            "note_link_label": "Veikals Rīgā",
+            "note_link": "",
+            "image": "shopify://shop_images/hf_20260310_112904_4b6d0782-693e-4f6b-b912-6fa57f42f454.jpg",
+            "focus_x": 40,
+            "focus_y": 75
+          }
+        },
+        "about_dogon": {
+          "type": "about",
+          "settings": {
+            "collection": "dogonart",
+            "label": "Dogon Art",
+            "lede": "Laikmetīgas rotas, ko iedvesmojis Mali Dogonu cilts skulpturālais mantojums.",
+            "fact_1_label": "Materiāli",
+            "fact_1_value": "Melnkoks, Vatusi govs rags, 24 karātu zeltījums",
+            "fact_2_label": "Darināts",
+            "fact_2_value": "Ar rokām Togo un Ganā",
+            "story": "<p>Dogon Art ir laikmetīgas rotas, ko iedvesmojis Mali Dogonu cilts skulpturālais mantojums. Zīmols sakņojas Rietumāfrikas amatniecībā un dabīgus materiālus pārvērš izsmalcinātās, izteiksmīgās rotās. Katru no tām iedvesmo dabā sastopamas organiskas formas, godinot faktūru, individualitāti un nepilnības skaistumu.</p><p>Kolekcijas centrā ir Vatusi govs rags un melnkoks, rets un vērtīgs Rietumāfrikas materiāls. Melnkoks ir pazīstams ar savu dziļo, gandrīz melno toni; tas ir ārkārtīgi blīvs, gluds un dabiski mirdzošs. To papildina 24 karātu zeltījums, kas bagātīgajiem tumšajiem toņiem piešķir smalku, siltu un gaišu kontrastu.</p><p>Katra rota ir darināta ar rokām ciešā sadarbībā ar prasmīgiem amatniekiem Togo un Ganā. Šīs ilgtermiņa partnerības nodrošina godīgu atalgojumu, saglabā tradicionālās tehnikas un veicina ilgtspējīgu izaugsmi. Dogon Art no jauna definē laikmetīgas rotas, paplašinot dabīgo materiālu radošās iespējas un vienlaikus radot nozīmīgu sociālo ietekmi.</p>",
+            "note": "Kolekcija drīzumā būs arī mājaslapā. Pagaidām to var apskatīt un iegādāties tikai mūsu veikalā Rīgā, Blaumaņa ielā 17.",
+            "note_link_label": "Veikals Rīgā",
+            "note_link": "shopify://pages/sofia-lark-veikals",
+            "look_1": "shopify://shop_images/aproce_kaklarota.png",
+            "look_2": "shopify://shop_images/izteiksmigas_rotas_sievietem.png",
+            "look_3": "shopify://shop_images/kaklarotas.png",
+            "focus_x": 50,
+            "focus_y": 50
+          }
+        }
+      },
+      "block_order": [
+        "about_kalliope",
+        "about_venus",
+        "about_aluzink",
+        "about_habaha",
+        "about_dogon"
+      ],
+      "settings": {
+        "more_label": "Par kolekciju"
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "subcollections": {
+          "type": "subcollections",
+          "settings": {
+            "subcollections_per_row": 5
+          }
+        },
+        "product_grid": {
+          "type": "product_grid",
+          "settings": {
+            "enable_collection_count": false,
+            "per_row": 4,
+            "rows_per_page": 10,
+            "mobile_flush_grid": false
+          }
+        }
+      },
+      "block_order": [
+        "subcollections",
+        "product_grid"
+      ],
+      "settings": {
+        "enable_sidebar": false,
+        "collapsed": false,
+        "filter_style": "sidebar",
+        "enable_color_swatches": false,
+        "enable_swatch_labels": false,
+        "enable_sort": false
+      }
+    },
+    "reviews": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_F9e8RB": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": true,
+            "reviews_selection": "product_reviews",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "star_rating": "5_star",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "review_text_only",
+            "max_reviews": 20,
+            "review_length": "medium",
+            "text_size": "medium",
+            "image_ratio": "1.33",
+            "reviews_shown": 4,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1400,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#f1efea",
+            "stars_color": "#000000",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "Mūsu klienti saka...",
+            "show_average_rating": true,
+            "rating_display": "default"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_cards_carousel_F9e8RB"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    }
+  },
+  "order": [
+    "sl_collection_header",
+    "main-collection",
+    "reviews"
+  ]
+}

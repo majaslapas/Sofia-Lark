@@ -1,0 +1,93 @@
+{
+  "sections": {
+    "main": {
+      "type": "sl-collections-index",
+      "blocks": {
+        "col_kalliope_jewelry": {
+          "type": "collection",
+          "settings": {
+            "collection": "kalliope-jewelry",
+            "label": "Kalliope",
+            "lede": "Grieķijā ar rokām darinātas rotas ar skulpturālām formām, zeltainas bronzas siltumu un kristālu mirdzumu.",
+            "fact_1_label": "Materiāli",
+            "fact_1_value": "Zeltīta bronza, kristāli, pērles, polimērs",
+            "fact_2_label": "Izcelsme",
+            "fact_2_value": "Grieķija, kopš 1987. gada",
+            "image": "shopify://shop_images/JurisZolbergs-5988.jpg"
+          }
+        },
+        "col_venus": {
+          "type": "collection",
+          "settings": {
+            "collection": "venus",
+            "label": "Venus",
+            "lede": "Rotas no modes mekas, Parīzes!\nŠim zīmolam raksturīgas ir dabīgu pēļu kombinācijas ar zeltītiem elementiem. Radot smalku un maigi sievišķigu tēlu.",
+            "fact_1_label": "Izcelsme",
+            "fact_1_value": "Francija, Parīze",
+            "fact_2_label": "Materiāli",
+            "fact_2_value": "Pērles, zeltīta bronza",
+            "image": "shopify://shop_images/hf_20260313_075549_f5ff5f0d-6c56-4678-a6a5-f3c361a45406.jpg"
+          }
+        },
+        "col_aluzink": {
+          "type": "collection",
+          "settings": {
+            "collection": "aluzink",
+            "label": "SkyLab",
+            "lede": "Itāļu zīmols ar tradicionālām rotu darināšanas tehnoloģijām: lielas, izteiksmīgas rotas sievietēm, kuras nebaidās būt pamanītas.",
+            "fact_1_label": "Izcelsme",
+            "fact_1_value": "Itālija",
+            "fact_2_label": "Materiāls",
+            "fact_2_value": "Aluzink jeb zamak metālu sakausējums",
+            "image": "shopify://shop_images/1-IMG_0303-Edit.jpg"
+          }
+        },
+        "col_habaha": {
+          "type": "collection",
+          "settings": {
+            "collection": "habaha",
+            "label": "Habaha",
+            "lede": "Rotas no Parīzes: juveliertērauds, izteiksmīgas formas un dabīgi pusdārgakmeņi.",
+            "fact_1_label": "Izcelsme",
+            "fact_1_value": "Francija, Parīze",
+            "fact_2_label": "Materiāli",
+            "fact_2_value": "Juveliertērauds, dabīgi pusdārgakmeņi",
+            "image": "shopify://shop_images/hf_20260310_112904_4b6d0782-693e-4f6b-b912-6fa57f42f454.jpg"
+          }
+        },
+        "col_dogonart": {
+          "type": "collection",
+          "settings": {
+            "collection": "dogonart",
+            "label": "Dogon Art",
+            "lede": "Laikmetīgas rotas, ko iedvesmojis Mali Dogonu cilts skulpturālais mantojums.",
+            "fact_1_label": "Materiāli",
+            "fact_1_value": "Melnkoks, Vatusi govs rags, 24 karātu zeltījums",
+            "fact_2_label": "Darināts",
+            "fact_2_value": "Ar rokām Togo un Ganā",
+            "look_1": "shopify://shop_images/aproce_kaklarota.png",
+            "look_2": "shopify://shop_images/izteiksmigas_rotas_sievietem.png",
+            "look_3": "shopify://shop_images/kaklarotas.png",
+            "note": "Kolekcija drīzumā būs arī mājaslapā. Pagaidām to var apskatīt un iegādāties tikai mūsu veikalā Rīgā, Blaumaņa ielā 17."
+          }
+        }
+      },
+      "block_order": [
+        "col_kalliope_jewelry",
+        "col_venus",
+        "col_aluzink",
+        "col_habaha",
+        "col_dogonart"
+      ],
+      "settings": {
+        "heading": "Kolekcijas",
+        "text": "Katrai kolekcijai savs stāsts.",
+        "view_label": "Par kolekciju",
+        "limit": 12
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "sections": {
+    "sl_collection_header": {
+      "type": "sl-collection-header",
+      "blocks": {
+        "cat_all": {
+          "type": "about",
+          "settings": {
+            "collection": "visas-rotas",
+            "label": "Visas rotas",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 50
+          }
+        },
+        "cat_earrings": {
+          "type": "about",
+          "settings": {
+            "collection": "all-earrings",
+            "label": "Auskari",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 35,
+            "image": "shopify://shop_images/kalliope-GS1873a-model_36b293b0-3ccb-4398-83ea-babe74f4bb74.jpg"
+          }
+        },
+        "cat_necklaces": {
+          "type": "about",
+          "settings": {
+            "collection": "necklaces",
+            "label": "Kaklarotas",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 45,
+            "image": "shopify://shop_images/kalliope-GK1873-model-view_76b28c7a-a68c-48b2-9cf7-80191add3076.jpg"
+          }
+        },
+        "cat_bracelets": {
+          "type": "about",
+          "settings": {
+            "collection": "all-bracletes",
+            "label": "Aproces",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 50,
+            "image": "shopify://shop_images/MG_1067.jpg"
+          }
+        },
+        "cat_rings": {
+          "type": "about",
+          "settings": {
+            "collection": "gredzeni",
+            "label": "Gredzeni",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 50,
+            "image": "shopify://shop_images/kalliope-GD1921-worn-model_25acc14a-656c-41fc-8009-dbb6ba5dcb95.jpg"
+          }
+        },
+        "cat_brooches": {
+          "type": "about",
+          "settings": {
+            "collection": "piespraudes-1",
+            "label": "Piespraudes",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 40,
+            "image": "shopify://shop_images/kalliope-GF1969b-model-view_635c4241-d406-45b5-804b-1cb62bd0e13c.jpg"
+          }
+        },
+        "cat_care": {
+          "type": "about",
+          "settings": {
+            "collection": "cleaning-chemicals",
+            "label": "Rotu kopšana",
+            "lede": "",
+            "fact_1_label": "",
+            "fact_1_value": "",
+            "fact_2_label": "",
+            "fact_2_value": "",
+            "story": "",
+            "note": "",
+            "note_link_label": "",
+            "note_link": "",
+            "focus_x": 50,
+            "focus_y": 50
+          }
+        }
+      },
+      "block_order": [
+        "cat_all",
+        "cat_earrings",
+        "cat_necklaces",
+        "cat_bracelets",
+        "cat_rings",
+        "cat_brooches",
+        "cat_care"
+      ],
+      "settings": {
+        "more_label": "Vairāk",
+        "crumb_label": "Rotas",
+        "crumb_link": "shopify://collections/visas-rotas"
+      }
+    },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "subcollections": {
+          "type": "subcollections",
+          "settings": {
+            "subcollections_per_row": 5
+          }
+        },
+        "product_grid": {
+          "type": "product_grid",
+          "settings": {
+            "enable_collection_count": false,
+            "per_row": 4,
+            "rows_per_page": 10,
+            "mobile_flush_grid": false
+          }
+        }
+      },
+      "block_order": [
+        "subcollections",
+        "product_grid"
+      ],
+      "settings": {
+        "enable_sidebar": false,
+        "collapsed": false,
+        "filter_style": "sidebar",
+        "enable_color_swatches": false,
+        "enable_swatch_labels": false,
+        "enable_sort": false
+      }
+    },
+    "reviews": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_F9e8RB": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": true,
+            "reviews_selection": "product_reviews",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "star_rating": "5_star",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "review_text_only",
+            "max_reviews": 20,
+            "review_length": "medium",
+            "text_size": "medium",
+            "image_ratio": "1.33",
+            "reviews_shown": 4,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1400,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#f1efea",
+            "stars_color": "#000000",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "Mūsu klienti saka...",
+            "show_average_rating": true,
+            "rating_display": "default"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_cards_carousel_F9e8RB"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    }
+  },
+  "order": [
+    "sl_collection_header",
+    "main-collection",
+    "reviews"
+  ]
+}

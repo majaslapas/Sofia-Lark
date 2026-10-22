@@ -147,15 +147,21 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
 .sl-p__was[hidden] { display: none; }
 .sl-p__tax { font-size: 14px; color: var(--sl-muted); }
 
+/* the key facts as a short list of what the piece is and promises, each with a small drawing */
 .sl-p__facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  margin-top: 16px !important;
-  font-size: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 20px;
+  margin-top: 20px !important;
+  padding: 16px 0 !important;
+  border-top: 1px solid var(--sl-ground-2);
+  border-bottom: 1px solid var(--sl-ground-2);
+  font-size: 15px;
+  line-height: 1.35;
 }
-.sl-p__facts li { white-space: nowrap; }
-.sl-p__facts b { font-weight: 500; }
+.sl-p__fact { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.sl-p__fact-icon { flex: none; width: 20px; height: 20px; margin-top: -1px; }
+.sl-p__fact span { min-width: 0; overflow-wrap: anywhere; }
 
 /* options */
 .sl-p__options { display: grid; gap: 22px; margin-top: 28px; }
@@ -182,6 +188,12 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
   outline-offset: -2px;
   cursor: pointer;
   transition: outline-color 0.2s ease;
+}
+.sl-p label.sl-p__stone--swatch {
+  width: 56px;
+  min-width: 56px;
+  flex: 0 0 56px;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, 0.12);
 }
 .sl-p__stone-img {
   width: 100%;
@@ -393,6 +405,87 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
 .sl-p__spec { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; }
 .sl-p__spec dt { color: var(--sl-muted); }
 
+/* ---------- a photograph opened large ---------- */
+
+.sl-p__zoom {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.sl-p__zoom:focus-visible { outline: 2px solid var(--sl-ink); outline-offset: -4px; }
+
+.sl-lb-open { overflow: hidden; }
+.sl-lb {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #f1efea;
+  color: #000;
+}
+.sl-lb::backdrop { background: rgba(0, 0, 0, 0.4); }
+.sl-lb__img {
+  position: absolute;
+  inset: 56px 72px;
+  width: calc(100% - 144px);
+  height: calc(100% - 112px);
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.sl-lb__btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+.sl-lb__btn:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+.sl-lb__btn::before { content: ''; display: block; width: 10px; height: 10px; border: solid currentColor; }
+.sl-lb__close { top: 16px; right: 16px; }
+.sl-lb__close::before {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  background:
+    linear-gradient(45deg, transparent calc(50% - 0.75px), currentColor 0 calc(50% + 0.75px), transparent 0),
+    linear-gradient(-45deg, transparent calc(50% - 0.75px), currentColor 0 calc(50% + 0.75px), transparent 0);
+}
+.sl-lb__prev, .sl-lb__next { top: 50%; margin-top: -24px; }
+.sl-lb__prev { left: 16px; }
+.sl-lb__next { right: 16px; }
+.sl-lb__prev::before { border-width: 0 0 1.5px 1.5px; margin-left: 4px; transform: rotate(45deg); }
+.sl-lb__next::before { border-width: 1.5px 1.5px 0 0; margin-right: 4px; transform: rotate(45deg); }
+.sl-lb.is-single .sl-lb__prev, .sl-lb.is-single .sl-lb__next { display: none; }
+.sl-lb__count {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  margin: 0;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+  font-size: 14px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+@media only screen and (max-width: 768px) {
+  .sl-lb__img { inset: 64px 0 48px; width: 100%; height: calc(100% - 112px); }
+  .sl-lb__prev, .sl-lb__next { top: auto; bottom: 8px; margin: 0; }
+}
+
 /* ---------- phone bar ---------- */
 
 .sl-p__bar { display: none; }
@@ -423,35 +516,6 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
   gap: 40px clamp(12px, 1.6vw, 24px);
 }
 .sl-pair__card { display: flex; flex-direction: column; min-width: 0; }
-.sl-pair__media {
-  display: block;
-  aspect-ratio: 1 / 1;
-  margin-bottom: 16px;
-  overflow: hidden;
-  background: var(--sl-ground);
-}
-.sl-pair__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  mix-blend-mode: multiply;
-  transition: transform 0.6s var(--sl-ease);
-}
-@media (hover: hover) and (pointer: fine) {
-  .sl-pair__card:hover .sl-pair__img { transform: scale(1.04); }
-}
-.sl-pair__name {
-  font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
-  font-size: 15px;
-  line-height: 1.3;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--sl-ink);
-  text-decoration: none;
-}
-.sl-pair__name:hover { text-decoration: underline; text-underline-offset: 4px; }
-.sl-pair__price { margin: 6px 0 0; font-size: 15px; font-variant-numeric: tabular-nums; }
 /* the name takes the room left, so a row of cards lines its buttons up */
 .sl-pair__info { flex: 1; }
 .sl-pair__form { margin: 14px 0 0; }
@@ -523,7 +587,7 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
 .sl-quote__card figcaption { margin-top: 24px; font-size: 15px; font-weight: 500; }
 .sl-quote__card figcaption span { display: block; margin-top: 2px; font-weight: 400; color: var(--sl-muted); }
 
-/* ---------- packaging film: framed beside its words, never a backdrop ---------- */
+/* ---------- packaging: a large photograph and a detail beside its words ---------- */
 
 .sl-film { margin-top: var(--sl-gap-section); margin-bottom: var(--sl-gap-section); }
 .sl-film__inner {
@@ -532,37 +596,34 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
   gap: clamp(32px, 6vw, 112px);
   align-items: center;
 }
+.sl-film__media { position: relative; }
 .sl-film__frame {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   background: var(--sl-ground);
 }
-/* the 16:9 film is cut to the frame's 4:3 and drawn a little larger, so YouTube's own corner
-   marks fall outside it */
-.sl-film__player,
-.sl-film__poster {
+/* with a detail, the large photograph leaves room at its lower right for the detail to overlap */
+.sl-film--pair .sl-film__frame { width: 84%; }
+.sl-film__detail {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  right: 0;
+  bottom: -12%;
+  width: 36%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--sl-ground);
+  box-shadow: 0 0 0 10px #fff;
+}
+.sl-film__img,
+.sl-film__player,
+.sl-film__video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%);
+  object-fit: cover;
 }
-.sl-film__player iframe {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 144%;
-  height: 108%;
-  border: 0;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.sl-film__video { width: 100%; height: 100%; object-fit: cover; }
-.sl-film__poster { object-fit: cover; transition: opacity 0.6s ease; }
-.sl-film[data-yt] .sl-film__poster { width: 144%; height: 108%; }
-.sl-film.is-started .sl-film__poster { opacity: 0; }
 .sl-film__toggle {
   position: absolute;
   left: 16px;
@@ -711,6 +772,8 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
   .sl-pair__add { min-height: 44px; padding: 0 8px; font-size: 12px; letter-spacing: 0.1em; }
 
   .sl-film__inner { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .sl-film--pair .sl-film__media { padding-bottom: 14%; }
+  .sl-film__detail { bottom: 0; box-shadow: 0 0 0 6px #fff; }
 
   /* reviews become a row you swipe, the next card showing at the edge */
   .sl-quote__grid {
@@ -733,10 +796,11 @@ video.sl-p__img, iframe.sl-p__img { mix-blend-mode: normal; border: 0; }
   .sl-p__option--tray .sl-p__values { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
 @media only screen and (max-width: 380px) {
+  .sl-p__facts { grid-template-columns: minmax(0, 1fr); }
   .sl-p__option--tray .sl-p__values { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sl-p__img, .sl-p__stone-img, .sl-pair__img, .sl-p__bar, .sl-p__meter i, .sl-film__poster { transition: none; }
+  .sl-p__img, .sl-p__stone-img, .sl-pair__img, .sl-p__bar, .sl-p__meter i { transition: none; }
   .sl-p__media:hover img.sl-p__img { transform: none; }
 }

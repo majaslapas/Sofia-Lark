@@ -251,7 +251,7 @@
                 assign cols = 4
               endif
             -%}
-            <ul class="sl-st__tile-grid" role="list" style="--cols: {{ cols }}">
+            <ul class="sl-st__tile-grid sl-st__tile-grid--n{{ n }}" role="list" style="--cols: {{ cols }}">
               {%- for i in (1..8) -%}
                 {%- liquid
                   assign k_t = 'item_' | append: i | append: '_title'

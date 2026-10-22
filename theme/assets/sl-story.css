@@ -474,6 +474,11 @@ a.sl-st__card-value:hover { text-decoration: underline; text-underline-offset: 6
   .sl-st__close-media { aspect-ratio: 4 / 3; }
   .sl-st__sum { grid-template-columns: minmax(0, 1fr); justify-items: center; }
   .sl-st__tile-grid { grid-template-columns: repeat(min(var(--cols, 4), 2), minmax(0, 1fr)); }
+  /* three words read best as a short list on a phone */
+  .sl-st__tile-grid--n3 { grid-template-columns: minmax(0, 1fr); }
+  .sl-st__tile { min-height: 104px; padding: 18px 16px; gap: 14px; }
+  .sl-st__tile-grid--n3 .sl-st__tile { min-height: 0; }
+  .sl-st__tile-word { font-size: min(22px, 12.5cqi); }
   .sl-st__open { align-items: start; }
   .sl-st__open-media { justify-self: start; order: -1; max-width: min(var(--w, 100%), 100%, 460px); }
   .sl-st__title { margin-top: 24px; }

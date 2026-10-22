@@ -5,7 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="{{ settings.color_button }}">
-  <link rel="canonical" href="{{ canonical_url }}">
+  {%- comment -%} Sofia Lark: /collections/all is the same list as Visas rotas, so it points there {%- endcomment -%}
+  {%- if request.page_type == 'collection' and collection.handle == 'all' -%}
+    <link rel="canonical" href="{{ shop.url }}{{ routes.collections_url }}/visas-rotas">
+  {%- else -%}
+    <link rel="canonical" href="{{ canonical_url }}">
+  {%- endif -%}
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
   <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">

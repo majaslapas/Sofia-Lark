@@ -29,14 +29,31 @@ The catalogue was measured first: 278 published products, 246 of them single-var
 
 | File | What it does |
 | --- | --- |
-| `templates/product.json` | The default product template, in this order: the product, "Sader kopā", reviews, the packaging film, and the theme's existing `sl-store`. |
+| `templates/product.json` | The default product template, in this order: the product, "Sader kopā", reviews, packaging, and the theme's existing `sl-store`. |
 | `sections/sl-product.liquid` | The product itself. The photos scroll while the buy box stays in place. The buy box holds the title, the one-line summary, app blocks (for example Judge.me stars), the price, key facts, the variant picker with stock, the button, the free-delivery meter, the three promises and the tabs. On phones there's a swipe gallery and a sticky add-to-cart bar. |
 | `sections/sl-product-pair.liquid` | "Sader kopā": complementary products, or Shopify's recommendations, then the care product, as cards. Single-variant pieces can be added to the cart in place. |
 | `sections/sl-quote.liquid` | Up to six real reviews as equal cards, each with its stars, plus the overall Judge.me rating. On phones the cards are a row you swipe. |
-| `sections/sl-packaging.liquid` | The packaging film in a 4:3 frame, with a pause button. It plays silently while on screen, and with reduced motion only when pressed. It uses a video uploaded to Shopify when one is chosen, otherwise the YouTube link (looping at 14 s, before the logo). The cover picture is in the store's Files and shows until the film plays. |
+| `sections/sl-packaging.liquid` | How every order arrives: the studio photograph of the packaging (`maza_izmera_sofia_lark_iepakojums.jpg` in Files) with a detail beside it, and a few words. A video uploaded to Shopify can take the large photograph's place; it plays silently while on screen and has a pause button. YouTube was left out because its player always shows some of its own buttons. |
 | `snippets/sl-product-facts.liquid` | Reads size, material, claims and care from a product. It uses only plain string operations, so each rule can be read and changed. |
-| `snippets/sl-product-media.liquid`, `snippets/sl-pair-card.liquid` | One gallery square; one "Sader kopā" card. |
-| `assets/sl-product.css`, `assets/sl-product.js` | Styles and behaviour. Without the script, the form still adds the chosen variant to the cart. |
+| `snippets/sl-product-media.liquid`, `snippets/sl-pair-card.liquid` | One gallery square (a photograph is a button that opens it large); one "Sader kopā" card, which is the shared product card plus a button. |
+| `assets/sl-product.css`, `assets/sl-product.js` | Styles and behaviour, including the photo viewer (arrows, swipe, Esc). Without the script, the form still adds the chosen variant to the cart. |
+
+### The rest of the site
+
+| File | What it does |
+| --- | --- |
+| `assets/sl-cards.css`, `layout/theme.liquid` | One product card everywhere: a square photo on stone, the name and price left-aligned, a white "sold out" tag. It applies to the theme's own grids (categories, search, recommendations, recently viewed) and to the Sofia Lark rows. It loads on every page from the layout (a one-line addition). |
+| `templates/collection.json`, `sections/sl-collection-header.liquid` | The jewellery categories (Auskari, Kaklarotas, Aproces, Gredzeni, Piespraudes, Visas rotas, Rotu kopšana) now have the same layout as the collection pages: the collection header with a photograph from the homepage rows, the product grid, and the homepage reviews. The header has a breadcrumb setting, so categories say "Rotas". |
+| `templates/collection.kolekcija.json` | The collection pages (Kalliope, Venus …) show the homepage reviews (Judge.me cards) in place of the old carousel. |
+| `templates/list-collections.json`, `sections/sl-collections-index.liquid`, `assets/sl-collections-index.css` | `/collections` lists only the design collections. Each has a few words, two facts and a row of pieces that scrolls like the homepage rows. Dogon Art, which has nothing online yet, shows its lookbook and where to see it. The words come from the collection pages. |
+| `sections/header-group.json`, `sections/footer-group.json` | The header and footer use a new menu, "Galvenā izvēlne (jaunā)" (`galvena-izvelne-2026`). It adds "Visas rotas" under Rotas and "Visas kolekcijas" under Kolekcijas. "Rotas" leads to the new Visas rotas page, and "Kolekcijas" to the collections page. The live theme keeps the old menu. |
+| `sections/sl-story.liquid`, `assets/sl-story.css`, `templates/page.laura-lark.json`, `templates/page.ka-top-rotas.json` | The Laura Lark page and "Kā top rotas" as story pages: an opening, numbered chapters, numbered steps and a closing. The Laura Lark text is the page's own, kept in full and in order, with only typos fixed. "Kā top rotas" is built only from what the store already says (Laura's own words, the collection pages, the packaging). |
+
+Made in the store, outside the theme:
+- **"Visas rotas" collection** (`/collections/visas-rotas`). An automatic collection of every product except delivery (`mk`) and the care products, so jewellery without a product type is included. It is published to the online store but linked only from the new menu.
+- **The new menu**, used only by the preview copy.
+- **Template choices on the two pages.** The live theme doesn't have these templates, so the live pages look exactly as before until the copy is published.
+- **The packaging detail picture** in Files (`sofia-lark-iepakojums-video-vaks.jpg`, a frame from the packing video).
 
 ## Preview and install
 

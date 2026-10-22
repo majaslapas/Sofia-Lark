@@ -8,7 +8,7 @@
           "settings": {
             "collection": "visas-rotas",
             "label": "Visas rotas",
-            "lede": "",
+            "lede": "Visas SOFIA LARK rotas vienuviet: auskari, kaklarotas, aproces, gredzeni un piespraudes – Laura Lark rotas un rūpīgi atlasīti citu dizaineru darbi.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",
@@ -26,7 +26,7 @@
           "settings": {
             "collection": "all-earrings",
             "label": "Auskari",
-            "lede": "",
+            "lede": "Auskari ar dabīgām pērlēm, akmeņiem un kristāliem – no smalkiem nagliņauskariem līdz izteiksmīgiem auskariem svētkiem.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",
@@ -45,7 +45,7 @@
           "settings": {
             "collection": "necklaces",
             "label": "Kaklarotas",
-            "lede": "",
+            "lede": "Kaklarotas ar pērlēm, kristāliem un skulpturālām formām no zeltītas bronzas, juveliertērauda un itāļu zamak.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",
@@ -64,7 +64,7 @@
           "settings": {
             "collection": "all-bracletes",
             "label": "Aproces",
-            "lede": "",
+            "lede": "Aproces ar dabīgām pērlēm un akmeņiem – valkā vienu pašu vai vairākas kopā.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",
@@ -83,7 +83,7 @@
           "settings": {
             "collection": "gredzeni",
             "label": "Gredzeni",
-            "lede": "",
+            "lede": "Gredzeni ar kristāliem, pērlēm un polimēru, daudzi ar regulējamu izmēru.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",
@@ -102,7 +102,7 @@
           "settings": {
             "collection": "piespraudes-1",
             "label": "Piespraudes",
-            "lede": "",
+            "lede": "Piespraudes ar emalju, pērlītēm un kristāliem – ziedi, putni, spāres un citi dabas motīvi.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",
@@ -121,7 +121,7 @@
           "settings": {
             "collection": "cleaning-chemicals",
             "label": "Rotu kopšana",
-            "lede": "",
+            "lede": "Līdzekļi rotu tīrīšanai un kopšanai, lai rotas ilgāk saglabā spīdumu.",
             "fact_1_label": "",
             "fact_1_value": "",
             "fact_2_label": "",

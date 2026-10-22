@@ -4,7 +4,15 @@
 {%- endcomment -%}
 {%- liquid
   assign shop_name = shop.name | strip
-  assign title = page_title
+  assign title = page_title | strip
+  # a title cut off at the admin's length limit can end in a comma or a dash
+  for i in (1..2)
+    assign last = title | slice: -1
+    if last == ',' or last == ';' or last == '|' or last == '-' or last == '–'
+      assign keep = title.size | minus: 1
+      assign title = title | slice: 0, keep | strip
+    endif
+  endfor
   if request.page_type == 'list-collections'
     assign title = 'Kolekcijas'
   elsif request.page_type == 'search'

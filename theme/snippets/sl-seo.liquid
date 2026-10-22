@@ -39,6 +39,11 @@
 {%- liquid
   # Shopify's own description arrives already escaped; the written ones are escaped below
   assign description = page_description | strip_html | strip
+  # the shop description in admin (Preferences) has a typo and is cut off mid-sentence; until it
+  # is rewritten there, pages that use it get this corrected version
+  if description contains ' klarotas'
+    assign description = 'Atklājiet Sofia Lark rotaslietas – unikālas zeltītas kaklarotas, auskari un aproces ar dabīgām saldūdens pērlēm un akmeņiem. Sievišķīgas rotas ikdienai un svētkiem, ideāla dāvana.'
+  endif
   if request.page_type == 'list-collections'
     assign description = ''
   endif
@@ -75,6 +80,9 @@
         endcapture
       else
         assign description = shop.description | strip_html | strip
+        if description contains ' klarotas'
+          assign description = 'Atklājiet Sofia Lark rotaslietas – unikālas zeltītas kaklarotas, auskari un aproces ar dabīgām saldūdens pērlēm un akmeņiem. Sievišķīgas rotas ikdienai un svētkiem, ideāla dāvana.'
+        endif
     endcase
   endif
   assign description = description | replace: '  ', ' ' | truncate: 300

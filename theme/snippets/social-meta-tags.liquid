@@ -25,6 +25,10 @@
   -%}
 {%- endif -%}
 {%- assign og_description = og_description | strip_html | replace: '  ', ' ' | strip | truncate: 300 -%}
+{%- comment -%} the shop description in admin has a typo and is cut off; see sl-seo.liquid {%- endcomment -%}
+{%- if og_description contains ' klarotas' -%}
+  {%- assign og_description = 'Atklājiet Sofia Lark rotaslietas – unikālas zeltītas kaklarotas, auskari un aproces ar dabīgām saldūdens pērlēm un akmeņiem. Sievišķīgas rotas ikdienai un svētkiem, ideāla dāvana.' -%}
+{%- endif -%}
 
   <meta property="og:site_name" content="{{ shop.name | strip }}">
   <meta property="og:url" content="{{ og_url }}">

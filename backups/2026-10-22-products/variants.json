@@ -1,0 +1,453 @@
+[
+ {
+  "handle": "sarkana-silimanita-papardes",
+  "productId": "gid://shopify/Product/8037417124140",
+  "option": {
+   "id": "gid://shopify/ProductOption/11306978083161",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/1186339225945",
+    "name": "Sarkana"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/1186339193177",
+    "name": "Pelēka"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/1227137515865",
+    "name": "Zaļa"
+   }
+  ],
+  "before": [
+   "Color",
+   "Red",
+   "Gray",
+   "Green"
+  ]
+ },
+ {
+  "handle": "afrodites-aproce",
+  "productId": "gid://shopify/Product/8067649077548",
+  "option": {
+   "id": "gid://shopify/ProductOption/10244286644524",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/202110959961",
+    "name": "Baltas pērles"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/295120568665",
+    "name": "Tumšas pērles"
+   }
+  ],
+  "before": [
+   "Color",
+   "White pearls",
+   "Dark pearls"
+  ]
+ },
+ {
+  "handle": "dionysus",
+  "productId": "gid://shopify/Product/8402824593753",
+  "option": {
+   "id": "gid://shopify/ProductOption/10964874428761",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/295167263065",
+    "name": "Sudraba"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/295167295833",
+    "name": "Zelta"
+   }
+  ],
+  "before": [
+   "Color",
+   "Silver",
+   "Gold"
+  ]
+ },
+ {
+  "handle": "modernist-auskari-24-19",
+  "productId": "gid://shopify/Product/8727439802713",
+  "option": {
+   "id": "gid://shopify/ProductOption/11338618700121",
+   "name": "Variants"
+  },
+  "values": [],
+  "before": [
+   "Style",
+   "1",
+   "2",
+   "3"
+  ]
+ },
+ {
+  "handle": "larissa-chip-earrings-copy",
+  "productId": "gid://shopify/Product/8999629259097",
+  "option": {
+   "id": "gid://shopify/ProductOption/11647925387609",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/1828897030489",
+    "name": "Sudraba"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/1828896997721",
+    "name": "Zelta"
+   }
+  ],
+  "before": [
+   "Color",
+   "SUDRABA",
+   "ZELTA"
+  ]
+ },
+ {
+  "handle": "hoop-earrings-3",
+  "productId": "gid://shopify/Product/9023600918873",
+  "option": {
+   "id": "gid://shopify/ProductOption/11675312324953",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/1870704509273",
+    "name": "Sudraba"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/1870704476505",
+    "name": "Zelta"
+   }
+  ],
+  "before": [
+   "Color",
+   "SUDRABA",
+   "ZELTA"
+  ]
+ },
+ {
+  "handle": "b7450",
+  "productId": "gid://shopify/Product/14830056767833",
+  "option": {
+   "id": "gid://shopify/ProductOption/17148307177817",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/8739112288601",
+    "name": "Zila"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/8739115237721",
+    "name": "Maigi zaļa"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/8739112354137",
+    "name": "Oranža"
+   }
+  ],
+  "before": [
+   "Color",
+   "Blue",
+   "MAIGI ZAĻŠ",
+   "Orange"
+  ]
+ },
+ {
+  "handle": "isreala-earrings-copy",
+  "productId": "gid://shopify/Product/14830068302169",
+  "option": {
+   "id": "gid://shopify/ProductOption/17148317139289",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/8739144925529",
+    "name": "Zila"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/8739144958297",
+    "name": "Maigi zaļa"
+   }
+  ],
+  "before": [
+   "Color",
+   "Blue",
+   "MAIGI ZAĻŠ"
+  ]
+ },
+ {
+  "handle": "cl7626",
+  "productId": "gid://shopify/Product/14942368792921",
+  "option": {
+   "id": "gid://shopify/ProductOption/17269717664089",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/8905053602137",
+    "name": "Balta"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/8905053634905",
+    "name": "Dažādas krāsas"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/8905053667673",
+    "name": "Sarkana"
+   }
+  ],
+  "before": [
+   "Color",
+   "White",
+   "mix",
+   "Red"
+  ]
+ },
+ {
+  "handle": "lagunas-vilinajums-copy",
+  "productId": "gid://shopify/Product/15705643909465",
+  "option": {
+   "id": "gid://shopify/ProductOption/18103510630745",
+   "name": "Dizains"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/11529512550745",
+    "name": "Dažādi akmeņi"
+   }
+  ],
+  "before": [
+   "Dizains",
+   "Fluorīts",
+   "Mix"
+  ]
+ },
+ {
+  "handle": "pegaza-sparni",
+  "productId": "gid://shopify/Product/16000905478489",
+  "option": {
+   "id": "gid://shopify/ProductOption/18443720491353",
+   "name": "Dizains"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/13286954762585",
+    "name": "Gaiši zila"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/13286961054041",
+    "name": "Violeta"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/13286935560537",
+    "name": "Balta"
+   }
+  ],
+  "before": [
+   "Dizains",
+   "Aqua blue",
+   "Purple",
+   "White"
+  ]
+ },
+ {
+  "handle": "bambus",
+  "productId": "gid://shopify/Product/16100763566425",
+  "option": {
+   "id": "gid://shopify/ProductOption/18557944234329",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/14025555280217",
+    "name": "Maigi zaļa"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/14025555312985",
+    "name": "Rozā"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/14037634449753",
+    "name": "Melna"
+   }
+  ],
+  "before": [
+   "KRĀSA",
+   "MAIGI ZAĻŠ",
+   "ROZĀ",
+   "MELNS"
+  ]
+ },
+ {
+  "handle": "eleganvces-vainags",
+  "productId": "gid://shopify/Product/16100774183257",
+  "option": {
+   "id": "gid://shopify/ProductOption/18557946298713",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/14025566159193",
+    "name": "Maigi zaļa"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/14025566126425",
+    "name": "Rozā"
+   }
+  ],
+  "before": [
+   "KRĀSA",
+   "MAIGI ZAĻŠ",
+   "ROZĀ"
+  ]
+ },
+ {
+  "handle": "ziedins",
+  "productId": "gid://shopify/Product/16100978819417",
+  "option": {
+   "id": "gid://shopify/ProductOption/18558223155545",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/14026939957593",
+    "name": "Sudraba"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/14026939990361",
+    "name": "Zelta"
+   }
+  ],
+  "before": [
+   "KRĀSA",
+   "SUDRABA",
+   "ZELTA"
+  ]
+ },
+ {
+  "handle": "kaklarota-5",
+  "productId": "gid://shopify/Product/16138470326617",
+  "option": {
+   "id": "gid://shopify/ProductOption/19287985029465",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/17085601612121",
+    "name": "Sudraba"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/17085644734809",
+    "name": "Zelta"
+   }
+  ],
+  "before": [
+   "krāsa",
+   "SUDRABA",
+   "ZELTA"
+  ]
+ },
+ {
+  "handle": "sudraba-klava-copy",
+  "productId": "gid://shopify/Product/16358155125081",
+  "option": {
+   "id": "gid://shopify/ProductOption/18861936181593",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/15563928994137",
+    "name": "Pelēka"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/15563929026905",
+    "name": "Balta"
+   }
+  ],
+  "before": [
+   "Color",
+   "Pelēks",
+   "Balts"
+  ]
+ },
+ {
+  "handle": "kalliope-kaklarota-gk1799",
+  "productId": "gid://shopify/Product/16690717426009",
+  "option": {
+   "id": "gid://shopify/ProductOption/19257725944153",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/16949037367641",
+    "name": "Ametists"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/16949037400409",
+    "name": "Peridots"
+   }
+  ],
+  "before": [
+   "KRĀSA",
+   "AMETISTS",
+   "PERIODOTS",
+   "Balts"
+  ]
+ },
+ {
+  "handle": "kalliope-auskari-gs1963b",
+  "productId": "gid://shopify/Product/16690720702809",
+  "option": {
+   "id": "gid://shopify/ProductOption/19289410339161",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/17093095588185",
+    "name": "Melna"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/17093095620953",
+    "name": "Balta"
+   }
+  ],
+  "before": [
+   "KRĀSA",
+   "MELNA",
+   "BALA"
+  ]
+ },
+ {
+  "handle": "kaklarota-7",
+  "productId": "gid://shopify/Product/16715118084441",
+  "option": {
+   "id": "gid://shopify/ProductOption/19289290998105",
+   "name": "Krāsa"
+  },
+  "values": [
+   {
+    "id": "gid://shopify/ProductOptionValue/17092297785689",
+    "name": "Sudraba"
+   },
+   {
+    "id": "gid://shopify/ProductOptionValue/17092297818457",
+    "name": "Sudrabs/zelts"
+   }
+  ],
+  "before": [
+   "Krāsa",
+   "SUDRABA",
+   "SUDRABS/ZELTS"
+  ]
+ }
+]

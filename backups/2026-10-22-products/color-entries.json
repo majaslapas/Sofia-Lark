@@ -1,0 +1,16 @@
+{
+  "note": "Shopify colour entries (metaobject type shopify--color-pattern) renamed 2026-10-22. They are shared: a product's linked colour option shows the entry's label. None is used by Calypso.",
+  "silver": ["SUDRABA", "Sudraba"],
+  "gold": ["ZELTA", "Zelta"],
+  "black (label was ROZĀ)": ["ROZĀ", "Rozā"],
+  "orange": ["Orange", "Oranža"],
+  "mix": ["mix", "Dažādas krāsas"],
+  "blue": ["Blue", "Zila"],
+  "white-1": ["White", "Balta"],
+  "green-1": ["MAIGI ZAĻŠ", "Maigi zaļa"],
+  "red-1": ["Red", "Sarkana"],
+  "black-1": ["MELNS", "Melna"],
+  "sudrabs-zelts": ["SUDRABS/ZELTS", "Sudrabs/zelts"],
+  "brown (label was Aqua blue)": ["Aqua blue", "Gaiši zila"],
+  "yellow": ["Yellow", "Dzeltena"]
+}

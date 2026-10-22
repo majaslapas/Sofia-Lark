@@ -15,3 +15,18 @@ What the store's products looked like before they were changed, so any of it can
   alt text came out as intended (all 55 / 55 and 393 / 393 matched; no photo is left without alt).
 
 Product handles (and so the product URLs), variants, prices and stock were not changed.
+
+## Second pass (same day)
+
+- **Calypso was put back exactly as it was** (title `Earrings "Calypso"`, its English description,
+  `custom.stone` and photos without alt text): its names belong to the design and are not translated.
+  Its colour names (Pearl gray, Lagoon blue …) are left as they are too.
+- **Variant names in Latvian** (`variants.py` → `variants.json`, before: `options-before.jsonl`,
+  after: `options-after.jsonl`). Option names are now `Krāsa` (was Color / KRĀSA / krāsa) and
+  `Variants` (was Style). Eight products had their own values renamed; the other colour options are
+  linked to Shopify's shared colour entries, which were renamed instead (`color-entries.json`).
+  Not changed: the Kalliope `Izpildījums` finishes (Montana Crystal, Creamrose Light Pearl … are the
+  crystal maker's names), the Habaha stone names (already Latvian) and Pērļu aitiņa (Pelēks/Balts).
+- **Title typos:** `TĪRĀMO LIDZEKĻU KOMPLEKTS` → `TĪRĀMO LĪDZEKĻU KOMPLEKTS`,
+  `Eleganvces vainags` → `Elegances vainags`, `Bambus Ii` → `Bambus II`.
+- **Alt text** that quoted an old variant name or title was updated to match (`alts-variant-fix.json`).

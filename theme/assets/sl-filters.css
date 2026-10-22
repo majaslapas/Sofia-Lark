@@ -18,8 +18,8 @@
 body:has(.sl-fl) .collection-filter { display: none; }
 
 .sl-fl fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
-/* the theme sets every label in small capitals; these read as plain words */
-.sl-fl label { margin: 0; letter-spacing: 0; text-transform: none; }
+/* the theme sets every label in small capitals (label:not(..):not(..)); these read as plain words */
+.sl-fl .sl-fl__form label { margin: 0; letter-spacing: 0; text-transform: none; }
 .sl-fl ul { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- categories ---------- */
@@ -113,7 +113,7 @@ body:has(.sl-fl) .collection-filter { display: none; }
 .sl-fl__panel-head { display: none; }
 
 .sl-fl__options ul { max-height: 320px; overflow-y: auto; overscroll-behavior: contain; }
-.sl-fl .sl-fl__opt {
+.sl-fl label.sl-fl__opt {
   position: relative;
   display: grid;
   grid-template-columns: 18px minmax(0, 1fr) auto;
@@ -156,7 +156,7 @@ body:has(.sl-fl) .collection-filter { display: none; }
 .sl-fl__opt-count { color: var(--sl-muted); font-size: 14px; font-variant-numeric: tabular-nums; }
 
 .sl-fl__price { display: flex; align-items: flex-end; gap: 10px; padding: 8px; }
-.sl-fl .sl-fl__field { display: grid; gap: 6px; flex: 1; min-width: 0; font-size: 13px; color: var(--sl-muted); }
+.sl-fl label.sl-fl__field { display: grid; gap: 6px; flex: 1; min-width: 0; font-size: 13px; color: var(--sl-muted); }
 .sl-fl__field input {
   width: 100%;
   min-height: 44px;
@@ -192,7 +192,7 @@ body:has(.sl-fl) .collection-filter { display: none; }
 /* ---------- sort ---------- */
 
 .sl-fl__sort { position: relative; display: flex; align-items: center; gap: 8px; flex: none; }
-.sl-fl .sl-fl__sort-label { font-size: 14px; color: var(--sl-muted); }
+.sl-fl label.sl-fl__sort-label { font-size: 14px; color: var(--sl-muted); }
 .sl-fl__select {
   appearance: none;
   -webkit-appearance: none;
@@ -332,7 +332,7 @@ body:has(.sl-fl.is-loading) .collection-grid__wrapper { opacity: 0.4; transition
     cursor: pointer;
   }
   .sl-fl__options ul { max-height: none; overflow: visible; }
-  .sl-fl .sl-fl__opt { min-height: 48px; padding: 0 8px; }
+  .sl-fl label.sl-fl__opt { min-height: 48px; padding: 0 8px; }
 }
 
 html.sl-fl-lock { overflow: hidden; }
